@@ -1,4 +1,0 @@
-hello
-world
-github
-추가 해봅시다
