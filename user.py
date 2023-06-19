@@ -19,9 +19,21 @@ def find_users(search_user):
 
     return result
 
-result = find_users(search_bob)
-print(result)
+# result = find_users(search_bob)
+# print(result)
 
 ''' find_users(search_user): 함수를 완성하시오.
 search_user = { } 안에 있는 조건이 모두 매칭하는 사용자를 찾아내시오.
 예). {"name" : "Bob" } 이 있으면 이름으로만 검색하고, {"name" : "Bob", "age" : 30} 이 있으면 이 두가지를 AND 로 비교해서 검색하고... 등 '''
+
+def find_users2(param):
+    result= []
+    for user in users:
+        for key, value in user.items():
+            for key2, value2 in param.items():
+                if key2 == key and value == value2:
+                    result = user
+    return result
+
+result = find_users2(search_bob)
+print(result)
