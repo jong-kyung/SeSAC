@@ -20,8 +20,8 @@ while len(words) >0:
         break
     else:
         spoken_words.append(user_input)
-        my_word = ''
-        for word in list(set(words) - set(first_word)):
+        my_word = []
+        for word in list(set(words) - set(spoken_words)):
             if word[0] == user_input[-1]:
                 my_word = word
                 break
