@@ -1,7 +1,7 @@
-from user_name_generator import NameGenerator
-from birthdate_generator import BirthdateGenerator
-from gender_generator import GenderGenerator
-from ..common.address_generator import AddressGenerator
+from .user_name_generator import NameGenerator
+from .birthdate_generator import BirthdateGenerator
+from .gender_generator import GenderGenerator
+from generator.common.address_generator import AddressGenerator
 
 from ..models.user import User
 class UserGenerator:
