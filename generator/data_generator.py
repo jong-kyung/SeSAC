@@ -18,7 +18,7 @@ class DataGenerator:
         self.request_data = input('데이터 유형을 입력하세요(User, Store 또는 Item)').lower()
         self.request_count = int(input('생성할 데이터 개수를 입력하세요:'))
         self.request_output = input('아웃풋 형태를 입력하세요.').lower()
-        # super().__imit__()부모의 instance 속성값 받아오기
+        # super().__init__()부모의 instance 속성값 받아오기
 
     def generate_data(self):
         result_data = []
