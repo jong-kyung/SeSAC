@@ -6,5 +6,5 @@ class User:
         self.address = address
 
     def __str__(self): # 객체의 정보를 사용자에게 보여주기 위한 함수
-        return f"Name: {self.name}, Gender: {self.gender}Birthdate: {self.birthdate}, Address: {self.address}"
+        return f"Name: {self.name}, Gender: {self.gender} Birthdate: {self.birthdate}, Address: {self.address}"
     
