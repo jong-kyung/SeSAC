@@ -1,15 +1,16 @@
 import csv
-from name_generator import NameGenerator
-from birthdate_generator import BirthdateGenerator
-from gender_generator import GenderGenerator
-from address_generator import AddressGenerator
+import os
+from user_generator import name_generator
+from user_generator import birthdate_generator
+from user_generator import gender_generator
+from address import address_generator
 
 class DataGenerator:
     def __init__(self):
-        self.name_gen = NameGenerator()
-        self.birthdate_gen = BirthdateGenerator()
-        self.gender_gen = GenderGenerator()
-        self.address_gen = AddressGenerator()
+        self.name_gen = name_generator.NameGenerator()
+        self.birthdate_gen = birthdate_generator.BirthdateGenerator()
+        self.gender_gen = gender_generator.GenderGenerator()
+        self.address_gen = address_generator.AddressGenerator()
         self.headers = ['Name', 'Birthdate', 'Gender', 'Address']
         # super().__imit__()부모의 instance 속성값 받아오기
 
@@ -34,6 +35,9 @@ class DataGenerator:
 
     def Write_console(self, count):
         data = self.generate_data(count)
-        print(self.headers)
         for dat in data:
             print(dat)
+
+data1 = DataGenerator()
+
+data1.Write_console(10)

@@ -1,0 +1,6 @@
+# 파이썬 컴파일/바이너리 파일
+__pycache__
+*.pyc
+
+# MAC북 파일
+.DS_Store
