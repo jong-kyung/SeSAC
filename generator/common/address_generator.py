@@ -18,5 +18,8 @@ class AddressGenerator:
 
     def generate_address(self):
         city = random.choice(self.cities)
-        street = random.choice(self.sub_address)
-        return f'{city} {street}'
+        sub = random.choice(self.sub_address)
+        street1 = random.randint(1, 100)
+        street2 = random.randint(1, 100)
+        return f'{city} {sub} {street1}길 {street2}' , f'{sub} {street1}호점'
+        
