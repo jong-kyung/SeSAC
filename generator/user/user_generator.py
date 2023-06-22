@@ -4,8 +4,10 @@ from user.birthdate_generator import BirthdateGenerator
 from user.gender_generator import GenderGenerator
 from common.address_generator import AddressGenerator
 from models.user import User
+import uuid
 class UserGenerator:
     def __init__(self):
+        self.user_id = uuid.uuid4()
         self.user_name_gen = NameGenerator()
         self.birthdate_gen = BirthdateGenerator()
         self.gender_gen = GenderGenerator()
@@ -17,5 +19,5 @@ class UserGenerator:
         gender = self.gender_gen.generate_gender()
         address = self.address_gen.generate_address()[0]
         
-        return User(user_name, gender, birthdate, address)
+        return User(self.user_id, user_name, gender, birthdate, address)
     
