@@ -1,4 +1,4 @@
- # 메인함수가 실행되는 위치 기준으로 절대경로 설정, 내가 작성한 메인함수에서는 generator 에서 작동하는 함수이므로 generator. 이 아닌 하위 경로로 작성해주면 된다.
+# 메인함수가 실행되는 위치 기준으로 절대경로 설정, 내가 작성한 메인함수에서는 generator 에서 작동하는 함수이므로 generator를 기준으로 하위 경로를 작성해주면 된다.
 from common.generator import Generator
 from user.user_name_generator import NameGenerator
 from user.birthdate_generator import BirthdateGenerator
