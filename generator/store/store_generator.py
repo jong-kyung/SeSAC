@@ -16,5 +16,5 @@ class StoreGenerator(Generator):
         address = self.address.generate_address()[0]
         store_info = f'{store_name} {self.address.generate_address()[1]}'
 
-        return Store(store_id, store_info, store_name, address).get_info()
+        return Store(store_id, store_info, store_name, address)
         

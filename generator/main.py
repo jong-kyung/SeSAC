@@ -5,9 +5,5 @@ if __name__ == '__main__': # 메인함수에서 실행할 것
     data_count = input('생성할 데이터 개수를 입력하세요')
     data_output_type = input('아웃풋 형태를 입력하세요(csv, console)')
     my_data = generate_data(data_type, data_count, data_output_type)
-    # my_data.data_generator()
-    # for i in my_data.data_generator():
-    #     print(i)
-    # my_data.request_data()
-    # print(my_data.data_generator())
-    my_data.user_request()
+    
+    my_data.user_generator()

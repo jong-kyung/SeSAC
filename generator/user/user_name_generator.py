@@ -5,6 +5,7 @@ class NameGenerator:
     def __init__(self):
         self.first_names = []
         self.last_names = []
+        
         self.path = os.path.dirname(os.path.abspath(__file__)) # 현재 파일의 절대경로 구하기
         with open(f'{self.path}/first_names.txt') as file:
             first_names = file.readlines()
