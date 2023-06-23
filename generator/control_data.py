@@ -35,7 +35,6 @@ class generate_data:
             user_info = user.generator()
             data.append(user_info)
 
-        print(data)
         return data
 
     def store_generator(self):
@@ -55,12 +54,12 @@ class generate_data:
         elif self.output == outputs[1]:
             self.print_csv()
     
-    def print_console(self):
+    def print_csv(self):
         with open(f'{self.data_type}.csv', 'a', newline='\n') as file:
             csv_file = csv.writer(file)
-            csv_file.writerows(self.data_result)
+            csv_file.writerow(self.data_result)
             print('요청된 데이터 파일 생성 중..')
 
-    def print_csv(self):
+    def print_console(self):
         for data in self.data_result:
             print(data)
