@@ -1,26 +1,13 @@
-from user.user_generator import UserGenerator
-from store.store_generator import StoreGenerator
-
-def user_generator(count):
-    user = UserGenerator()
-
-    users = []
-    for _ in range(count):
-        data = user.generate_data()
-        users.append(data)
-    
-    return users
-
-def store_generator(count):
-    store = StoreGenerator()
-
-    stores = []
-    for _ in range(count):
-        data = store.generate_data()
-        stores.append(data)
-
-    return stores
+from control_data import generate_data
 
 if __name__ == '__main__': # 메인함수에서 실행할 것
-    print(store_generator(10)[0]) # user 입출력 테스트
-    # TODO : 모듈화
+    data_type = input('데이터 유형을 입력하세요 (User, Store 또는 Item)')
+    data_count = input('생성할 데이터 개수를 입력하세요')
+    data_output_type = input('아웃풋 형태를 입력하세요(csv, console)')
+    my_data = generate_data(data_type, data_count, data_output_type)
+    # my_data.data_generator()
+    # for i in my_data.data_generator():
+    #     print(i)
+    # my_data.request_data()
+    # print(my_data.data_generator())
+    my_data.user_request()
