@@ -11,7 +11,7 @@
         }
 
         a {
-            text-decoration: none;
+            text-decoration: none !important;
             color: blue;
         }
 
@@ -33,14 +33,32 @@
             padding: 5px
         }
 
-        table > thead {
+        tr:first-child {
             background-color: aliceblue;
             font-weight: bold;
             pointer-events: none;
             border-bottom: 3px solid gray;
         }
 
-        td {
+        tr:first-child td:first-child {
+            text-align: center;
+        }
+
+        tr:first-child a {
+            color: black;
+        }
+
+        td:first-child {
+            width: 30%;
+            text-align: left;
+        }
+
+        tr td:not(:first-child) a{
+            color:black;
+            pointer-events: none;
+        }
+
+        td:not(:first-child) {
             width: 180px;
         }
 
@@ -52,7 +70,7 @@
 </head>
 
 <body>
-    <h1>{{ finduser[1] }}님의 마이페이지</h1>
+    <h1>Flask Hompage</h1>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -61,33 +79,23 @@
                         <a class="nav-link active" aria-current="page" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/">Features</a>
+                        <a class="nav-link" href="/store">Store</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/">Pricing</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled">Disabled</a>
+                        <a class="nav-link" href="/item">Item</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
     <table>
-        <thead>
-            <td>Name</td>
-            <td>Gender</td>
-            <td>Age</td>
-            <td>Birthdate</td>
-            <td>Address</td>
-        </thead>
-        <tr>
-            <td>{{ finduser[1] }}</td>
-            <td>{{ finduser[2] }}</td>
-            <td>{{ finduser[3] }}</td>
-            <td>{{ finduser[4] }}</td>
-            <td>{{ finduser[5] }}</td>
-        </tr>
+        {% for data in datas %}
+            <tr>
+                {% for i in range(data|length) %}
+                <td><a href='./{{ dataname }}/{{ data[i] }}'>{{ data[i] }}</a></td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
     </table>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
