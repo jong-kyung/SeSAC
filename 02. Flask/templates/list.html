@@ -55,7 +55,6 @@
 
         tr td:not(:first-child) a{
             color:black;
-            pointer-events: none;
         }
 
         td:not(:first-child) {
@@ -88,11 +87,15 @@
             </div>
         </div>
     </nav>
-    <table>
+    <table class="table-primary">
         {% for data in datas %}
-            <tr>
+            <tr class="table-primary">
                 {% for i in range(data|length) %}
-                <td><a href='./{{ dataname }}/{{ data[i] }}'>{{ data[i] }}</a></td>
+                    {% if i == 0 %}
+                    <td class="table-primary"><a href='./{{ dataname }}/{{ data[i] }}'>{{ data[i] }}</a></td>
+                    {% else %}
+                    <td class="table-primary">{{ data[i] }}</td>
+                    {% endif %}
                 {% endfor %}
             </tr>
         {% endfor %}

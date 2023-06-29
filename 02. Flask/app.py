@@ -6,18 +6,9 @@ app = Flask(__name__) # 고유식별자를 넣어주어야함 보통 __name__으
 @app.route('/')
 def home():
     with open('./csv/user.csv', 'r') as file:
-        csv_reader = csv.reader(file)   
-        return render_template('list.html', datas=csv_reader, dataname='user')
+        csv_file = csv.reader(file)   
+        return render_template('list.html', datas=csv_file, dataname='user')
     # """ """ 는 자바스크립트에서의 백틱과 유사함.
-
-@app.route('/user')
-def user_none():
-    return """
-    <ul>
-    <li><a href='/user/tom'>tom</a></li>
-    <li><a href='/user/john'>john</a></li>
-    <li><a href='/user/bill'>bill</a></li>
-    """
 
 @app.route('/user/<param>')
 def user_info(param):
@@ -33,8 +24,8 @@ def user_info(param):
 @app.route('/store')
 def store():
         with open('./csv/store.csv', 'r') as file:
-            csv_reader = csv.reader(file)   
-            return render_template('list.html', datas=csv_reader, dataname='store')
+            csv_file = csv.reader(file)   
+            return render_template('list.html', datas=csv_file, dataname='store')
 
 @app.route('/store/<param>')
 def store_info(param):
@@ -50,8 +41,8 @@ def store_info(param):
 @app.route('/item')
 def item():
         with open('./csv/item.csv', 'r') as file:
-            csv_reader = csv.reader(file)   
-            return render_template('list.html', datas=csv_reader, dataname='item')
+            csv_file = csv.reader(file)   
+            return render_template('list.html', datas=csv_file, dataname='item')
         
 @app.route('/item/<param>')
 def item_info(param):
