@@ -1,13 +1,19 @@
 from flask import Flask, url_for, redirect, render_template, request
 import csv
+import math
 
 app = Flask(__name__) # 고유식별자를 넣어주어야함 보통 __name__으로 작명함
 
-# 연산은 백엔드에서 처리하는게 가장 좋음, 연산이 적은거는 프론트에서
 @app.route('/')
-def home(page=1):
+def root():
+    return redirect(url_for('user'))
+
+# 연산은 백엔드에서 처리하는게 가장 좋음, 연산이 적은거는 프론트에서
+@app.route('/user')
+def user():
     page = request.args.get('page', default=1, type=int) 
     search_name = request.args.get('name', default='', type=str)
+    gender = request.args.get('gender', default='', type=str)
     
     per_page = 35
     headers= []
@@ -20,15 +26,15 @@ def home(page=1):
         for row in csv_data:
             if search_name in row[1]:
                 datas.append(row)
-                
+            
         total_len = len(datas) - 1 # header 제외
-        total_range = (total_len // per_page) + 1
+        total_range = math.ceil(total_len // per_page)
 
         start_index = (page - 1) * per_page
         end_index = start_index + per_page
         result_datas = datas[start_index:end_index]
     
-        return render_template('list.html', dataname='user', headers = headers, datas = result_datas, total_range = total_range, page = page, search_name = search_name)
+        return render_template('list.html', dataname='user', headers = headers, datas = result_datas, total_range = total_range, page = page, search_name = search_name, gender=gender)
     # """ """ 는 자바스크립트에서의 백틱과 유사함.
 
 @app.route('/user/<param>')
@@ -43,26 +49,30 @@ def user_info(param):
                 return render_template('detail.html', datas=findData)
 
 @app.route('/store')
-def store(page=1):
+def store():
+    page = request.args.get('page', default=1, type=int) 
+    search_name = request.args.get('name', default='', type=str)
+    
+    per_page = 35
     headers= []
     datas = []
     result_datas = []
-    per_page = 35
     
     with open('./crm/store.csv', 'r') as file:
         csv_data = csv.reader(file)
         headers = next(csv_data) # 첫번째 줄 넣기
         for row in csv_data:
-            datas.append(row)
-
+            if search_name in row[1]:
+                datas.append(row)
+                
         total_len = len(datas) - 1 # header 제외
-        total_range = (total_len // per_page) + 1
+        total_range = math.ceil(total_len // per_page)
 
-        start_index = per_page*(int(page) - 1)
+        start_index = (page - 1) * per_page
         end_index = start_index + per_page
         result_datas = datas[start_index:end_index]
-
-        return render_template('list.html', dataname='store', headers=headers, datas=result_datas, total_range = total_range, page=int(page))
+    
+        return render_template('list.html', dataname='store', headers = headers, datas = result_datas, total_range = total_range, page = page, search_name = search_name)
 
 @app.route('/store/<param>')
 def store_info(param):
