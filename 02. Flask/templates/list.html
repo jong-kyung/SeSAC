@@ -71,7 +71,7 @@
                         </li>
                     </ul>
                     <form class="d-flex" role="search" method="get">
-                        <input class="form-control me-2 search-item" type="search" placeholder="Search" aria-label="Search" name="name">
+                        <input class="form-control me-2 search-item" type="search" placeholder="Search" aria-label="Search" name="name" value="{{ search_name }}">
                         {% if dataname  == 'user' %}
                             <select class="form-select" id="inputGroupSelect04" name="gender">
                                 <option selected>Gender</option>
