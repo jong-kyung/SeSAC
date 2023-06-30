@@ -19,13 +19,21 @@ def user():
     headers= []
     datas = []
     result_datas = []
+    filter_datas = []
     
     with open('./crm/user.csv', 'r') as file:
         csv_data = csv.reader(file)
         headers = next(csv_data) # 첫번째 줄 넣기
         for row in csv_data:
+            # TODO : 어떻게 코드를 합칠 수 있을까? 따로하면 작성은 됨..
             if search_name in row[1]:
                 datas.append(row)
+
+        # data들한테 gender가 있는지 검사
+        for data in datas:
+            if gender in data:
+                filter_datas.append(data)
+                datas = filter_datas
             
         total_len = len(datas) - 1 # header 제외
         total_range = math.ceil(total_len // per_page)
@@ -87,25 +95,29 @@ def store_info(param):
             
 @app.route('/item')
 def item(page=1):
+    page = request.args.get('page', default=1, type=int) 
+    search_name = request.args.get('name', default='', type=str)
+    
+    per_page = 35
     headers= []
     datas = []
     result_datas = []
-    per_page = 35
     
     with open('./crm/item.csv', 'r') as file:
         csv_data = csv.reader(file)
         headers = next(csv_data) # 첫번째 줄 넣기
         for row in csv_data:
-            datas.append(row)
-
+            if search_name in row[1]:
+                datas.append(row)
+                
         total_len = len(datas) - 1 # header 제외
-        total_range = (total_len // per_page) + 1
+        total_range = math.ceil(total_len // per_page)
 
-        start_index = per_page*(int(page) - 1)
+        start_index = (page - 1) * per_page
         end_index = start_index + per_page
         result_datas = datas[start_index:end_index]
-
-        return render_template('list.html', dataname='item', headers=headers, datas=result_datas, total_range = total_range, page=int(page))
+    
+        return render_template('list.html', dataname='item', headers = headers, datas = result_datas, total_range = total_range, page = page, search_name = search_name)
     
 @app.route('/item/<param>')
 def item_info(param):
@@ -120,25 +132,29 @@ def item_info(param):
             
 @app.route('/order')
 def order(page=1):
+    page = request.args.get('page', default=1, type=int) 
+    search_name = request.args.get('name', default='', type=str)
+    
+    per_page = 35
     headers= []
     datas = []
     result_datas = []
-    per_page = 35
     
     with open('./crm/order.csv', 'r') as file:
         csv_data = csv.reader(file)
         headers = next(csv_data) # 첫번째 줄 넣기
         for row in csv_data:
-            datas.append(row)
-
+            if search_name in row[1]:
+                datas.append(row)
+                   
         total_len = len(datas) - 1 # header 제외
-        total_range = (total_len // per_page) + 1
+        total_range = math.ceil(total_len // per_page)
 
-        start_index = per_page*(int(page) - 1)
+        start_index = (page - 1) * per_page
         end_index = start_index + per_page
         result_datas = datas[start_index:end_index]
-
-        return render_template('list.html', dataname='order', headers=headers, datas=result_datas, total_range = total_range, page=int(page))
+    
+        return render_template('list.html', dataname='order', headers = headers, datas = result_datas, total_range = total_range, page = page, search_name = search_name)
     
 @app.route('/order/<param>')
 def order_info(param):
@@ -153,25 +169,29 @@ def order_info(param):
                    
 @app.route('/ordereditem')
 def ordereditem(page=1):
+    page = request.args.get('page', default=1, type=int) 
+    search_name = request.args.get('name', default='', type=str)
+    
+    per_page = 35
     headers= []
     datas = []
     result_datas = []
-    per_page = 35
     
     with open('./crm/orderitem.csv', 'r') as file:
         csv_data = csv.reader(file)
         headers = next(csv_data) # 첫번째 줄 넣기
         for row in csv_data:
-            datas.append(row)
-
+            if search_name in row[1]:
+                datas.append(row)
+                
         total_len = len(datas) - 1 # header 제외
-        total_range = (total_len // per_page) + 1
+        total_range = math.ceil(total_len // per_page)
 
-        start_index = per_page*(int(page) - 1)
+        start_index = (page - 1) * per_page
         end_index = start_index + per_page
         result_datas = datas[start_index:end_index]
-
-        return render_template('list.html', dataname='ordereditem', headers=headers, datas=result_datas, total_range = total_range, page=int(page))
+    
+        return render_template('list.html', dataname='ordereditem', headers = headers, datas = result_datas, total_range = total_range, page = page, search_name = search_name)
     
 @app.route('/ordereditem/<param>')
 def orderitem_info(param):
