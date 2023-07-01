@@ -37,12 +37,15 @@ def user():
             
         total_len = len(datas) - 1 # header 제외
         total_range = math.ceil(total_len // per_page)
-
         start_index = (page - 1) * per_page
         end_index = start_index + per_page
+
+        min_page = min(1, start_index + 1)
+        max_page = max(page, end_index)
+        
         result_datas = datas[start_index:end_index]
-    
-        return render_template('list.html', dataname='user', headers = headers, datas = result_datas, total_range = total_range, page = page, search_name = search_name, gender=gender)
+        print(total_range)
+        return render_template('list.html', dataname='user', headers = headers, datas = result_datas, total_range = total_range, page = page, search_name = search_name, gender=gender, min_page = min_page, max_page = max_page)
     # """ """ 는 자바스크립트에서의 백틱과 유사함.
 
 @app.route('/user/<param>')
@@ -78,9 +81,11 @@ def store():
 
         start_index = (page - 1) * per_page
         end_index = start_index + per_page
+        min_page = min(1, start_index + 1)
+
         result_datas = datas[start_index:end_index]
     
-        return render_template('list.html', dataname='store', headers = headers, datas = result_datas, total_range = total_range, page = page, search_name = search_name)
+        return render_template('list.html', dataname='store', headers = headers, datas = result_datas, total_range = total_range, page = page, search_name = search_name, min_page = min_page)
 
 @app.route('/store/<param>')
 def store_info(param):
