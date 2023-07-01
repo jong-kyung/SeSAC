@@ -122,25 +122,19 @@
                     </li>
                 {% endif %}
             {% endif %} -->
-            {% if page > 1 %}
+            {% if page > 5 %}
             <li class="page-item">
-                <a class="page-link" href="/{{ dataname }}?page={{ page - 1 }}&name={{ search_name }}">Previous</a>
+                <a class="page-link" href="/{{ dataname }}?page={{ page - 5 }}&name={{ search_name }}">Previous</a>
             </li>
             {% endif %}
             <!-- 페이지네이션 -->
-            {% if page <= 3 %}
-                {% for num in range(min_page, max_page) %}
-                    <li class="page-item"><a class="page-link" href="/{{ dataname }}?page={{ num }}&name={{ search_name }}">{{ num }}</a></li> 
-                {% endfor %}
-            {% elif page >= 3 and page <= total_range -2 %}
-                {% for num in range(min_page , page + 4) %}
-                    <li class="page-item"><a class="page-link" href="/{{ dataname }}?page={{ num }}&name={{ search_name }}">{{ num }}</a></li> 
-                {% endfor %}
-            {% endif %}
+            {% for num in range(start_page, end_page + 2) %}
+                <li class="page-item"><a class="page-link" href="/{{ dataname }}?page={{ num }}&name={{ search_name }}">{{ num }}</a></li> 
+            {% endfor %}
             <!-- 다음 페이지 -->
             {% if page < total_range %}
                 <li class="page-item">
-                    <a class="page-link" href="/{{ dataname }}?page={{ page + 1 }}&name={{ search_name }}">Next</a>
+                    <a class="page-link" href="/{{ dataname }}?page={{ page + 5 }}&name={{ search_name }}">Next</a>
                 </li>
             {% endif %}
         </ul>

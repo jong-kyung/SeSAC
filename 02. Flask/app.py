@@ -15,10 +15,10 @@ def user():
     search_name = request.args.get('name', default='', type=str)
     gender = request.args.get('gender', default='', type=str)
     
-    per_page = 35
-    headers= []
-    datas = []
-    result_datas = []
+    per_page = 35 # 내가 보여줄 페이지 갯수
+    headers= [] # 맨 위의 헤딩 저장
+    datas = [] # 데이터 담을 list
+    result_datas = [] # 데이터 쪼개서 보여줄때 넣어주기
     filter_datas = []
     
     with open('./crm/user.csv', 'r') as file:
@@ -27,25 +27,24 @@ def user():
         for row in csv_data:
             # TODO : 어떻게 코드를 합칠 수 있을까? 따로하면 작성은 됨..
             if search_name in row[1]:
-                datas.append(row)
+                datas.append(row) # csv 데이터 삽입
 
-        # data들한테 gender가 있는지 검사
-        for data in datas:
+        for data in datas: # 데이터들을 for문을 통해 필터링 작업
             if gender in data:
-                filter_datas.append(data)
+                filter_datas.append(data) 
                 datas = filter_datas
             
         total_len = len(datas) - 1 # header 제외
-        total_range = math.ceil(total_len // per_page)
-        start_index = (page - 1) * per_page
+        total_range = math.ceil(total_len // per_page) # 페이지네이션 갯수
+        start_index = (page - 1) * per_page 
         end_index = start_index + per_page
 
-        min_page = min(1, start_index + 1)
-        max_page = max(page, end_index)
+        start_page = ((page - 1) // 5)*5 + 1
+        end_page = min(start_page + 4, total_range)
         
         result_datas = datas[start_index:end_index]
         print(total_range)
-        return render_template('list.html', dataname='user', headers = headers, datas = result_datas, total_range = total_range, page = page, search_name = search_name, gender=gender, min_page = min_page, max_page = max_page)
+        return render_template('list.html', dataname='user', headers = headers, datas = result_datas, total_range = total_range, page = page, search_name = search_name, gender=gender, start_page = start_page, end_page = end_page)
     # """ """ 는 자바스크립트에서의 백틱과 유사함.
 
 @app.route('/user/<param>')
