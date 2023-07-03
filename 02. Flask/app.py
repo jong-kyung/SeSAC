@@ -120,7 +120,7 @@ def user():
             start_index = (page - 1) * per_page 
             end_index = start_index + per_page
 
-            start_page = ((page - 1) // 5)*5 + 1 # 5개 단위로 끊기
+            start_page = ((page - 1) // 5)*5 + 1 # 현재페이지를 5로 나눠 몫을 구한 후 5를 곱하여 5개단위로 끊기
             end_page = min(start_page + 4, total_range) # 전체페이지와 마지막 페이지를 비교하여 더 작은 값 선택
             
             result_datas = datas[start_index:end_index]
