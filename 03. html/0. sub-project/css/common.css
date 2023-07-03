@@ -1,0 +1,140 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Pretendard';
+    list-style: none;
+}
+
+html,
+body {
+    font-size: 16px;
+}
+
+:root {
+    --Black: #000;
+    --Red: #ff0000;
+    --DarkGreen: #6a8c50;
+    --Green: #93be72;
+    --Grey: #ccc;
+}
+
+a {
+    text-decoration: none;
+    pointer-events: none;
+    color: var(--Black);
+    cursor: pointer;
+}
+
+.screen_out {
+    display: none;
+}
+
+/* Header */
+.header_wrap {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    padding: 20px;
+}
+
+.nav_wrap h1 {
+    font-size: 2rem;
+    text-align: center;
+}
+
+.main_menu {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.main_menu li {
+    cursor: pointer;
+}
+
+.main_menu li {
+    width: 60px;
+    padding: 5px;
+    text-align: center;
+}
+
+.main_menu li a {
+    position: relative;
+    transition: ease color 0.3s;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.main_menu li a::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background-color: var(--Green);
+    transition: ease all 0.3s;
+}
+
+.main_menu li:hover a::after {
+    width: 100%;
+}
+
+.main_menu li:hover a {
+    color: var(--DarkGreen);
+}
+
+.search_wrap {
+    width: 200px;
+    height: 30px;
+    border: 1px solid var(--Green);
+    border-radius: 100px;
+    position: absolute;
+    right: 5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: ease all 0.3s;
+}
+
+.search_wrap:hover {
+    box-shadow: -1px 1px 3px var(--DarkGreen);
+}
+
+.search_wrap>input {
+    border: none;
+    border-radius: 100px;
+    width: 85%;
+    height: 100%;
+    padding: 2px 10px;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.search_wrap>button {
+    background: none;
+    outline: none;
+    border: none;
+    color: var(--DarkGreen);
+    cursor: pointer;
+    scale: 1;
+    transition: ease all 0.3s;
+}
+
+.search_wrap>button:hover {
+    scale: 1.2;
+}
+
+/* Footer */
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--DarkGreen);
+    height: 150px;
+    margin-top: 20px;
+}
+
+footer address {
+    font-style: normal;
+    font-size: 12px;
+}
