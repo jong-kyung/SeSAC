@@ -1,12 +1,36 @@
 from flask import Flask, url_for, redirect, render_template, request, jsonify, make_response
 import csv
 import math
+from functools import wraps
 import datetime 
 import jwt # JWT 토큰 생성용 라이브러리
 import hashlib # 해쉬암호화 라이브러리
 SECRET_KEY = 'SESAC'
 
 app = Flask(__name__) # 고유식별자를 넣어주어야함 보통 __name__으로 작명함
+
+# 로그인여부 확인하는 데코레이터 함수
+def check_login(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        token = request.cookies.get('token') # 토큰 받아오기
+
+        if token is None:
+            return redirect('/')
+        
+        try:
+            payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+
+            with open('./crm/login.csv', 'r') as file:
+                csv_data = csv.reader(file)
+                for row in csv_data:
+                    if row[0] == payload['id']:
+                        return  (f(*args, **kwargs))
+        
+        except jwt.DecodeError:
+            pass
+    
+    return decorated_function
 
 @app.route('/sign', methods=['POST'])
 def sign_up():
@@ -15,11 +39,22 @@ def sign_up():
 
     pw_hash = hashlib.sha256(sign_pw.encode('utf-8')).hexdigest() # 해쉬암호화
 
-    save_data = {'id': sign_id,'pw': pw_hash}
-    with open('./crm/login.csv', 'w') as file:
-        csv_data = csv.writer(file)
-        for key, value in save_data.items():
-            csv_data.writerow([key, value])
+    save_data = [sign_id, pw_hash]
+
+    with open('./crm/login.csv', 'r') as file:
+        csv_file = csv.reader(file)
+        exists = False
+        for data in  csv_file:
+            if save_data[0] in data:
+                exists = True
+                break
+        if not exists:
+            with open('./crm/login.csv', 'a', newline='') as datas:
+                csv_data = csv.writer(datas)
+                csv_data.writerow(save_data)
+        else:
+            print('이미 있는 계정임')
+
     
     return redirect('/')
 
@@ -33,12 +68,12 @@ def login():
     with open('./crm/login.csv', 'r') as file:
         csv_data = csv.reader(file)
         for row in csv_data:
-            if row[1] == id:
-                result.append(row[1])
-                continue
-            if row[1] == pw_hash:
-                result.append(row[1])
-    if result != []:
+            if row[0] == id and row[1] == pw_hash:
+                result.append(row)
+                break
+    
+    # TODO : len으로 작성하면 보안에 취약할 것 같은데 어떻게 개선하면 좋을지?
+    if len(result) == 1:
         payload = {
             'id': id,
             'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=60*60)
@@ -57,13 +92,11 @@ def root():
 
 # 연산은 백엔드에서 처리하는게 가장 좋음, 연산이 적은거는 프론트에서
 @app.route('/user')
+@check_login
 def user():
-    token = request.cookies.get('token') # 토큰 받아오기
-    try: 
         page = request.args.get('page', default=1, type=int) 
         search_name = request.args.get('name', default='', type=str)
         gender = request.args.get('sub-data', default='', type=str)
-        
         per_page = 35 # 내가 보여줄 페이지 갯수
         headers= [] # 맨 위의 헤딩 저장
         datas = [] # 데이터 담을 list
@@ -94,12 +127,10 @@ def user():
 
             return render_template('list.html', dataname='user', headers = headers, datas = result_datas, total_range = total_range, page = page, search_name = search_name, gender=gender, start_page = start_page, end_page = end_page)
         # """ """ 는 자바스크립트에서의 백틱과 유사함.
-    except jwt.ExpiredSignatureError:
-        return '토큰이 만료되었습니다'
-    except jwt.InvalidTokenError:
-        return '유효하지 않은 토큰입니다'
+
 
 @app.route('/user/<param>')
+@check_login
 def user_info(param):
     findData = []
     with open('./crm/user.csv', 'r', newline='') as file:
@@ -111,6 +142,7 @@ def user_info(param):
                 return render_template('detail.html', datas=findData)
 
 @app.route('/store')
+@check_login
 def store():
     page = request.args.get('page', default=1, type=int) 
     search_name = request.args.get('name', default='', type=str)
@@ -147,6 +179,7 @@ def store():
         return render_template('list.html', dataname='store', headers = headers, datas = result_datas, total_range = total_range, page = page, search_name = search_name, start_page = start_page, end_page = end_page)
 
 @app.route('/store/<param>')
+@check_login
 def store_info(param):
     findData = []
     with open('./crm/store.csv', 'r', newline='') as file:
@@ -158,6 +191,7 @@ def store_info(param):
                 return render_template('detail.html', datas=findData)
             
 @app.route('/item')
+@check_login
 def item():
     page = request.args.get('page', default=1, type=int) 
     search_name = request.args.get('name', default='', type=str)
@@ -194,6 +228,7 @@ def item():
         return render_template('list.html', dataname='item', headers = headers, datas = result_datas, total_range = total_range, page = page, search_name = search_name, start_page = start_page, end_page = end_page)
     
 @app.route('/item/<param>')
+@check_login
 def item_info(param):
     findData = []
     with open('./crm/item.csv', 'r', newline='') as file:
@@ -205,6 +240,7 @@ def item_info(param):
                 return render_template('detail.html', datas=findData)    
             
 @app.route('/order')
+@check_login
 def order():
     page = request.args.get('page', default=1, type=int) 
     search_name = request.args.get('name', default='', type=str)
@@ -234,6 +270,7 @@ def order():
         return render_template('list.html', dataname='order', headers = headers, datas = result_datas, total_range = total_range, page = page, search_name = search_name, start_page = start_page, end_page = end_page)
     
 @app.route('/order/<param>')
+@check_login
 def order_info(param):
     findData = []
     with open('./crm/order.csv', 'r', newline='') as file:
@@ -245,6 +282,7 @@ def order_info(param):
                 return render_template('detail.html', datas=findData) 
                    
 @app.route('/ordereditem')
+@check_login
 def ordereditem(page=1):
     page = request.args.get('page', default=1, type=int) 
     search_name = request.args.get('name', default='', type=str)
@@ -274,6 +312,7 @@ def ordereditem(page=1):
         return render_template('list.html', dataname='ordereditem', headers = headers, datas = result_datas, total_range = total_range, page = page, search_name = search_name, start_page = start_page, end_page = end_page)
     
 @app.route('/ordereditem/<param>')
+@check_login
 def orderitem_info(param):
     findData = []
     with open('./crm/orderitem.csv', 'r', newline='') as file:
