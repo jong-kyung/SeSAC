@@ -39,11 +39,11 @@ def user():
         start_index = (page - 1) * per_page 
         end_index = start_index + per_page
 
-        start_page = ((page - 1) // 5)*5 + 1
-        end_page = min(start_page + 4, total_range)
+        start_page = ((page - 1) // 5)*5 + 1 # 5개 단위로 끊기
+        end_page = min(start_page + 4, total_range) # 전체페이지와 마지막 페이지를 비교하여 더 작은 값 선택
         
         result_datas = datas[start_index:end_index]
-        print(total_range)
+        
         return render_template('list.html', dataname='user', headers = headers, datas = result_datas, total_range = total_range, page = page, search_name = search_name, gender=gender, start_page = start_page, end_page = end_page)
     # """ """ 는 자바스크립트에서의 백틱과 유사함.
 
