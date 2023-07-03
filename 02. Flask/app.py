@@ -76,7 +76,7 @@ def login():
     if len(result) == 1:
         payload = {
             'id': id,
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=60*60)
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=60*30)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
         response = make_response(redirect(url_for('user'))) # 응답객체 생성
