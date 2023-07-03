@@ -76,17 +76,35 @@
                             <a class="nav-link" href="/ordereditem">Ordered Item</a>
                         </li>
                     </ul>
-                    <form class="d-flex" role="search" method="get">
-                        <input class="form-control me-2 search-item" type="search" placeholder="Search" aria-label="Search" name="name" value="{{ search_name }}">
-                        {% if dataname  == 'user' %}
-                            <select class="form-select" id="inputGroupSelect04" name="gender">
+                    {% if not dataname == 'order' and not dataname == 'ordereditem' %}
+                        <form class="d-flex" role="search" method="get">
+                            <input class="form-control me-2 search-item" type="search" placeholder="Search" aria-label="Search" name="name" value="{{ search_name }}">
+                            <!-- select -->
+                            {% if dataname  == 'user' %}
+                            <select class="form-select" id="inputGroupSelect04" name="sub-data">
                                 <option selected>Gender</option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
-                                </select>
-                        {% endif %}
-                        <button class="btn btn-outline-success search-btn " type="submit">Search</button>
-                    </form>
+                            </select>
+                            {% elif dataname == 'store' %}
+                            <select class="form-select" id="inputGroupSelect04" name="sub-data">
+                                <option selected>Type</option>
+                                <option value="이디야">이디야</option>
+                                <option value="투썸">투썸</option>
+                                <option value="스타벅스">스타벅스</option>
+                                <option value="커피빈">커피빈</option>
+                            </select>
+                            {% elif dataname == 'item'%}
+                            <select class="form-select" id="inputGroupSelect04" name="sub-data">
+                                <option selected>Type</option>
+                                <option value="Coffee">Coffee</option>
+                                <option value="Juice">Juice</option>
+                                <option value="Cake">Cake</option>
+                            </select>
+                            {% endif %}
+                            <button class="btn btn-outline-success search-btn " type="submit">Search</button>
+                        </form>
+                    {% endif %}
                 </div>
             </div>
         </nav>
