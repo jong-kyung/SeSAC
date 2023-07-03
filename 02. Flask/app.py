@@ -292,7 +292,7 @@ def ordereditem(page=1):
     datas = []
     result_datas = []
     
-    with open('./crm/orderitem.csv', 'r') as file:
+    with open('./crm/orderlist.csv', 'r') as file:
         csv_data = csv.reader(file)
         headers = next(csv_data) # 첫번째 줄 넣기
         for row in csv_data:
