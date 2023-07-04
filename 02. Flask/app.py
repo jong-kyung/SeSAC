@@ -71,6 +71,13 @@ def login():
         return response
     else:
         return jsonify({'result':'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다'})
+    
+@app.route('/logout')
+@check_login
+def logout():
+    response = make_response(redirect('/'))
+    response.delete_cookie('token')
+    return response
 
 @app.route('/')
 def root():
