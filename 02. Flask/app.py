@@ -8,6 +8,7 @@ from routes.store import store
 from routes.item import item
 from routes.order import order
 from routes.orderitem import orderitem
+from common.verify import check_login
 SECRET_KEY = 'SESAC'
 
 app = Flask(__name__) # 고유식별자를 넣어주어야함 보통 __name__으로 작명함
@@ -73,7 +74,16 @@ def login():
 
 @app.route('/')
 def root():
+    token = request.cookies.get('token') # 토큰 받아오기
+    
+    if token is None:
         return render_template('login.html')
+    try:
+        jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+        return redirect(url_for('user.user_list'))
+    except jwt.exceptions.ExpiredSignatureError:
+        return render_template('login.html')
+        
 
 
 
