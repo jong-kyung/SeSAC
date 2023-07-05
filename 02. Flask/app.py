@@ -28,20 +28,19 @@ def sign_up():
     save_data = [sign_id, pw_hash]
 
     with open('./crm/login.csv', 'r') as file:
-        csv_file = csv.reader(file)
-        exists = False
-        for data in  csv_file:
-            if save_data[0] in data:
-                exists = True
-                break
-        if not exists:
-            with open('./crm/login.csv', 'a', newline='') as datas:
-                csv_data = csv.writer(datas)
-                csv_data.writerow(save_data)
-        else:
-           return jsonify({'result':'fail', 'msg': '이미 존재하는 계정입니다'})
+            csv_file = csv.reader(file)
+            exists = False
+            for data in  csv_file:
+                if save_data[0] in data:
+                    exists = True
+                    break
+            if not exists:
+                with open('./crm/login.csv', 'a', newline='') as datas:
+                    csv_data = csv.writer(datas)
+                    csv_data.writerow(save_data)
+            else:
+                return jsonify({'result':'fail', 'msg': '이미 존재하는 계정입니다'})
 
-    
     return redirect('/')
 
 @app.route('/login', methods=['POST'])
