@@ -1,5 +1,4 @@
 import csv
-import math
 from flask import request    
 
 def parse_data(dataname, pages):
@@ -21,7 +20,7 @@ def parse_data(dataname, pages):
             
     # TODO : 페이지네이션 함수 따로만들기
     total_len = len(datas) - 1 # header 제외
-    total_range = math.ceil(total_len // per_page) # 페이지네이션 갯수 
+    total_range = total_len // per_page + 1 # 페이지네이션 갯수 
     start_index = (page - 1) * per_page 
     end_index = start_index + per_page
 
