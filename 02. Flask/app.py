@@ -31,7 +31,7 @@ def sign_up():
             csv_file = csv.reader(file)
             exists = False
             for data in  csv_file:
-                if save_data[0] in data:
+                if sign_id in data:
                     exists = True
                     break
             if not exists:
