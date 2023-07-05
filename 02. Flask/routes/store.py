@@ -9,7 +9,7 @@ store = Blueprint('store', __name__)
 def store_list():
     data = parse_data('store', 10)
 
-    return render_template('list.html', dataname='store', headers = data['headers'], datas = data['result_datas'], total_range = data['total_range'], page = data['page'], search_name = data['search_name'], gender=data['sub_data'], start_page = data['start_page'], end_page = data['end_page'])
+    return render_template('list.html', dataname='store', headers = data['headers'], datas = data['result_datas'], total_range = data['total_range'], page = data['page'], search_name = data['search_name'], sub_data=data['sub_data'], start_page = data['start_page'], end_page = data['end_page'])
 
 @store.route('/store/<param>')
 @check_login

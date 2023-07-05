@@ -9,7 +9,7 @@ item = Blueprint('item', __name__)
 def item_list():
     data = parse_data('item', 10)
 
-    return render_template('list.html', dataname='item', headers = data['headers'], datas = data['result_datas'], total_range = data['total_range'], page = data['page'], search_name = data['search_name'], gender=data['sub_data'], start_page = data['start_page'], end_page = data['end_page'])
+    return render_template('list.html', dataname='item', headers = data['headers'], datas = data['result_datas'], total_range = data['total_range'], page = data['page'], search_name = data['search_name'], sub_data=data['sub_data'], start_page = data['start_page'], end_page = data['end_page'])
     
 @item.route('/item/<param>')
 @check_login

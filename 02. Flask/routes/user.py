@@ -10,7 +10,7 @@ user = Blueprint('user', __name__)
 def user_list():  
     data = parse_data('user', 10)
 
-    return render_template('list.html', dataname='user', headers = data['headers'], datas = data['result_datas'], total_range = data['total_range'], page = data['page'], search_name = data['search_name'], gender=data['sub_data'], start_page = data['start_page'], end_page = data['end_page'])
+    return render_template('list.html', dataname='user', headers = data['headers'], datas = data['result_datas'], total_range = data['total_range'], page = data['page'], search_name = data['search_name'], sub_data=data['sub_data'], start_page = data['start_page'], end_page = data['end_page'])
         # """ """ 는 자바스크립트에서의 백틱과 유사함.
 
 

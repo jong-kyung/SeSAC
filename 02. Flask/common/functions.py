@@ -10,19 +10,15 @@ def parse_data(dataname, pages):
     headers= [] # 맨 위의 헤딩 저장
     datas = [] # 데이터 담을 list
     result_datas = [] # 데이터 쪼개서 보여줄때 넣어주기
-    filter_datas = []
         
     with open(f'./crm/{dataname}.csv', 'r') as file:
         csv_data = csv.reader(file)
         headers = next(csv_data) # 첫번째 줄 넣기
         for row in csv_data:
             if search_name in row[1]:
-                datas.append(row) # csv 데이터 삽입
+                if sub_data in row[2]:
+                    datas.append(row) # csv 데이터 삽입
 
-        for data in datas: # 데이터들을 for문을 통해 필터링 작업
-            if sub_data in data:
-                filter_datas.append(data) 
-                datas = filter_datas
             
         total_len = len(datas) - 1 # header 제외
         total_range = math.ceil(total_len // per_page) # 페이지네이션 갯수

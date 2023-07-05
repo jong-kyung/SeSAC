@@ -10,7 +10,7 @@ order = Blueprint('order', __name__)
 def order_list():
     data = parse_data('order', 10)
 
-    return render_template('list.html', dataname='order', headers = data['headers'], datas = data['result_datas'], total_range = data['total_range'], page = data['page'], search_name = data['search_name'], gender=data['sub_data'], start_page = data['start_page'], end_page = data['end_page'])
+    return render_template('list.html', dataname='order', headers = data['headers'], datas = data['result_datas'], total_range = data['total_range'], page = data['page'], search_name = data['search_name'], sub_data=data['sub_data'], start_page = data['start_page'], end_page = data['end_page'])
     
 @order.route('/order/<param>')
 @check_login
