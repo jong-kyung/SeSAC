@@ -72,7 +72,6 @@
         let search_input = document.querySelector('.search-item')
         document.querySelector('.search-btn').addEventListener('click', function (e) {
             e.preventDefault()
-            console.log(search_input.value)
             if (space_regex.test(search_input.value)) {
                 alert('공백 쓰면 안됨요~')
             } else if (symbol_regex.test(search_input.value)) {
