@@ -1,210 +1,135 @@
-<!DOCTYPE html>
-<html lang="ko">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hello World</title>
-    <style>
-        * {
-            color: black
-        }
-
-        a {
-            text-decoration: none !important;
-            color: blue;
-        }
-
-        h1 {
-            text-align: center;
-        }
-
-        table {
-            margin: 20px 0 ;
-            text-align: center;
-        }
-
-        .pagination {
-            justify-content: center;
-        }
-
-        .input-container {
-            display: flex;
-            justify-content: right;
-        }
-
-        .input-group {
-            width:30% !important
-        }
-        
-        .input-group >form {
-            width: 100%;
-        }
-
-        .current_page {
-            background-color: var(--bs-pagination-hover-bg) !important;
-            color:var(--bs-pagination-hover-color) !important;
-            border-color: var(--bs-pagination-hover-border-color) !important;
-        }
-    </style>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-
-<body>
-    <h1>Flask Hompage</h1>
-    <div class="container">
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="/">Home</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/store">Store</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/item">Item</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/order">Order</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/ordereditem">Ordered Item</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-danger fw-bold" href="/logout">Log-Out</a>
-                        </li>
-                    </ul>
-                    {% if not dataname == 'order' and not dataname == 'ordereditem' %}
-                        <form class="d-flex" role="search" method="get">
-                            <input class="form-control me-2 search-item" type="search" placeholder="Search" aria-label="Search" name="name" value="{{ search_name }}">
-                            <!-- select -->
-                            {% if dataname  == 'user' %}
-                            <select class="form-select" id="inputGroupSelect04" name="sub-data">
-                                <option selected>Gender</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                            </select>
-                            {% elif dataname == 'store' %}
-                            <select class="form-select" id="inputGroupSelect04" name="sub-data">
-                                <option selected>Type</option>
-                                <option value="이디야">이디야</option>
-                                <option value="투썸">투썸</option>
-                                <option value="스타벅스">스타벅스</option>
-                                <option value="커피빈">커피빈</option>
-                            </select>
-                            {% elif dataname == 'item'%}
-                            <select class="form-select" id="inputGroupSelect04" name="sub-data">
-                                <option selected>Type</option>
-                                <option value="Coffee">Coffee</option>
-                                <option value="Juice">Juice</option>
-                                <option value="Cake">Cake</option>
-                            </select>
-                            {% endif %}
-                            <button class="btn btn-outline-success search-btn " type="submit">Search</button>
-                        </form>
-                    {% endif %}
-                </div>
-            </div>
-        </nav>
-    </div>
-    <div class="container">
-        <table class="table table-striped">
-            <tr>
-                {% for header in headers[1:(headers|length)] %}
-                    <td>{{ header }}</td>
-                {% endfor %}
-            </tr>
-            {% if dataname == 'user' or dataname == 'store' or dataname == 'item' %}
-                {% for data in datas %}
-                    <tr>
-                        {% for i in range(1, data|length) %}
-                            {% if i == 1 %}
-                                <td><a href='./{{ dataname }}/{{ data[i-1] }}'>{{ data[i] }}</a></td>
-                            {% else %}
-                                <td>{{ data[i] }}</td>
-                            {% endif %}
-                        {% endfor %}
-                    </tr>
-                {% endfor %}
-            {% else %}
-                {% for data in datas %}
-                    <tr>
-                        {% if dataname == 'order' %}
-                            {% for i in range(1, data|length) %}
-                                {% if i == (data|length) -2 %}
-                                    <td><a href='store/{{ data[i] }}'>{{ data[i] }}</a></td>
-                                {% elif i == (data|length) -1 %}
-                                    <td><a href='user/{{ data[i] }}'>{{ data[i] }}</a></td>
-                                {% else %}
-                                    <td>{{ data[i] }}</td>
-                                {% endif %}
-                            {% endfor %}
-                        {% else %}
-                            {% for i in range(1, data|length) %}
-                                   {% if i == (data|length) -2 %}
-                                        <td><a href='order/{{ data[i] }}'>{{ data[i] }}</a></td>
-                                    {% elif i == (data|length) -1 %}
-                                        <td><a href='item/{{ data[i] }}'>{{ data[i] }}</a></td>
-                                    {% else %}
-                                        <td>{{ data[i] }}</td>
-                                {% endif %}
-                                {% endfor %}
-                        {% endif %}
-                    </tr>
-                {% endfor %}
-            {% endif %}
-        </table>
-    </div>
-    <div class="container">
-        <ul class="pagination">
-            {% if page > 5 %}
-            <li class="page-item">
-                <a class="page-link" href="/{{ dataname }}?page={{ page - 5 }}&name={{ search_name }}">Previous</a>
-            </li>
-            {% endif %}
-            <!-- 페이지네이션 -->
-            {% for num in range(start_page, end_page + 2) %}
-                {% if page == num %}
-                    <li class="page-item"><a class="page-link current_page" href="/{{ dataname }}?page={{ num }}&name={{ search_name }}">{{ num }}</a></li> 
-                {% else %}
-                    <li class="page-item"><a class="page-link" href="/{{ dataname }}?page={{ num }}&name={{ search_name }}">{{ num }}</a></li> 
-                {% endif %}
-            {% endfor %}
-            <!-- 다음 페이지 -->
-            {% if page < total_range %}
-                <li class="page-item">
-                    <a class="page-link" href="/{{ dataname }}?page={{ page + 5 }}&name={{ search_name }}">Next</a>
+{% extends 'base.html' %}
+{% block navbar %}
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">Home</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="/store">Store</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/item">Item</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/order">Order</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/ordereditem">Ordered Item</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-danger fw-bold" href="/logout">Log-Out</a>
+                </li>
+            </ul>
+            {% if not dataname == 'order' and not dataname == 'ordereditem' %}
+            <form class="d-flex" role="search" method="get">
+                <input class="form-control me-2 search-item" type="search" placeholder="Search" aria-label="Search"
+                    name="name" value="{{ search_name }}">
+                <!-- select -->
+                {% if dataname == 'user' %}
+                <select class="form-select" id="inputGroupSelect04" name="sub-data">
+                    <option selected>Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+                {% elif dataname == 'store' %}
+                <select class="form-select" id="inputGroupSelect04" name="sub-data">
+                    <option selected>Type</option>
+                    <option value="이디야">이디야</option>
+                    <option value="투썸">투썸</option>
+                    <option value="스타벅스">스타벅스</option>
+                    <option value="커피빈">커피빈</option>
+                </select>
+                {% elif dataname == 'item'%}
+                <select class="form-select" id="inputGroupSelect04" name="sub-data">
+                    <option selected>Type</option>
+                    <option value="Coffee">Coffee</option>
+                    <option value="Juice">Juice</option>
+                    <option value="Cake">Cake</option>
+                </select>
+                {% endif %}
+                <button class="btn btn-outline-success search-btn " type="submit">Search</button>
+            </form>
             {% endif %}
-        </ul>
+        </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    {% if dataname == 'user' or dataname == 'store' or dataname == 'item' %}
-    <script>
-        const space_regex = /^\s/g 
-        const symbol_regex = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
-        let search_input = document.querySelector('.search-item')
-        document.querySelector('.search-btn').addEventListener('click',function(e){
-            e.preventDefault()
-            console.log(search_input.value)
-            if (space_regex.test(search_input.value)){
-                alert('공백 쓰면 안됨요~')
-            } else if(symbol_regex.test(search_input.value)){
-                alert('특수문자 사용 안됨요~')
-            } else if (search_input.value == '') {
-                alert('입력안하고 뭐함요?')
-            }
-            else {
-                this.parentNode.submit()
-            }
-        })
-    </script>
-    {% endif %}
-</body>
+</nav>
+{% endblock %}
 
-</html>
+{% block content %}
+<table class="table table-striped">
+    <tr>
+        {% for header in headers[1:(headers|length)] %}
+        <td>{{ header }}</td>
+        {% endfor %}
+    </tr>
+    {% if dataname == 'user' or dataname == 'store' or dataname == 'item' %}
+    {% for data in datas %}
+    <tr>
+        {% for i in range(1, data|length) %}
+        {% if i == 1 %}
+        <td><a href='./{{ dataname }}/{{ data[i-1] }}'>{{ data[i] }}</a></td>
+        {% else %}
+        <td>{{ data[i] }}</td>
+        {% endif %}
+        {% endfor %}
+    </tr>
+    {% endfor %}
+    {% else %}
+    {% for data in datas %}
+    <tr>
+        {% if dataname == 'order' %}
+        {% for i in range(1, data|length) %}
+        {% if i == (data|length) -2 %}
+        <td><a href='store/{{ data[i] }}'>{{ data[i] }}</a></td>
+        {% elif i == (data|length) -1 %}
+        <td><a href='user/{{ data[i] }}'>{{ data[i] }}</a></td>
+        {% else %}
+        <td>{{ data[i] }}</td>
+        {% endif %}
+        {% endfor %}
+        {% else %}
+        {% for i in range(1, data|length) %}
+        {% if i == (data|length) -2 %}
+        <td><a href='order/{{ data[i] }}'>{{ data[i] }}</a></td>
+        {% elif i == (data|length) -1 %}
+        <td><a href='item/{{ data[i] }}'>{{ data[i] }}</a></td>
+        {% else %}
+        <td>{{ data[i] }}</td>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+    </tr>
+    {% endfor %}
+    {% endif %}
+</table>
+{% endblock %}
+
+{% block pagination %}
+<ul class="pagination">
+    {% if page > 5 %}
+    <li class="page-item">
+        <a class="page-link" href="/{{ dataname }}?page={{ page - 5 }}&name={{ search_name }}">Previous</a>
+    </li>
+    {% endif %}
+    <!-- 페이지네이션 -->
+    {% for num in range(start_page, end_page + 2) %}
+    {% if page == num %}
+    <li class="page-item"><a class="page-link current_page"
+            href="/{{ dataname }}?page={{ num }}&name={{ search_name }}">{{ num }}</a></li>
+    {% else %}
+    <li class="page-item"><a class="page-link" href="/{{ dataname }}?page={{ num }}&name={{ search_name }}">{{ num
+            }}</a></li>
+    {% endif %}
+    {% endfor %}
+    <!-- 다음 페이지 -->
+    {% if page < total_range %} <li class="page-item">
+        <a class="page-link" href="/{{ dataname }}?page={{ page + 5 }}&name={{ search_name }}">Next</a>
+        </li>
+        {% endif %}
+</ul>
+{% endblock %}
