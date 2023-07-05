@@ -80,6 +80,15 @@
                 this.parentNode.submit()
             }
         })
+
+        const options = document.querySelectorAll('option')
+        options.forEach((a,i)=>{
+            if(a.value == '{{ sub_data }}') {
+                a.setAttribute('selected','');
+            } else{
+                a.removeAttribute('selected')
+            }
+        })
     </script>
     {% endif %}
 </body>

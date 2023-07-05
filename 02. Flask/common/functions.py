@@ -18,7 +18,6 @@ def parse_data(dataname, pages):
             if search_name in row[1]:
                 if sub_data in row[2]:
                     datas.append(row) # csv 데이터 삽입
-
             
         total_len = len(datas) - 1 # header 제외
         total_range = math.ceil(total_len // per_page) # 페이지네이션 갯수
