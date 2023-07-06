@@ -1,0 +1,25 @@
+<!-- TODO : 페이지네이션 수정하기 -->
+<ul class="pagination">
+    {% if page > 5 %}
+        <li class="page-item">
+            <a class="page-link" href="/{{ dataname }}?page={{ page - 5 }}&name={{ search_name }}&sub-data={{ sub_data}}">Previous</a>
+        </li>
+    {% endif %}
+    <!-- 페이지네이션 -->
+    {% for num in range(start_page, end_page + 1) %}
+        <!-- 의미가 있는 덧셈? 이면 주석 작성 -->
+        {% if page == num %}
+            <li class="page-item"><a class="page-link current_page"
+                    href="/{{ dataname }}?page={{ num }}&name={{ search_name }}&sub-data={{ sub_data}}">{{ num }}</a></li>
+        {% else %}
+            <li class="page-item"><a class="page-link" href="/{{ dataname }}?page={{ num }}&name={{ search_name }}&sub-data={{ sub_data}}">{{ num
+                    }}</a></li>
+        {% endif %}
+    {% endfor %}
+    <!-- 다음 페이지 -->
+    {% if page < total_range %} 
+        <li class="page-item">
+            <a class="page-link" href="/{{ dataname }}?page={{ page + 5 }}&name={{ search_name }}&sub-data={{ sub_data}}">Next</a>
+        </li>
+    {% endif %}
+</ul>

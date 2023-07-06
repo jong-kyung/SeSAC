@@ -1,0 +1,57 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">Home</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="/store">Store</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/item">Item</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/order">Order</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/ordereditem">Ordered Item</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-danger fw-bold" href="/logout">Log-Out</a>
+                </li>
+            </ul>
+            {% if not dataname == 'order' and not dataname == 'orderitem' %}
+                <form class="d-flex" role="search" method="get">
+                    <input class="form-control me-2 search-item" type="search" placeholder="Search" aria-label="Search"
+                        name="name" value="{{ search_name }}">
+                    {% if dataname == 'user' %}
+                        <select class="form-select" id="inputGroupSelect04" name="sub-data">
+                            <option selected value="">Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    {% elif dataname == 'store' %}
+                        <select class="form-select" id="inputGroupSelect04" name="sub-data">
+                            <option selected value="">Type</option>
+                            <option value="이디야">이디야</option>
+                            <option value="투썸">투썸</option>
+                            <option value="스타벅스">스타벅스</option>
+                            <option value="커피빈">커피빈</option>
+                        </select>
+                    {% elif dataname == 'item'%}
+                        <select class="form-select" id="inputGroupSelect04" name="sub-data">
+                            <option selected value="">Type</option>
+                            <option value="Coffee">Coffee</option>
+                            <option value="Juice">Juice</option>
+                            <option value="Cake">Cake</option>
+                        </select>
+                    {% endif %}
+                        <button class="btn btn-outline-success search-btn " type="submit">Search</button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+</nav>
