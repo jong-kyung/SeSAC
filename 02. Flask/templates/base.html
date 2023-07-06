@@ -68,7 +68,6 @@
     {% if dataname == 'user' or dataname == 'store' or dataname == 'item' %}
     <script>
         const options = document.querySelectorAll('option')
-        options = 1234
         options.forEach((a,i)=>{
             if(a.value == '{{ sub_data }}') {
                 a.setAttribute('selected','');
