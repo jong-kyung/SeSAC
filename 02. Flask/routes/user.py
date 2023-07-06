@@ -1,6 +1,6 @@
 from flask import Blueprint, request, render_template
 import csv
-from common.functions import parse_data
+from common.pagination import parse_data
 from common.verify import check_login
 user = Blueprint('user', __name__)
 
@@ -8,7 +8,7 @@ user = Blueprint('user', __name__)
 @user.route('/user')
 @check_login
 def user_list():  
-    data = parse_data('user', 10)
+    data = parse_data('user', 30)
 
     return render_template('list.html', dataname='user', headers = data['headers'], datas = data['result_datas'], total_range = data['total_range'], page = data['page'], search_name = data['search_name'], sub_data=data['sub_data'], start_page = data['start_page'], end_page = data['end_page'])
         # """ """ 는 자바스크립트에서의 백틱과 유사함.

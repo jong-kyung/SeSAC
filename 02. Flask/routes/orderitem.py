@@ -1,6 +1,6 @@
 from flask import Blueprint, request, render_template
 import csv
-from common.functions import parse_data
+from common.pagination import parse_data
 from common.verify import check_login
 orderitem = Blueprint('orderitem', __name__)
 

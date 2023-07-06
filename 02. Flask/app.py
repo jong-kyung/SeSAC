@@ -1,14 +1,18 @@
-from flask import Flask, url_for, redirect, render_template, request, jsonify, make_response
 import csv
-import datetime 
-import jwt # JWT 토큰 생성용 라이브러리
+import datetime # 토큰 저장시 사용하기 위한 라이브러리 / 목적적어주기
 import hashlib # 해쉬암호화 라이브러리
+import jwt # JWT 토큰 생성용 라이브러리
+
+from flask import Flask, url_for, redirect, render_template, request, jsonify, make_response
+
 from routes.user import user
 from routes.store import store
 from routes.item import item
 from routes.order import order
 from routes.orderitem import orderitem
 from common.verify import check_login
+# 1. 알파벳 순서로 분류, 2. 기능별로 분류 / 강사님은 기능별로 분류 후 그 안에서 알파벳순으로 분류함
+
 SECRET_KEY = 'SESAC'
 
 app = Flask(__name__) # 고유식별자를 넣어주어야함 보통 __name__으로 작명함
@@ -57,7 +61,7 @@ def login():
                 result.append(row)
                 break
     
-    # TODO : len으로 작성하면 보안에 취약할 것 같은데 어떻게 개선하면 좋을지?
+    # TODO : len으로 작성하면 보안에 취약할 것 같은데 어떻게 개선하면 좋을지? / 보통 실무에서도 이렇게 한다고함.
     if len(result) == 1:
         payload = {
             'id': id,
@@ -89,7 +93,8 @@ def root():
         return redirect(url_for('user.user_list'))
     except jwt.exceptions.ExpiredSignatureError:
         return render_template('login.html')
-        
+    
+    # 고른이유가 뭔지 설명할 수 있어야함
 
 
 if __name__ == '__main__':

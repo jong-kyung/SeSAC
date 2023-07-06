@@ -26,34 +26,33 @@
                 </li>
             </ul>
             {% if not dataname == 'order' and not dataname == 'ordereditem' %}
-            <form class="d-flex" role="search" method="get">
-                <input class="form-control me-2 search-item" type="search" placeholder="Search" aria-label="Search"
-                    name="name" value="{{ search_name }}">
-                <!-- select -->
-                {% if dataname == 'user' %}
-                <select class="form-select" id="inputGroupSelect04" name="sub-data">
-                    <option selected value="">Gender</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                </select>
-                {% elif dataname == 'store' %}
-                <select class="form-select" id="inputGroupSelect04" name="sub-data">
-                    <option selected value="">Type</option>
-                    <option value="이디야">이디야</option>
-                    <option value="투썸">투썸</option>
-                    <option value="스타벅스">스타벅스</option>
-                    <option value="커피빈">커피빈</option>
-                </select>
-                {% elif dataname == 'item'%}
-                <select class="form-select" id="inputGroupSelect04" name="sub-data">
-                    <option selected value="">Type</option>
-                    <option value="Coffee">Coffee</option>
-                    <option value="Juice">Juice</option>
-                    <option value="Cake">Cake</option>
-                </select>
-                {% endif %}
-                <button class="btn btn-outline-success search-btn " type="submit">Search</button>
-            </form>
+                <form class="d-flex" role="search" method="get">
+                    <input class="form-control me-2 search-item" type="search" placeholder="Search" aria-label="Search"
+                        name="name" value="{{ search_name }}">
+                    {% if dataname == 'user' %}
+                        <select class="form-select" id="inputGroupSelect04" name="sub-data">
+                            <option selected value="">Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    {% elif dataname == 'store' %}
+                        <select class="form-select" id="inputGroupSelect04" name="sub-data">
+                            <option selected value="">Type</option>
+                            <option value="이디야">이디야</option>
+                            <option value="투썸">투썸</option>
+                            <option value="스타벅스">스타벅스</option>
+                            <option value="커피빈">커피빈</option>
+                        </select>
+                    {% elif dataname == 'item'%}
+                        <select class="form-select" id="inputGroupSelect04" name="sub-data">
+                            <option selected value="">Type</option>
+                            <option value="Coffee">Coffee</option>
+                            <option value="Juice">Juice</option>
+                            <option value="Cake">Cake</option>
+                        </select>
+                    {% endif %}
+                        <button class="btn btn-outline-success search-btn " type="submit">Search</button>
+                </form>
             {% endif %}
         </div>
     </div>
@@ -64,72 +63,75 @@
 <table class="table table-striped">
     <tr>
         {% for header in headers[1:(headers|length)] %}
-        <td>{{ header }}</td>
+            <td>{{ header }}</td>
         {% endfor %}
     </tr>
     {% if dataname == 'user' or dataname == 'store' or dataname == 'item' %}
-    {% for data in datas %}
-    <tr>
-        {% for i in range(1, data|length) %}
-        {% if i == 1 %}
-        <td><a href='./{{ dataname }}/{{ data[i-1] }}'>{{ data[i] }}</a></td>
-        {% else %}
-        <td>{{ data[i] }}</td>
-        {% endif %}
+        {% for data in datas %}
+        <tr>
+            {% for i in range(1, data|length) %}
+                {% if i == 1 %}
+                    <td><a href='./{{ dataname }}/{{ data[i-1] }}'>{{ data[i] }}</a></td>
+                {% else %}
+                    <td>{{ data[i] }}</td>
+                {% endif %}
+            {% endfor %}
+        </tr>
         {% endfor %}
-    </tr>
-    {% endfor %}
     {% else %}
-    {% for data in datas %}
-    <tr>
-        {% if dataname == 'order' %}
-        {% for i in range(1, data|length) %}
-        {% if i == (data|length) -2 %}
-        <td><a href='store/{{ data[i] }}'>{{ data[i] }}</a></td>
-        {% elif i == (data|length) -1 %}
-        <td><a href='user/{{ data[i] }}'>{{ data[i] }}</a></td>
-        {% else %}
-        <td>{{ data[i] }}</td>
-        {% endif %}
+        {% for data in datas %}
+        <tr>
+            {% if dataname == 'order' %}
+                {% for i in range(1, data|length) %}
+                    {% if i == (data|length) -2 %}
+                        <td><a href='store/{{ data[i] }}'>{{ data[i] }}</a></td>
+                    {% elif i == (data|length) -1 %}
+                        <td><a href='user/{{ data[i] }}'>{{ data[i] }}</a></td>
+                    {% else %}
+                        <td>{{ data[i] }}</td>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                {% for i in range(1, data|length) %}
+                    {% if i == (data|length) -2 %}
+                        <td><a href='order/{{ data[i] }}'>{{ data[i] }}</a></td>
+                    {% elif i == (data|length) -1 %}
+                        <td><a href='item/{{ data[i] }}'>{{ data[i] }}</a></td>
+                    {% else %}
+                        <td>{{ data[i] }}</td>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </tr>
         {% endfor %}
-        {% else %}
-        {% for i in range(1, data|length) %}
-        {% if i == (data|length) -2 %}
-        <td><a href='order/{{ data[i] }}'>{{ data[i] }}</a></td>
-        {% elif i == (data|length) -1 %}
-        <td><a href='item/{{ data[i] }}'>{{ data[i] }}</a></td>
-        {% else %}
-        <td>{{ data[i] }}</td>
-        {% endif %}
-        {% endfor %}
-        {% endif %}
-    </tr>
-    {% endfor %}
     {% endif %}
 </table>
 {% endblock %}
 
 {% block pagination %}
+<!-- TODO : 페이지네이션 수정하기 -->
 <ul class="pagination">
     {% if page > 5 %}
-    <li class="page-item">
-        <a class="page-link" href="/{{ dataname }}?page={{ page - 5 }}&name={{ search_name }}&sub-data={{ sub_data}}">Previous</a>
-    </li>
+        <li class="page-item">
+            <a class="page-link" href="/{{ dataname }}?page={{ page - 5 }}&name={{ search_name }}&sub-data={{ sub_data}}">Previous</a>
+        </li>
     {% endif %}
     <!-- 페이지네이션 -->
     {% for num in range(start_page, end_page + 2) %}
-    {% if page == num %}
-    <li class="page-item"><a class="page-link current_page"
-            href="/{{ dataname }}?page={{ num }}&name={{ search_name }}&sub-data={{ sub_data}}">{{ num }}</a></li>
-    {% else %}
-    <li class="page-item"><a class="page-link" href="/{{ dataname }}?page={{ num }}&name={{ search_name }}&sub-data={{ sub_data}}">{{ num
-            }}</a></li>
-    {% endif %}
+        <!-- 의미가 있는 덧셈? 이면 주석 작성 -->
+        {% if page == num %}
+            <li class="page-item"><a class="page-link current_page"
+                    href="/{{ dataname }}?page={{ num }}&name={{ search_name }}&sub-data={{ sub_data}}">{{ num }}</a></li>
+        {% else %}
+            <li class="page-item"><a class="page-link" href="/{{ dataname }}?page={{ num }}&name={{ search_name }}&sub-data={{ sub_data}}">{{ num
+                    }}</a></li>
+        {% endif %}
     {% endfor %}
     <!-- 다음 페이지 -->
-    {% if page < total_range %} <li class="page-item">
-        <a class="page-link" href="/{{ dataname }}?page={{ page + 5 }}&name={{ search_name }}&sub-data={{ sub_data}}">Next</a>
+    {% if page < total_range %} 
+        <li class="page-item">
+            <a class="page-link" href="/{{ dataname }}?page={{ page + 5 }}&name={{ search_name }}&sub-data={{ sub_data}}">Next</a>
         </li>
-        {% endif %}
+    {% endif %}
 </ul>
 {% endblock %}
