@@ -72,6 +72,22 @@
                 a.removeAttribute('selected')
             }
         })
+
+        const search_input = document.querySelector('.search-item')
+        const data_names = document.querySelectorAll('td>a')
+        // data_names.forEach((a,i)=>{
+        //     console.log(a.innerHTML.includes(search_input.value))
+        // })
+        search_input.addEventListener('input',(e)=>{
+            // console.log(e.target.value)
+            data_names.forEach((a,i)=>{
+                console.log(a.innerHTML.split(''))
+                a.innerHTML.split('').forEach((a,i)=>{})
+                if (a.innerHTML.includes(search_input.value)) {
+                    a.innerHTML = `<span style='background:yellow';>${a.innerHTML}</span>`
+                }
+        })
+        })
     </script>
     {% endif %}
 </body>
