@@ -76,14 +76,24 @@
         const search_input = document.querySelector('.search-item')
         const data_names = document.querySelectorAll('td > a')
         search_input.addEventListener('input', (e) => {
-            // console.log(e.target.value)
             data_names.forEach((a, i) => {
-                if (a.innerHTML.includes(search_input.value)) {
-                    newtext = a.innerHTML.replace(search_input.value, `<span style='background:yellow;'>${search_input.value}</span>`)
-                    a.innerHTML = newtext
+                const search_value = e.target.value
+                if (a.innerText.includes(search_value) && search_value.length > 0) {
+                    OriginText = a.innerText
+                    NewText = a.innerText.replace(search_value, `<span style='background:yellow;'>${search_value}</span>`)
+                    a.innerHTML = NewText
                 }
             })
         })
+
+        if(search_input.value){
+            data_names.forEach((a,i)=>{
+                const search_value = search_input.value
+                    OriginText = a.innerText
+                    NewText = a.innerText.replace(search_value, `<span style='background:yellow;'>${search_value}</span>`)
+                    a.innerHTML = NewText
+            })
+        }
     </script>
     {% endif %}
 </body>
