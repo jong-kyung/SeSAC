@@ -78,10 +78,13 @@
         search_input.addEventListener('input', (e) => {
             data_names.forEach((a, i) => {
                 const search_value = e.target.value
+                const OriginText = a.innerText
                 if (a.innerText.includes(search_value) && search_value.length > 0) {
-                    OriginText = a.innerText
                     NewText = a.innerText.replace(search_value, `<span style='background:yellow;'>${search_value}</span>`)
                     a.innerHTML = NewText
+                } 
+                if (search_value == '') {
+                    a.innerHTML = OriginText
                 }
             })
         })
