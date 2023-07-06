@@ -56,7 +56,7 @@
         {% include 'navbar.html' %}
     </div>
     <div class="container">
-        {% include 'content.html' %} 
+        {% include 'content.html' %}
     </div>
     <div class="container">
         {% include 'pagination.html' %}
@@ -65,28 +65,24 @@
     {% if dataname == 'user' or dataname == 'store' or dataname == 'item' %}
     <script>
         const options = document.querySelectorAll('option')
-        options.forEach((a,i)=>{
-            if(a.value == '{{ sub_data }}') {
-                a.setAttribute('selected','');
-            } else{
+        options.forEach((a, i) => {
+            if (a.value == '{{ sub_data }}') {
+                a.setAttribute('selected', '');
+            } else {
                 a.removeAttribute('selected')
             }
         })
 
         const search_input = document.querySelector('.search-item')
-        const data_names = document.querySelectorAll('td>a')
-        // data_names.forEach((a,i)=>{
-        //     console.log(a.innerHTML.includes(search_input.value))
-        // })
-        search_input.addEventListener('input',(e)=>{
+        const data_names = document.querySelectorAll('td > a')
+        search_input.addEventListener('input', (e) => {
             // console.log(e.target.value)
-            data_names.forEach((a,i)=>{
-                console.log(a.innerHTML.split(''))
-                a.innerHTML.split('').forEach((a,i)=>{})
+            data_names.forEach((a, i) => {
                 if (a.innerHTML.includes(search_input.value)) {
-                    a.innerHTML = `<span style='background:yellow';>${a.innerHTML}</span>`
+                    newtext = a.innerHTML.replace(search_input.value, `<span style='background:yellow;'>${search_input.value}</span>`)
+                    a.innerHTML = newtext
                 }
-        })
+            })
         })
     </script>
     {% endif %}
