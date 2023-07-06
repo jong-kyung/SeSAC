@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL 명령어</title>
+</head>
+<body>
+    <h2>SQL 명령어</h2>
+    <ul>
+        <li>sqlite3 (이름).db : 데이터베이스 생성</li>
+        <li>CREATE TABLE {이름}(
+                id integer,
+                name text,    
+            ) : table 생성
+        </li>
+        <li>.table : 생성된 table 조회</li>
+        <li>SELECT * FROM {테이블 이름};: 테이블 내용 조회
+            <ul>
+                <li>WHERE 절</li>
+                <li>GROUP BY 절, 앞에 조건을 걸때는 WHERE, 뒤에 조건을 걸때는 HAVING</li>
+                <li>LIMIT 절</li>
+            </ul>
+        </li>
+        <li>INSERT INTO {테이블 이름} VALUES (데이터값); : 데이터 삽입</li>
+        <li>UPDATE {테이블 이름} SET (신규데이터값) WHERE (기존데이터값); : 데이터 삽입</li>
+        <li>DELETE FROM {테이블 이름} WHERE (데이터값); : 데이터 삭제</li>
+        <li>DROP TABLE {테이블 이름}; : 테이블 삭제</li>
+    </ul>
+</body>
+</html>
