@@ -6,3 +6,4 @@
     - 데이터 생성기 만들기
 - 3주차 : Flask 기반 웹서비스 기초
     - CRM 페이지 생성
+    - Database SQLite3

@@ -4,3 +4,6 @@ __pycache__
 
 # MAC북 파일
 .DS_Store
+
+# DB
+.db
