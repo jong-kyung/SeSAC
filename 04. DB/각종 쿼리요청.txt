@@ -75,3 +75,5 @@ SELECT branch, SUM(sales), AVG(sales) FROM store GROUP BY branch;
 SELECT MAX(sales), MIN(sales) FROM store;
 
 SELECT branch, MAX(sales), MIN(sales) FROM store GROUP BY branch;
+
+SELECT * FROM user WHERE username='user6' OR TRUE LIMIT 1 -- 
