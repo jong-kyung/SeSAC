@@ -77,3 +77,13 @@ SELECT MAX(sales), MIN(sales) FROM store;
 SELECT branch, MAX(sales), MIN(sales) FROM store GROUP BY branch;
 
 SELECT * FROM user WHERE username='user6' OR TRUE LIMIT 1 -- 
+----------------------------------------------------------
+SELECT * FROM employee INNER JOIN dept ON employee.dept_id = dept_id;
+
+SELECT * FROM dept INNER JOIN employee ON dept_id = employee.dept_id;
+
+SELECT employee.id, employee.name, dept.name FROM employee INNER JOIN dept ON employee.dept_id == dept_id;
+----------------------------------------------------------
+SELECT FirstName, LastName, customerId, Country FROM customers WHERE country != 'USA';
+
+SELECT DISTINCT country FROM customers;

@@ -1,0 +1,17 @@
+1. non_usa_customers.sql: 미국에 거주하지 않는 고객(전체 이름, 고객 ID 및 국가)을 표시하는 쿼리를 제공합니다.
+SELECT FirstName ||" "|| LastName AS 'Full Name', customerId, Country FROM customers WHERE country != 'USA';
+
+2. brazil_customers.sql: 브라질 고객만 표시하는 쿼리를 제공합니다.
+SELECT FirstName ||" "|| LastName AS 'Full Name' FROM customers WHERE country == 'Brazil';
+
+3. brazil_customers_invoices.sql: 브라질 고객의 송장을 보여주는 쿼리를 제공합니다. 결과 테이블에는 고객의 전체 이름, 송장 ID, 송장 날짜 및 청구 국가가 표시되어야 합니다.
+SELECT customers.FirstName ||" "|| customers.LastName AS 'Full Name',Invoices.Invoiceid, Invoices.InvoiceDate, Invoices.BillingCountry FROM Invoices INNER JOIN customers ON customers.Country == 'Brazil';
+
+4. sales_agents.sql: 판매 대리인인 직원만 표시하는 쿼리를 제공하십시오.
+SELECT FirstName ||" "|| LastName AS 'Full Name' FROM employees WHERE Title = 'Sales Support Agent';
+
+5. unique_invoice_countries.sql: 송장 테이블에서 청구 국가의 고유/고유 목록을 표시하는 쿼리를 제공합니다.
+SELECT BillingCountry FROM Invoices Group By BillingCountry;
+
+6. sales_agent_invoices.sql: 각 판매 에이전트와 연결된 송장을 표시하는 쿼리를 제공합니다. 결과 테이블에는 영업 에이전트의 전체 이름이 포함되어야 합니다.
+SELECT Invoices.*, employees.FirstName ||" "|| employees.LastName AS 'Full Name' FROM employees JOIN customers ON employees.employeeId == customers.SupportRepId JOIN Invoices ON customers.customerId == invoices.invoiceId;
