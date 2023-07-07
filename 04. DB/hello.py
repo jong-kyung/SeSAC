@@ -20,6 +20,7 @@ for r in result:
     print(r)
 
 # 미션 로그인 코드 구현
+# len(result) == 1
 if result:
     print('로그인에 성공했습니다')
 else:
