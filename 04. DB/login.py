@@ -20,7 +20,7 @@ def login(username, password):
 
     c.execute("SELECT * FROM user WHERE username=? AND password=?", (username, hashedPassword))
     result= c.fetchall()
-    if result:
+    if len(result) == 1:
         print('로그인 성공')
     else:
         print('로그인 실패')
