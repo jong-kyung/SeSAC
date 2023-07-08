@@ -5,7 +5,7 @@ SELECT FirstName ||" "|| LastName AS 'Full Name', customerId, Country FROM custo
 SELECT FirstName ||" "|| LastName AS 'Full Name' FROM customers WHERE country == 'Brazil';
 
 3. brazil_customers_invoices.sql: 브라질 고객의 송장을 보여주는 쿼리를 제공합니다. 결과 테이블에는 고객의 전체 이름, 송장 ID, 송장 날짜 및 청구 국가가 표시되어야 합니다.
-SELECT customers.FirstName ||" "|| customers.LastName AS 'Full Name',Invoices.Invoiceid, Invoices.InvoiceDate, Invoices.BillingCountry FROM Invoices INNER JOIN customers ON customers.Country == 'Brazil';
+SELECT customers.FirstName ||" "|| customers.LastName AS 'Full Name',Invoices.InvoiceId, Invoices.InvoiceDate, Invoices.BillingCountry FROM Invoices INNER JOIN customers ON customers.Country == 'Brazil';
 
 4. sales_agents.sql: 판매 대리인인 직원만 표시하는 쿼리를 제공하십시오.
 SELECT FirstName ||" "|| LastName AS 'Full Name' FROM employees WHERE Title = 'Sales Support Agent';
@@ -15,3 +15,15 @@ SELECT BillingCountry FROM Invoices Group By BillingCountry;
 
 6. sales_agent_invoices.sql: 각 판매 에이전트와 연결된 송장을 표시하는 쿼리를 제공합니다. 결과 테이블에는 영업 에이전트의 전체 이름이 포함되어야 합니다.
 SELECT Invoices.*, employees.FirstName ||" "|| employees.LastName AS 'Full Name' FROM employees JOIN customers ON employees.employeeId == customers.SupportRepId JOIN Invoices ON customers.customerId == invoices.invoiceId;
+
+7. invoice_totals.sql: 모든 송장 및 고객에 대한 송장 합계, 고객 이름, 국가 및 판매 대리점 이름을 표시하는 쿼리를 제공합니다.
+SELECT invoices.*, customers.FirstName ||" "|| customers.LastName AS 'Full Name', customers.Country, employees.FirstName ||" "|| employees.LastName AS 'employee Full Name' FROM invoices JOIN customers ON invoices.CustomerId == customers.CustomerId JOIN employees ON customers.SupportRepId == employees.employeeId;
+
+8. total_invoices_{year}.sql: 2009년과 2011년에 몇 개의 인보이스가 있었습니까?
+SELECT count(*) FROM invoices WHERE InvoiceDate BETWEEN '2009-01-01' AND '2011-12-31';
+
+9. total_sales_{year}.sql: 각 연도의 총 매출은 얼마입니까?
+SELECT substr(invoices.InvoiceDate, 1, 4), sum(UnitPrice) FROM invoice_items JOIN invoices ON invoice_items.InvoiceId == invoices.InvoiceId GROUP BY substr(invoices.InvoiceDate, 1, 4);
+
+10. invoice_37_line_item_count.sql: InvoiceLine 테이블을 보고 Invoice ID 37에 대한 라인 항목 수를 계산하는 쿼리를 제공합니다.
+SELECT count(*) FROM invoice_items WHERE InvoiceId == '37';
