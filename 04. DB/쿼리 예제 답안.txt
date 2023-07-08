@@ -27,3 +27,18 @@ SELECT substr(invoices.InvoiceDate, 1, 4), sum(UnitPrice) FROM invoice_items JOI
 
 10. invoice_37_line_item_count.sql: InvoiceLine 테이블을 보고 Invoice ID 37에 대한 라인 항목 수를 계산하는 쿼리를 제공합니다.
 SELECT count(*) FROM invoice_items WHERE InvoiceId == '37';
+
+11. line_items_per_invoice.sql: InvoiceLine 테이블을 보고 각 Invoice에 대한 라인 항목 수를 계산하는 쿼리를 제공합니다. 힌트: 그룹화 기준
+SELECT invoice_items.InvoiceId, count(invoice_items.InvoiceId) FROM invoice_items JOIN invoices ON invoice_items.InvoiceId == invoices.InvoiceId GROUP BY invoice_items.InvoiceId;
+
+12. line_item_track.sql: 각 송장 라인 항목에 구매한 트랙 이름을 포함하는 쿼리를 제공합니다.
+SELECT tracks.Name FROM tracks JOIN invoice_items ON tracks.TrackId == invoice_items.TrackId;
+
+13. line_item_track_artist.sql: 구매한 트랙 이름과 아티스트 이름을 포함하는 쿼리를 각 송장 라인 항목과 함께 제공합니다.
+SELECT tracks.Name, artists.Name FROM tracks JOIN invoice_items ON tracks.trackId == invoice_items.trackId JOIN albums ON tracks.AlbumId == albums.AlbumId JOIN artists ON albums.ArtistId == artists.ArtistId; 
+
+14. country_invoices.sql: 국가별 송장 수를 표시하는 쿼리를 제공합니다. 힌트: 그룹화 기준
+SELECT customers.Country, count(customers.Country) FROM customers JOIN invoices ON customers.customerId == invoices.customerId GROUP BY customers.Country;
+
+15. playlists_track_count.sql: 각 재생 목록의 총 트랙 수를 표시하는 쿼리를 제공합니다. 재생 목록 이름은 결과 테이블에 포함되어야 합니다.
+SELECT playlists.Name, count(playlist_track.TrackId) FROM playlist_track JOIN playlists ON playlist_track.PlaylistId == playlists.PlaylistId JOIN tracks ON playlist_track.TrackId == Tracks.TrackId GROUP BY playlists.Name;
