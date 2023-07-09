@@ -12,14 +12,13 @@
 12. line_item_track.sql: Provide a query that includes the purchased track name with each invoice line item.
 13. line_item_track_artist.sql: Provide a query that includes the purchased track name AND artist name with each invoice line item.
 14. country_invoices.sql: Provide a query that shows the # of invoices per country. HINT: GROUP BY
-
 15. playlists_track_count.sql: Provide a query that shows the total number of tracks in each playlist. The Playlist name should be include on the resulant table.
-
 16. tracks_no_id.sql: Provide a query that shows all the Tracks, but displays no IDs. The result should include the Album name, Media type and Genre.
 17. invoices_line_item_count.sql: Provide a query that shows all Invoices but includes the # of invoice line items.
 18. sales_agent_total_sales.sql: Provide a query that shows total sales made by each sales agent.
 19. top_2009_agent.sql: Which sales agent made the most in sales in 2009?
-    Hint: Use the MAX function on a subquery. top_agent.sql: Which sales agent made the most in sales over all?
+    Hint: Use the MAX function on a subquery. 
+20. top_agent.sql: Which sales agent made the most in sales over all?
 21. sales_agent_customer_count.sql: Provide a query that shows the count of customers assigned to each sales agent.
 22. sales_per_country.sql: Provide a query that shows the total sales per country.
 23. top_country.sql: Which country's customers spent the most?
@@ -47,7 +46,8 @@
 17. invoices_line_item_count.sql: 모든 송장을 표시하지만 송장 라인 항목의 수를 포함하는 쿼리를 제공합니다.
 18. sales_agent_total_sales.sql: 판매 대리점별 총 매출을 조회하는 쿼리를 제공한다.
 19. top_2009_agent.sql: 2009년 가장 많은 매출을 올린 판매원은?
-     힌트: 하위 쿼리에서 MAX 함수를 사용하십시오. top_agent.sql: 전체 판매 실적이 가장 많은 판매 대리점은?
+    힌트: 하위 쿼리에서 MAX 함수를 사용하십시오. 
+20. top_agent.sql: 전체 판매 실적이 가장 많은 판매 대리점은?
 21. sales_agent_customer_count.sql: 각 판매 대리점에 할당된 고객 수를 보여주는 쿼리를 제공한다.
 22. sales_per_country.sql: 국가별 총 매출을 보여주는 쿼리를 제공한다.
 23. top_country.sql: 고객이 가장 많이 지출한 국가는 어디입니까?

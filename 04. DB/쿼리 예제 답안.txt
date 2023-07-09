@@ -42,3 +42,18 @@ SELECT customers.Country, count(customers.Country) FROM customers JOIN invoices 
 
 15. playlists_track_count.sql: 각 재생 목록의 총 트랙 수를 표시하는 쿼리를 제공합니다. 재생 목록 이름은 결과 테이블에 포함되어야 합니다.
 SELECT playlists.Name, count(playlist_track.TrackId) FROM playlist_track JOIN playlists ON playlist_track.PlaylistId == playlists.PlaylistId JOIN tracks ON playlist_track.TrackId == Tracks.TrackId GROUP BY playlists.Name;
+
+16. Tracks_no_id.sql: 모든 트랙을 표시하지만 ID는 표시하지 않는 쿼리를 제공합니다. 결과에는 앨범 이름, 미디어 유형 및 장르가 포함되어야 합니다.
+SELECT tracks.Name, albums.Title, media_types.Name FROM tracks JOIN albums ON tracks.AlbumId == albums.AlbumId JOIN media_types ON tracks.MediaTypeId == media_types.MediaTypeId;
+
+17. invoices_line_item_count.sql: 모든 송장을 표시하지만 송장 라인 항목의 수를 포함하는 쿼리를 제공합니다.
+SELECT invoices.*, count(invoice_items.InvoiceLineId) FROM invoices JOIN invoice_items ON invoices.invoiceId == invoice_items.invoiceId GROUP BY invoices.invoiceId;
+
+18. sales_agent_total_sales.sql: 판매 대리점별 총 매출을 조회하는 쿼리를 제공한다.
+SELECT employees.FirstName ||" "|| employees.LastName AS 'Full Name', SUM(invoice_items.UnitPrice) FROM invoices JOIN invoice_items ON invoices.InvoiceId == invoice_items.InvoiceId JOIN customers ON invoices.CustomerId == customers.CustomerId JOIN employees ON customers.SupportRepId == employees.EmployeeId GROUP BY employees.FirstName;
+
+19. top_2009_agent.sql: 2009년 가장 많은 매출을 올린 판매원은?
+SELECT substr(invoices.InvoiceDate, 1, 4), employees.FirstName, SUM(invoice_items.UnitPrice) FROM invoices JOIN customers ON invoices.CustomerId == customers.CustomerId JOIN employees ON customers.SupportRepId == employees.employeeId JOIN invoice_items ON invoices.InvoiceId == invoice_items.InvoiceId WHERE substr(invoices.InvoiceDate, 1, 4) == '2009' ORDER BY SUM(invoice_items.UnitPrice);
+
+20. sales_agent_customer_count.sql: 각 판매 대리점에 할당된 고객 수를 보여주는 쿼리를 제공한다.
+SELECT employees.FirstName, count(customers.FirstName) FROM customers JOIN employees ON customers.SupportRepId == employees.employeeId GROUP BY employees.FirstName;
