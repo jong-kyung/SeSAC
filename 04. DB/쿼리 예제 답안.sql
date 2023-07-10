@@ -10,7 +10,8 @@ SELECT customers.FirstName ||" "|| customers.LastName AS 'Full Name',Invoices.In
 FROM Invoices INNER 
 JOIN customers ON customers.Country == 'Brazil';
 
-[T]SELECT c.FirstName ||" "|| c.LastName AS 'Full Name',I.InvoiceId, I.InvoiceDate, I.BillingCountry 
+-- 강사님 풀이
+SELECT c.FirstName ||" "|| c.LastName AS 'Full Name',I.InvoiceId, I.InvoiceDate, I.BillingCountry 
 FROM Invoices I 
 LEFT JOIN customers c ON i.CustomerId == c.CustomerId WHERE c.Country == 'Brazil';
 
@@ -19,14 +20,16 @@ LEFT JOIN customers c ON i.CustomerId == c.CustomerId WHERE c.Country == 'Brazil
 SELECT FirstName ||" "|| LastName AS 'Full Name' 
 FROM employees WHERE Title = 'Sales Support Agent';
 
-[T]SELECT * FROM employees where title like 'Sales%';
+-- 강사님 풀이
+SELECT * FROM employees where title like 'Sales%';
 
 -- 5. unique_invoice_countries.sql: 송장 테이블에서 청구 국가의 고유/고유 목록을 표시하는 쿼리를 제공합니다.
 SELECT BillingCountry 
 FROM Invoices 
 Group By BillingCountry;
 
-[T]SELECT DISTINCT BillingCountry FROM invoices;
+-- 강사님 풀이
+SELECT DISTINCT BillingCountry FROM invoices;
 
 -- 6. sales_agent_invoices.sql: 각 판매 에이전트와 연결된 송장을 표시하는 쿼리를 제공합니다. 결과 테이블에는 영업 에이전트의 전체 이름이 포함되어야 합니다.
 SELECT Invoices.*, employees.FirstName ||" "|| employees.LastName AS 'Full Name' 
@@ -44,10 +47,26 @@ SELECT count(*)
 FROM invoices 
 WHERE InvoiceDate BETWEEN '2009-01-01' AND '2011-12-31';
 
+-- 강사님 풀이1
+SELECT count(*) 
+FROM invoices 
+WHERE InvoiceDate 
+BETWEEN '2009-01-01' AND '2009-12-31' 
+OR InvoiceDate
+BETWEEN '2011-01-01' AND '2011-12-31';
+
+-- 강사님 풀이2
+-- strftime
+SELECT COUNT(i.InvoiceId) AS NumberOfInvoices, strftime('%Y', i.InvoiceId) AS InvoiceYear
+FROM invoices I
+WHERE InvoiceYear IN ('2009', '2011') 
+GROUP BY InvoiceYear;
+
 -- 9. total_sales_{year}.sql: 각 연도의 총 매출은 얼마입니까?
 SELECT substr(invoices.InvoiceDate, 1, 4), sum(UnitPrice) 
 FROM invoice_items 
-INNER JOIN invoices ON invoice_items.InvoiceId == invoices.InvoiceId GROUP BY substr(invoices.InvoiceDate, 1, 4);
+INNER JOIN invoices ON invoice_items.InvoiceId == invoices.InvoiceId 
+GROUP BY substr(invoices.InvoiceDate, 1, 4);
 
 -- 10. invoice_37_line_item_count.sql: InvoiceLine 테이블을 보고 Invoice ID 37에 대한 라인 항목 수를 계산하는 쿼리를 제공합니다.
 SELECT count(*) 
@@ -58,6 +77,11 @@ WHERE InvoiceId == '37';
 SELECT invoice_items.InvoiceLineId, count(invoice_items.InvoiceId) 
 FROM invoice_items 
 INNER JOIN invoices ON invoice_items.InvoiceId == invoices.InvoiceId GROUP BY invoice_items.InvoiceId;
+
+-- 강사님 풀이
+SELECT invoiceId, COUNT(invoiceLineId) AS 'Invoice Count'
+FROM invoice_items
+GROUP BY invoiceID
 
 -- 12. line_item_track.sql: 각 송장 라인 항목에 구매한 트랙 이름을 포함하는 쿼리를 제공합니다.
 SELECT tracks.Name FROM tracks 
@@ -134,7 +158,18 @@ FROM invoices
 INNER JOIN invoice_items ON invoices.InvoiceId == invoice_items.InvoiceId 
 INNER JOIN customers ON invoices.CustomerId == customers.CustomerId 
 GROUP BY invoices.BillingCountry 
-ORDER BY SUM(invoice_items.UnitPrice) DESC LIMIT 1;
+ORDER BY SUM(invoice_items.UnitPrice) 
+DESC LIMIT 1;
+
+-- 강사님 풀이
+-- Nested Query : SELECT FROM 안에 SELECT가 쓰이는 것, 효율적이지는 않기에 고민을 많이 해보아야함.
+SELECT "Country", MAX("Total Sales For Country") as "Total Spent"
+FROM (
+    SELECT BillingCountry as "Country", SUM(Total) as "Total Sales For Country"
+    FROM invoices
+    GROUP BY BillingCountry
+);
+
 
 -- 24. top_2013_track.sql: 2013년 가장 많이 구매한 트랙을 보여주는 쿼리를 제공합니다.
 SELECT tracks.Name, SUM(invoice_items.trackId) 
@@ -144,7 +179,8 @@ INNER JOIN invoices ON invoice_items.InvoiceID == invoices.InvoiceId
 INNER JOIN customers ON invoices.CustomerId == customers.CustomerId 
 WHERE substr(invoices.InvoiceDate, 1, 4) == '2013' 
 GROUP BY tracks.Name 
-ORDER BY SUM(invoice_items.trackId) DESC LIMIT 1;
+ORDER BY SUM(invoice_items.trackId) 
+DESC LIMIT 1;
 
 -- 25. top_5_tracks.sql: 가장 많이 구매한 상위 5곡을 보여주는 쿼리를 제공합니다.
 SELECT tracks.Name, SUM(invoice_items.trackId) 
@@ -153,7 +189,16 @@ INNER JOIN tracks ON tracks.TrackId == invoice_items.TrackId
 INNER JOIN invoices ON invoice_items.InvoiceID == invoices.InvoiceId 
 INNER JOIN customers ON invoices.CustomerId == customers.CustomerId 
 GROUP BY tracks.Name 
-ORDER BY SUM(invoice_items.trackId) DESC LIMIT 5;
+ORDER BY SUM(invoice_items.trackId) 
+DESC LIMIT 5;
+
+-- 강사님 풀이
+SELECT t.Name, COUNT(t.Name) AS 'PurchaseCount'
+FROM tracks t
+JOIN invoice_items I ON I.TrackId = t.TrackId
+GROUP BY t.Name
+ORDER BY PurchaseCount
+DESC LIMIT 5;
 
 -- 26. top_3_artists.sql: 가장 많이 팔린 3명의 아티스트를 보여주는 쿼리를 제공합니다.
 SELECT artists.Name, count(invoice_items.trackId) 
@@ -163,7 +208,8 @@ INNER JOIN albums ON tracks.AlbumId == albums.AlbumId
 INNER JOIN artists ON albums.ArtistId == artists.ArtistId
 INNER JOIN invoices ON invoice_items.InvoiceId == invoices.InvoiceId 
 GROUP BY artists.Name 
-ORDER BY count(invoice_items.trackId) DESC LIMIT 3;
+ORDER BY count(invoice_items.trackId) 
+DESC LIMIT 3;
 
 -- 27. top_media_type.sql: 가장 많이 구매한 Media Type을 보여주는 쿼리를 제공한다.
 SELECT media_types.Name, count(invoice_items.InvoiceId) 
@@ -172,4 +218,5 @@ INNER JOIN tracks ON media_types.MediaTypeId == tracks.MediaTypeId
 INNER JOIN invoice_items ON invoice_items.TrackId == tracks.TrackId 
 INNER JOIN invoices ON invoice_items.InvoiceId == invoices.InvoiceId 
 GROUP BY media_types.Name 
-ORDER BY count(invoice_items.InvoiceId) DESC LIMIT 1;
+ORDER BY count(invoice_items.InvoiceId) 
+DESC LIMIT 1;
