@@ -1,5 +1,6 @@
 from user.user_generator import UserGenerator
 from store.store_generator import StoreGenerator
+from item.item_generator import ItemGenerator
 import csv
 
 class generate_data:
@@ -22,11 +23,10 @@ class generate_data:
             self.data_result = self.user_generator()
         elif self.data_type == datas[1]:
             self.data_result = self.store_generator()
-        # else:
-        #     self.item_generator()
-        # self.print_data()
-
-        return self.data_result
+        elif self.data_type == datas[2]:
+            self.data_result = self.item_generator()
+        
+        self.print_data()
         
     def user_generator(self):
         data = []
@@ -44,6 +44,16 @@ class generate_data:
         for _ in range(self.count):
             store_info = store.generator()
             data.append([store_info])
+
+        return data
+    
+    def item_generator(self):
+        data = []
+        item = ItemGenerator()
+
+        for _ in range(self.count):
+            item_info = item.generator()
+            data.append([item_info])
 
         return data
     

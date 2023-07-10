@@ -49,13 +49,13 @@ ORDER BY TopRate
 DESC LIMIT 1;
 
 -- 8. 각 사용자가 사용한 금액 보여주기
-SELECT users.Name, items.UnitPrice
+SELECT users.Name, SUM(items.UnitPrice) AS 'price'
 FROM users
 INNER JOIN orders ON users.Id = orders.UserId
 INNER JOIN orderitems ON orders.Id = orderitems.OrderId
 INNER JOIN items ON orderitems.ItemId = items.Id
 GROUP BY users.Name
-ORDER BY items.UnitPrice DESC;
+ORDER BY Price DESC;
 
 -- 9. 어떤 종류의 음료가 가장 많이 팔렸는지 확인하기
 SELECT items.Type, count(orderitems.itemId) AS 'purchasedCount'

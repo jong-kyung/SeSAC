@@ -7,4 +7,3 @@ if __name__ == '__main__': # 메인함수에서 실행할 것
     my_data = generate_data(data_type, data_count, data_output_type)
     
     my_data.data_generator()
-    my_data.print_csv()
