@@ -103,3 +103,5 @@ INSERT INTO users2(uuid, name, gender, age, birthdate) SELECT uuid, name, gender
 ----------------------------------------------------------
 .mode csv
 .import user.csv user
+
+sqlite3 crm.db < (이름).sql => sql파일 즉시 실행
