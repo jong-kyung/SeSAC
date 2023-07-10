@@ -8,3 +8,6 @@ class Store:
     def __str__(self): 
         return f"{self.store_id}, {self.store_info}, {self.name}, {self.address}"
     
+    def get_info(self):
+        return f"{self.store_id}, {self.store_info}, {self.name}, {self.address}"
+    

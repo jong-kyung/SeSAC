@@ -7,3 +7,6 @@ class Item:
 
     def __str__(self):
         return f'{self.item_id}, {self.item_name}, {self.item_type}, {self.price}'
+
+    def get_info(self):
+        return f'{self.item_id}, {self.item_name}, {self.item_type}, {self.price}'

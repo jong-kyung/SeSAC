@@ -31,10 +31,9 @@ class generate_data:
     def user_generator(self):
         data = []
         user = UserGenerator()
-
         for _ in range(self.count):
             user_info = user.generator()
-            data.append(user_info)
+            data.append([user_info])
 
         return data
 
@@ -44,7 +43,7 @@ class generate_data:
 
         for _ in range(self.count):
             store_info = store.generator()
-            data.append(store_info)
+            data.append([store_info])
 
         return data
     
@@ -56,10 +55,11 @@ class generate_data:
             self.print_csv()
     
     def print_csv(self):
-        with open(f'{self.data_type}.csv', 'a') as file:
+        with open(f'{self.data_type}.csv', 'a', newline='') as file:
             csv_file = csv.writer(file)
-            csv_file.writerow(self.data_result)
-            print('요청된 데이터 파일 생성 중..')
+            csv_file.writerows(self.data_result)
+            
+        print('요청된 데이터 파일 생성 중..')
 
     def print_console(self):
         for data in self.data_result:

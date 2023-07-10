@@ -20,5 +20,4 @@ class UserGenerator(Generator):
         gender = self.gender_gen.generate_gender()
         address = self.address_gen.generate_address()[0]
         
-        return User(user_id, user_name, gender, birthdate, address)
-    
+        return User(user_id, user_name, gender, birthdate, address).get_info()
