@@ -25,6 +25,7 @@ class generate_data:
         # else:
         #     self.item_generator()
         # self.print_data()
+
         return self.data_result
         
     def user_generator(self):
@@ -55,7 +56,7 @@ class generate_data:
             self.print_csv()
     
     def print_csv(self):
-        with open(f'{self.data_type}.csv', 'a', newline='\n') as file:
+        with open(f'{self.data_type}.csv', 'a') as file:
             csv_file = csv.writer(file)
             csv_file.writerow(self.data_result)
             print('요청된 데이터 파일 생성 중..')

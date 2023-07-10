@@ -89,3 +89,17 @@ SELECT FirstName, LastName, customerId, Country FROM customers WHERE country != 
 SELECT DISTINCT country FROM customers;
 ----------------------------------------------------------
 JOIN = INNER JOIN (Default)
+----------------------------------------------------------
+CREATE TABLE users2(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "uuid" TEXT,
+    "name" TEXT,
+    "gender" TEXT,
+    "age" INTEGER,
+    "birthdate" TEXT
+);
+
+INSERT INTO users2(uuid, name, gender, age, birthdate) SELECT uuid, name, gender, age, birthdate FROM users;
+----------------------------------------------------------
+.mode csv
+.import user.csv user
