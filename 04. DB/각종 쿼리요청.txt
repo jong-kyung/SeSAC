@@ -87,3 +87,5 @@ SELECT employee.id, employee.name, dept.name FROM employee INNER JOIN dept ON em
 SELECT FirstName, LastName, customerId, Country FROM customers WHERE country != 'USA';
 
 SELECT DISTINCT country FROM customers;
+----------------------------------------------------------
+JOIN = INNER JOIN (Default)
