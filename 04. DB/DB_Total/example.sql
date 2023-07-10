@@ -30,7 +30,7 @@ SELECT substr(stores.Address, 1, 2) AS 'City', count(stores.Name) AS 'StoresCoun
 FROM stores
 GROUP BY City
 
--- 6. 2023년 5월의 매출이 가장 높은 지점 찾기
+-- 6. 2023년 5월의 방문객이 가장 많은 지점 찾기
 SELECT stores.Name, count(stores.Name) AS 'TopRate'
 FROM stores
 INNER JOIN orders ON stores.Id = orders.StoreId
@@ -72,6 +72,7 @@ INNER JOIN orderitems On orders.Id = orderitems.OrderId
 INNER JOIN items ON orderitems.ItemId = items.Id
 GROUP BY users.Gender;
 
+-- --------------------------------------------------------
 -- 강사님) 특정 사용자가 구매한 주문 내역을 모두 보여주시오.
 SELECT users.Name, orders.*
 FROM users
