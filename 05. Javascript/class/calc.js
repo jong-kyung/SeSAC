@@ -18,9 +18,13 @@ buttons.forEach((a, i) => {
 
             /* 어레이에 연산자 추가 */
             if (operator.includes(user_request[1])) {
-                user_request.pop(Number(number))
-            } else {
-                user_request.push(_this.innerHTML);
+                user_request.pop()
+            } else if (user_request.length === 1) {
+                if (user_request[0] == 0) {
+                    user_request.pop()
+                } else {
+                    user_request.push(_this.innerHTML);
+                }
             }
         } else if (_this.innerHTML == 'C') {
             /* 사용자의 UI 초기화 및 입력중이었던 값 초기화 */

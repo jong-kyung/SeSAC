@@ -1,7 +1,6 @@
 const input = document.querySelector('input')
 const buttons = document.querySelectorAll('button')
 const operator = ['+', '-', '*', '/']
-let result = 0;
 let number = '';
 
 buttons.forEach((a, i) => {
@@ -12,9 +11,9 @@ buttons.forEach((a, i) => {
         } else if (_this.innerHTML == 'C') {
             /* 사용자의 UI 초기화 */
             input.value = '';
-            result = 0;
+            number = '';
         } else if (_this.innerHTML == '=') {
-            input.value = result
+            input.value = eval(number)
         } else { // 숫자를 눌렀을 경우
             number += _this.innerHTML
             input.value = number
