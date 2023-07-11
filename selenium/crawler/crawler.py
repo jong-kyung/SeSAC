@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By # DOM 요소를 찾기 위한 import
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 
-def crawl_browser(URL, FindTitles, FindArtists):
+def crawl_browser(URL, FindTitles, FindArtists, FindAlbums):
     chrome_options = Options() # 브라우저 꺼짐 방지
     chrome_options.add_experimental_option("detach", True)
     chrome_options.add_experimental_option("excludeSwitches", ["enable-logging"]) #불필요한 에러 메세지 삭제
@@ -17,13 +17,15 @@ def crawl_browser(URL, FindTitles, FindArtists):
     
     titles = crawler.find_elements(By.CSS_SELECTOR, FindTitles)
     artists = crawler.find_elements(By.CSS_SELECTOR, FindArtists)
+    albums = crawler.find_elements(By.CSS_SELECTOR, FindAlbums)
 
-    for title,artist in zip(titles, artists):
+    for title, artist, album in zip(titles, artists, albums):
         datas.append({
-            'Title':title.text,
-            'Artist':artist.text
-            })
-        print(f'제목:{title.text}, 가수:{artist.text}')
-    
+            'Title': title.text,
+            'Artist': artist.text,
+            'AlbumTitle': album.text
+        })
     crawler.quit() # 닫기
+    return datas
+
 
