@@ -4,14 +4,12 @@ from selenium.webdriver.common.by import By # DOM 요소를 찾기 위한 import
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 
-chrome_options = Options() # 브라우저 꺼짐 방지
-chrome_options.add_experimental_option("detach", True)
-chrome_options.add_experimental_option("excludeSwitches", ["enable-logging"]) #불필요한 에러 메세지 삭제
-service = Service(executable_path = ChromeDriverManager().install())
-crawler = webdriver.Chrome(service = service ,options = chrome_options) # Chrome Driver 실행 파라미터엔, 경로를 설정할 수 있음. 같은경로일 경우 공백
-
-# melonUrl = 'https://www.melon.com/chart/index.htm' # 내가 원하는 주소
 def crawl_browser(URL, FindTitles, FindArtists):
+    chrome_options = Options() # 브라우저 꺼짐 방지
+    chrome_options.add_experimental_option("detach", True)
+    chrome_options.add_experimental_option("excludeSwitches", ["enable-logging"]) #불필요한 에러 메세지 삭제
+    service = Service(executable_path = ChromeDriverManager().install())
+    crawler = webdriver.Chrome(service = service ,options = chrome_options) # Chrome Driver 실행 파라미터엔, 경로를 설정할 수 있음. 같은경로일 경우 공백
     datas = []
     crawler.get(URL) # 실행
 
@@ -29,8 +27,3 @@ def crawl_browser(URL, FindTitles, FindArtists):
     
     crawler.quit() # 닫기
 
-crawl_browser(
-    'https://www.melon.com/chart/index.htm',
-    '.wrap_song_info .rank01 a',
-    '.wrap_song_info .rank02'
-    )
