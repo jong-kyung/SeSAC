@@ -8,24 +8,22 @@ let user_request = []
 buttons.forEach((a, i) => {
     a.addEventListener('click', (e) => {
         let _this = e.currentTarget;
-        console.log(user_request)
         if (operator.includes(_this.innerHTML)) { // 연산자가 있는지 확인
-            user_request.push(Number(number))
+            if (number != '') { // 연산자를 먼저 눌렀을때 0으로 입력되는 것 방지
+                user_request.push(Number(number))
+            }
 
             /* 사용자의 UI 초기화 및 입력중이었던 값 초기화 */
             number = '';
             input.value = '';
 
             /* 어레이에 연산자 추가 */
-            if (operator.includes(user_request[1])) {
-                user_request.pop()
-            } else if (user_request.length === 1) {
-                if (user_request[0] == 0) {
-                    user_request.pop()
-                } else {
-                    user_request.push(_this.innerHTML);
-                }
+            if (operator.includes(user_request[1])) { // 이미 연산자가 있을때
+                user_request.pop() // 두번 누를경우 입력되는 0을 제거 하기위함
+            } else if (user_request.length === 1) { // 앞에 입력된 값이 있을때만 연산자 추가
+                user_request.push(_this.innerHTML);
             }
+
         } else if (_this.innerHTML == 'C') {
             /* 사용자의 UI 초기화 및 입력중이었던 값 초기화 */
             number = '';
@@ -43,9 +41,17 @@ buttons.forEach((a, i) => {
             } else if (user_request[1] == operator[2]) {
                 result = user_request[0] * user_request[2]
             } else if (user_request[1] == operator[3]) {
-                result = user_request[0] / user_request[2]
+                if (user_request[2] == 0) {
+                    result = '오류'
+                    user_request = []
+                } else {
+                    result = user_request[0] / user_request[2]
+                }
             }
             input.value = result
+            number = ''
+            user_request = []
+            user_request.push(result)
         } else { // 숫자를 눌렀을 경우
             number += _this.innerHTML
             input.value = number
