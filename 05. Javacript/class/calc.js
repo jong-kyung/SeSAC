@@ -10,7 +10,7 @@ buttons.forEach((a, i) => {
         let _this = e.currentTarget;
         if (operator.includes(_this.innerHTML)) { // 연산자가 있는지 확인
             user_request.push(Number(number)) // 지금까지 입력된 숫자를 어레이에 넣기
-            
+
             /* 사용자의 UI 초기화 및 입력중이었던 값 초기화 */
             number = '';
             input.value = '';
@@ -22,9 +22,10 @@ buttons.forEach((a, i) => {
             number = '';
             user_request = [];
             input.value = '';
+            result = 0;
         } else if (_this.innerHTML == '=') {
             user_request.push(Number(number)) // 입력된 숫자를 어레이에 넣음
-            
+
             /* 계산로직 */
             if (user_request[1] == operator[0]) {
                 result = user_request[0] + user_request[2]
