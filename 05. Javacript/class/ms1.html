@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculation</title>
+</head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+<style>
+    .numbers {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 5px
+    }
+
+    .input {
+        height: 50px;
+    }
+</style>
+
+<body>
+    <div class="container w-50 border border-black mt-5 p-3">
+        <div class="input-group">
+            <input type="text" class="w-100 rounded-3 from-control input" readonly/>
+        </div>
+        <div class="numbers mt-3">
+            <button class="btn btn-light">+</button>
+            <button class="btn btn-light">-</button>
+            <button class="btn btn-light">*</button>
+            <button class="btn btn-light">/</button>
+            <button class="btn btn-light">7</button>
+            <button class="btn btn-light">8</button>
+            <button class="btn btn-light">9</button>
+            <button class="btn btn-light">=</button>
+            <button class="btn btn-light">4</button>
+            <button class="btn btn-light">5</button>
+            <button class="btn btn-light">6</button>
+            <button class="btn btn-light">C</button>
+            <button class="btn btn-light">1</button>
+            <button class="btn btn-light">2</button>
+            <button class="btn btn-light">3</button>
+            <button class="btn btn-light">0</button>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="calc.js"></script>
+</body>
+
+</html>
