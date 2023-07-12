@@ -12,5 +12,6 @@
 - 4주차 : 데이터베이스 및 자바스크립트
     - SQL csv파일 연동
     - Javascript 기본 개념 및 문법
-    - Bootstrap 기본 개념
-    - Chart.js 기본 개념
+    - Bootstrap 사용법
+    - Chart.js 사용법
+    - Leaflet.js 사용법
