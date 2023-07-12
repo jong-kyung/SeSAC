@@ -8,4 +8,3 @@ __pycache__
 # DB
 *.db
 *.db-journal
-*._crm.sqbpro
