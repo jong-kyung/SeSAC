@@ -13,3 +13,4 @@
     - SQL csv파일 연동
     - Javascript 기본 개념 및 문법
     - Bootstrap 기본 개념
+    - Chart.js 기본 개념

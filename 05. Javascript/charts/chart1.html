@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>chart.js를 사용한 그래프 그리기</title>
+</head>
+
+<body>
+    <div>
+        <canvas id="myChart"></canvas>
+        <canvas id="myChart2"></canvas>
+        <canvas id="myChart3"></canvas>
+        <canvas id="myChart4"></canvas>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('myChart');
+        bar_chart()
+        const ctx2 = document.getElementById('myChart2');
+        line_chart()
+        const ctx3 = document.getElementById('myChart3');
+        mixed_chart()
+        const ctx4 = document.getElementById('myChart4');
+        radar_chart()
+        function radar_chart() {
+            new Chart(ctx4, {
+                type: 'radar',
+                data: {
+                    labels: [
+                        'A',
+                        'B',
+                        'C',
+                        'D',
+                        'E',
+                        'F',
+                        'G',
+                    ],
+                    datasets: [{
+                        label: 'My First Dataset',
+                        data: [65, 59, 90, 81, 56, 55, 40],
+                        fill: true,
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        pointBackgroundColor: 'rgb(255, 99, 132)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgb(255, 99, 132)'
+                    }, {
+                        label: 'My Second Dataset',
+                        data: [28, 48, 40, 19, 96, 27, 100],
+                        fill: true,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgb(54, 162, 235)',
+                        pointBackgroundColor: 'rgb(54, 162, 235)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgb(54, 162, 235)'
+                    }]
+                },
+                options: {
+                    element: {
+                        line: {
+                            borderWidth: 3
+                        }
+                    }
+                }
+            })
+        }
+
+        function mixed_chart() {
+            new Chart(ctx3, {
+                type: 'bar',
+                data: {
+                    datasets: [{
+                        label: 'Bar Dataset',
+                        data: [10, 20, 30, 40],
+                        order: 2
+                    }, {
+                        label: 'Line Dataset',
+                        type: 'line',
+                        data: [10, 20, 25, 35],
+                        order: 1,
+                        tension: 0.5
+                    }],
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr']
+                }
+            })
+        }
+
+        function line_chart() {
+            new Chart(ctx2, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: '# of Votes',
+                        data: [12, 19, 3, 5, 2, 3],
+                        borderWidth: 1
+                    }]
+                }
+            });
+        }
+
+        function bar_chart() {
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                    datasets: [{
+                        label: '# of Votes',
+                        data: [12, 19, 3, 5, 2, 3],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
