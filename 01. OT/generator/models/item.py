@@ -10,8 +10,8 @@ class Item:
 
     def get_info(self):
         return {
-            'id': self.item_id,
-            'name': self.item_name,
-            'type': self.item_type,
-            'price' : self.price
+            'Id': self.item_id,
+            'Name': self.item_name,
+            'Type': self.item_type,
+            'Price' : self.price
         }

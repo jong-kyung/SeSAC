@@ -9,4 +9,9 @@ class Order:
         return f'{self.item_id}, {self.orderAt}, {self.StoreId}, {self.UserId}'
 
     def get_info(self):
-        return f'{self.item_id}, {self.orderAt}, {self.StoreId}, {self.UserId}'
+        return {
+            'Id' : self.item_id,
+            'OrderAt': self.orderAt,
+            'StoreId': self.StoreId,
+            'UserId' : self.UserId
+        }

@@ -11,9 +11,9 @@ class User:
     
     def get_info(self):
         return {
-            'id':self.user_id,
-            'name':self.name,
-            'gender':self.gender,
-            'birthdate':self.birthdate,
-            'address':self.address
+            'Id':self.user_id,
+            'Name':self.name,
+            'Gender':self.gender,
+            'Birthdate':self.birthdate,
+            'Address':self.address
         }

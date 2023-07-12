@@ -1,6 +1,8 @@
 from user.user_generator import UserGenerator
 from store.store_generator import StoreGenerator
 from item.item_generator import ItemGenerator
+from order.order_generator import OrderGenerator
+from orderitem.orderitem_generator import OrderItemGenerator
 import csv
 
 class generate_data:
@@ -15,32 +17,33 @@ class generate_data:
     def user_request(self):
         self.data_generator()
         self.print_data()
-        return print('작업이 완료되었습니다.')
 
     # TODO : 코드 간소화
     def data_generator(self):
-        datas = ['user', 'store', 'item']
+        datas = ['user', 'store', 'item', 'order', 'orderitem']
         if self.data_type == datas[0]:
             self.data_result = self.user_generator()
         elif self.data_type == datas[1]:
             self.data_result = self.store_generator()
         elif self.data_type == datas[2]:
             self.data_result = self.item_generator()
-        
-        self.print_csv(self.fieldname)
+        elif self.data_type == datas[3]:
+            self.data_result = self.order_generator()
+        elif self.data_type == datas[4]:
+            self.data_result = self.orderitem_generator()
         
     def user_generator(self):
-        self.fieldname = ['id','name','gender','birthdate','address']
+        self.fieldname = ['Id','Name','Gender','Birthdate','Address']
         data = []
         user = UserGenerator()
         for _ in range(self.count):
             user_info = user.generator()
             data.append(user_info)
-        print(data)
+
         return data
 
     def store_generator(self):
-        self.fieldname = ['id','name','type','address']
+        self.fieldname = ['Id','Name','Type','Address']
         data = []
         store = StoreGenerator()
 
@@ -51,7 +54,7 @@ class generate_data:
         return data
     
     def item_generator(self):
-        self.fieldname = ['id','name','type','price']
+        self.fieldname = ['Id','Name','Type','Price']
         data = []
         item = ItemGenerator()
 
@@ -61,12 +64,34 @@ class generate_data:
 
         return data
     
+    def order_generator(self):
+        self.fieldname = ['Id','OrderAt','StoreId','UserId']
+        data = []
+        order = OrderGenerator()
+
+        for _ in range(self.count):
+            order_info = order.generator()
+            data.append(order_info)
+
+        return data
+    
+    def orderitem_generator(self):
+        self.fieldname =['Id', 'OrderId', 'ItemId']
+        data = []
+        orderitem = OrderItemGenerator()
+
+        for _ in range(self.count):
+            orderitem_info = orderitem.generator()
+            data.append(orderitem_info)
+        
+        return data
+
     def print_data(self):
         outputs = ['console', 'csv']
         if self.output == outputs[0]:
             self.print_console()
         elif self.output == outputs[1]:
-            self.print_csv()
+            self.print_csv(self.fieldname)
     
     def print_csv(self, param):
         with open(f'./csv/{self.data_type}s.csv', 'w', newline='') as file:

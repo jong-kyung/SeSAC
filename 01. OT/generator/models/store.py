@@ -10,9 +10,9 @@ class Store:
     
     def get_info(self):
         return {
-            'id' : self.store_id,
-            'name' : self.name,
-            'type' : self.store_type,
-            'address' : self.address
+            'Id' : self.store_id,
+            'Name' : self.name,
+            'Type' : self.store_type,
+            'Address' : self.address
         }
     
