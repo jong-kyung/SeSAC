@@ -6,6 +6,8 @@ let number = '';
 let user_request = []
 
 buttons.forEach((a, i) => {
+    a.className = 'btn btn-light'
+    
     a.addEventListener('click', (e) => {
         let _this = e.currentTarget;
         if (operator.includes(_this.innerHTML)) { // 연산자가 있는지 확인
