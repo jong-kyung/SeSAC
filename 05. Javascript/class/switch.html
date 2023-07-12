@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    </select>
+    <script>
+        window.addEventListener('load', (e) => {
+            const select = document.getElementById('select_fruit')
+            select.addEventListener('change', (e) => {
+                const _this = e.currentTarget
+                match(select.value)
+            })
+            // 미션1. select 와 자바스크립트 코드를 연결한다
+            function match(param) {
+                let fruit = param;
+                const result_box = document.querySelector('#fruit_result');
+                switch (fruit) {
+                    case 'apple':
+                        result_box.innerHTML = '이것은 사과입니다.'
+                        break
+                    case 'banana':
+                        result_box.innerHTML = '이것은 바나나입니다.'
+                        break
+                    case 'orange':
+                        result_box.innerHTML = '이것은 오렌지입니다.'
+                        break
+                }
+            }
+        })
+    </script>
+</head>
+
+<body>
+    <h1>도큐먼트에서 자바스크립트로 switch/cast 처리하기</h1>
+    <select id="select_fruit">
+        <option value="apple">Apple</option>
+        <option value="banana">Banana</option>
+        <option value="orange">Orange</option>
+    </select>
+    <div id="fruit_result"></div>
+</body>
+
+</html>

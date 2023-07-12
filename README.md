@@ -12,4 +12,4 @@
 - 4주차 : 데이터베이스 및 자바스크립트
     - SQL csv파일 연동
     - Javascript 기본 개념 및 문법
-    - Bootstrap 기본
+    - Bootstrap 기본 개념

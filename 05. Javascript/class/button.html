@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        window.addEventListener('load', (e) => {
+            const buttons = document.querySelectorAll('button')
+            const result = document.querySelector('.result')
+            
+            let number = 0;
+            buttons.forEach((a, i) => {
+                a.addEventListener('click', (e) => {
+                    const _this = e.currentTarget;
+                    if (_this.innerHTML == '+1') {
+                        number++;
+                    } else {
+                        number--;
+                    }
+                    result.innerHTML = `결과: ${number}`
+                })
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <h1>버튼 월드</h1>
+    <div>
+        <button>+1</button>
+        <button>-1</button>
+    </div>
+    <div class="result">결과: 0</div>
+    <!-- 미션1. 이버튼을 클릭해서 숫자가 +- 되도록 구현한다 -->
+</body>
+
+</html>
