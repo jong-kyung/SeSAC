@@ -36,4 +36,4 @@ class ItemGenerator(Generator):
         item_subtype = random.choice(list(self.item_types[item_type].keys()))
         item_name = f"{item_subtype} {item_type}"
         item_price = self.item_types[item_type][item_subtype]
-        return Item(item_id, item_name, item_type, item_price)
+        return Item(item_id, item_name, item_type, item_price).get_info()

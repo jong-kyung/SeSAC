@@ -9,4 +9,9 @@ class Item:
         return f'{self.item_id}, {self.item_name}, {self.item_type}, {self.price}'
 
     def get_info(self):
-        return f'{self.item_id}, {self.item_name}, {self.item_type}, {self.price}'
+        return {
+            'id': self.item_id,
+            'name': self.item_name,
+            'type': self.item_type,
+            'price' : self.price
+        }

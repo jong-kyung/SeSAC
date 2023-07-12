@@ -10,4 +10,10 @@ class User:
         return f"{self.user_id}, {self.name}, {self.gender}, {self.birthdate}, {self.address}"
     
     def get_info(self):
-        return f"{self.user_id}, {self.name}, {self.gender}, {self.birthdate}, {self.address}"
+        return {
+            'id':self.user_id,
+            'name':self.name,
+            'gender':self.gender,
+            'birthdate':self.birthdate,
+            'address':self.address
+        }

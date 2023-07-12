@@ -9,6 +9,7 @@ class generate_data:
         self.data_type = data_type.lower()
         self.count = int(count)
         self.output = output.lower()
+        self.fieldname = []
         # TODO : 메인 함수 혹은 새로운 함수로 변수값 유형을 검사하는 것으로 변경
 
     def user_request(self):
@@ -26,34 +27,37 @@ class generate_data:
         elif self.data_type == datas[2]:
             self.data_result = self.item_generator()
         
-        self.print_data()
+        self.print_csv(self.fieldname)
         
     def user_generator(self):
+        self.fieldname = ['id','name','gender','birthdate','address']
         data = []
         user = UserGenerator()
         for _ in range(self.count):
             user_info = user.generator()
-            data.append([user_info])
-
+            data.append(user_info)
+        print(data)
         return data
 
     def store_generator(self):
+        self.fieldname = ['id','name','type','address']
         data = []
         store = StoreGenerator()
 
         for _ in range(self.count):
             store_info = store.generator()
-            data.append([store_info])
+            data.append(store_info)
 
         return data
     
     def item_generator(self):
+        self.fieldname = ['id','name','type','price']
         data = []
         item = ItemGenerator()
 
         for _ in range(self.count):
             item_info = item.generator()
-            data.append([item_info])
+            data.append(item_info)
 
         return data
     
@@ -64,12 +68,13 @@ class generate_data:
         elif self.output == outputs[1]:
             self.print_csv()
     
-    def print_csv(self):
-        with open(f'{self.data_type}.csv', 'a', newline='') as file:
-            csv_file = csv.writer(file)
+    def print_csv(self, param):
+        with open(f'./csv/{self.data_type}s.csv', 'w', newline='') as file:
+            csv_file = csv.DictWriter(file, fieldnames = param)
+            csv_file.writeheader()
             csv_file.writerows(self.data_result)
             
-        print('요청된 데이터 파일 생성 중..')
+        print('파일 생성 완료')
 
     def print_console(self):
         for data in self.data_result:

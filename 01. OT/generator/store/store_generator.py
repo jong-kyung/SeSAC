@@ -7,14 +7,14 @@ import uuid
 
 class StoreGenerator(Generator):
     def __init__(self):
-        self.store_name = NameGenerator()
+        self.store_type = NameGenerator()
         self.address = AddressGenerator()
 
     def generator(self):
         store_id = uuid.uuid4()
-        store_name = self.store_name.generate_name()
+        store_type = self.store_type.generate_name()
         address = self.address.generate_address()[0]
-        store_info = f'{store_name} {self.address.generate_address()[1]}'
+        store_name = f'{store_type} {self.address.generate_address()[1]}'
 
-        return Store(store_id, store_info, store_name, address)
+        return Store(store_id, store_name, store_type, address).get_info()
         
