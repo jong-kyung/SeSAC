@@ -58,7 +58,7 @@ class generate_data:
         data = []
         item = ItemGenerator()
 
-        for _ in range(self.count):
+        for _ in range(15):
             item_info = item.generator()
             data.append(item_info)
 
