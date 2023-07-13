@@ -1,0 +1,79 @@
+<table class="table table-striped">
+    <thead>
+        {% for header in headers[1:(headers|length)] %}
+        <td>{{ header }}</td>
+        {% endfor %}
+    </thead>
+    {% set search = ['user', 'store', 'item'] %}
+    {% if dataname in search %}
+        {% for data in datas %}
+            <tr>
+                {% for i in range(1, data|length) %}
+                    {% if i == 1 %}
+                        <td><a href='./{{ dataname }}/{{ data[i-1] }}'>{{ data[i] }}</a></td>
+                    {% else %}
+                        <td>{{ data[i] }}</td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    {% else %}
+        {% for data in datas %}
+        <tr>
+        {% if dataname == 'order' %}
+            {% for i in range(1, data|length) %}
+                {% if i == (data|length) -2 %}
+                    <td><a href='store/{{ data[i] }}'>{{ data[i] }}</a></td>
+                {% elif i == (data|length) -1 %}
+                    <td><a href='user/{{ data[i] }}'>{{ data[i] }}</a></td>
+                {% else %}
+                    <td>{{ data[i] }}</td>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            {% for i in range(1, data|length) %}
+                {% if i == (data|length) -2 %}
+                    <td><a href='order/{{ data[i] }}'>{{ data[i] }}</a></td>
+                {% elif i == (data|length) -1 %}
+                    <td><a href='item/{{ data[i] }}'>{{ data[i] }}</a></td>
+                {% else %}
+                    <td>{{ data[i] }}</td>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        </tr>
+        {% endfor %}
+    {% endif %}
+</table>
+<ul class="pagination">
+    <!-- 첫 페이지 -->
+    <li class="page-item">
+        <a class="page-link first" href="?page=1">
+            <span aria-hidden="true">&laquo;</span>
+        </a>
+        </li>
+    <!-- 이전 페이지 -->
+    <li class="page-item">
+        <a class="page-link previous" href="?page={{ page-1 }}">Previous</a>
+    </li>
+    <!-- 페이지네이션 -->
+    {% for number in range(start_page, end_page + 1) %}
+        {% if page == number %}
+            <li class="page-item active" aria-current="page">
+                <a class="page-link" href="?page={{ number }}">{{ number }}</a>
+            </li>
+        {% else %}
+            <li class="page-item"><a class="page-link" href="?page={{ number }}">{{ number }}</a></li>
+        {% endif %}
+    {% endfor %}
+    <!-- 다음 페이지 -->
+    <li class="page-item">
+        <a class="page-link next" href="?page={{ page + 1 }}">Next</a>
+    </li>
+    <!-- 마지막 페이지 -->
+    <li class="page-item">
+        <a class="page-link last" href="?page={{ page_range }}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+        </a>
+    </li>
+</ul>
