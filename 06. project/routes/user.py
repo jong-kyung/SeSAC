@@ -8,7 +8,7 @@ user = Blueprint('user', __name__)
 
 # TODO : 만약 주소창에 -1을 입력할경우엔 어떻게 할것인지?
 @user.route('/user')
-# @check_login
+@check_login
 def user_list():  
     page = request.args.get('page', default=1, type=int) 
     users = SQLite3_query('users')
@@ -41,7 +41,7 @@ def user_list():
 
 
 @user.route('/user/<param>')
-# @check_login
+@check_login
 def user_info(param):
     user = SQLite3_query('users')
     headers = user.schema_query()

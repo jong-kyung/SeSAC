@@ -17,9 +17,9 @@ def check_login(f):
         try:
             payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
             find_user = SQLite3_query('user')
-            user_id = find_user.user_auth(payload['id'])
+            user_id = find_user.check_overlap(payload['id'])
             
-            if len(user_id) == 1:
+            if user_id:
                 return  (f(*args, **kwargs))
         
         except jwt.DecodeError:

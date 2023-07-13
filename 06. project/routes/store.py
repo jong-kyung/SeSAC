@@ -6,7 +6,7 @@ import math
 store = Blueprint('store', __name__)
 
 @store.route('/store')
-# @check_login
+@check_login
 def store_list():  
     page = request.args.get('page', default=1, type=int) 
     stores = SQLite3_query('stores')
@@ -39,7 +39,7 @@ def store_list():
 
 
 @store.route('/store/<param>')
-# @check_login
+@check_login
 def store_info(param):
     store = SQLite3_query('stores')
     headers = store.schema_query()

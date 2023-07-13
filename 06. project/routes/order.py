@@ -6,7 +6,7 @@ import math
 order = Blueprint('order', __name__)
 
 @order.route('/order')
-# @check_login
+@check_login
 def order_list():  
     page = request.args.get('page', default=1, type=int) 
     orders = SQLite3_query('orders')
@@ -39,7 +39,7 @@ def order_list():
 
 
 @order.route('/order/<param>')
-# @check_login
+@check_login
 def order_info(param):
     order = SQLite3_query('orders')
     headers = order.schema_query()
