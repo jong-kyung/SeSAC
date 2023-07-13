@@ -45,14 +45,12 @@ def login():
     pw = request.form['pw']
     pw_hash = hashlib.sha256(pw.encode('utf-8')).hexdigest()
 
-    print(id)
-    print(pw_hash)
     find_user = SQLite3_query('user')
     user_id = find_user.user_auth(id, pw_hash)
     if user_id:
         payload = {
             'id': id,
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=60*30)
+            # 'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=60*30)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
         response = make_response(redirect(url_for('user.user_list'))) # 응답객체 생성

@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template
+from flask import Blueprint, render_template, redirect, url_for, request
 from common.verify import check_login
 from common.sqlite_query import SQLite3_query
 
@@ -11,33 +11,30 @@ user = Blueprint('user', __name__)
 @check_login
 def user_list():  
     page = request.args.get('page', default=1, type=int) 
-    users = SQLite3_query('users')
+    search_name = request.args.get('name', default='', type=str)
+    sub_data = request.args.get('sub-data', default='', type=str)
+    try:
+        per_page = 15
+
+        users = SQLite3_query('users')
+        headers = users.schema_query() # schema 받아오기
+        result_datas = [] # 결과 데이터 삽입용
+        datas = users.total_data_query(page, per_page, 'Name', search_name, 'Gender', sub_data)
+
+        # -------- 페이지네이션 --------
+        total_data_len = datas['data_length'] # 데이터 전체 갯수
+        page_range = math.floor(total_data_len/per_page) # 페이지 갯수 구하기
+            # ---- 데이터 자르기 ----
+        result_datas = datas['datas'] # 데이터 자르기
+        start_page =  ((page - 1) // 5)*5 + 1  # 현재페이지를 5로 나눠 몫을 구한 후 5를 곱하여 5개단위로 끊기
+        end_page = min(start_page + 4, page_range) 
+
+        return render_template('list.html', dataname='user', search_name = search_name, sub_data = sub_data, page = page, headers = headers, datas = result_datas, page_range = page_range, start_page = start_page, end_page = end_page)
     
-    headers = users.schema_query() # schema 받아오기
-    datas = users.total_data_query() # 데이터들 받아오기
-    result_datas = [] # 결과 데이터 삽입용
+    # TODO : 예외처리를 어떻게 할까?
+    except TypeError:
+        return redirect('user',next='/1')
 
-    # -------- 페이지네이션 --------
-    per_page = 15
-    total_data_len = len(datas) # 데이터 전체 갯수
-    page_range = math.ceil(total_data_len/per_page) # 페이지 갯수 구하기
-        # ---- 데이터 자르기 ----
-    start_index = (page - 1)*per_page # 데이터를 자르기 위한 인덱싱
-    end_index = start_index + per_page
-    result_datas = datas[start_index:end_index] # 데이터 자르기
-
-    if page < 1:
-        page = 1
-    elif page > page_range:
-        page = page_range
-
-    start_page =  ((page - 1) // 5)*5 + 1  # 현재페이지를 5로 나눠 몫을 구한 후 5를 곱하여 5개단위로 끊기
-    end_page = min(start_page + 4, page_range) 
-    # print(f'현재:{page}, 처음:{start_page},마지막:{end_page}')
-
-
-
-    return render_template('list.html', dataname='user', page = page, headers = headers, datas = result_datas, page_range = page_range, start_page = start_page, end_page = end_page)
 
 
 @user.route('/user/<param>')
