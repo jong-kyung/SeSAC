@@ -6,6 +6,7 @@ import math
 
 user = Blueprint('user', __name__)
 
+# TODO : 만약 주소창에 -1을 입력할경우엔 어떻게 할것인지?
 @user.route('/user')
 # @check_login
 def user_list():  
