@@ -32,8 +32,9 @@ class SQLite3_query():
         conn = sqlite3.connect('./DB/crm.db')
         cursor = conn.cursor()
         # -------- 원하는 data 불러오기 --------
-        cursor.execute(f"SELECT * FROM {self.TableName} WHERE {condition[0]} LIKE ? AND {condition[1]} LIKE ? LIMIT {count} OFFSET {page*count}" , ( find_data[0]+ '%', find_data[1] + '%'))
+        cursor.execute(f"SELECT * FROM {self.TableName} WHERE {condition[0]} LIKE ? AND {condition[1]} LIKE ? LIMIT {count} OFFSET {(page - 1)*count}" , ( find_data[0]+ '%', find_data[1] + '%'))
         datas = cursor.fetchall()
+        print(datas)
         #  -------- 원하는 data 길이 불러오기 --------
         cursor.execute(f"SELECT count(*) FROM {self.TableName} WHERE {condition[0]} LIKE ? AND {condition[1]} LIKE ?" , ( find_data[0]+ '%', find_data[1] + '%'))
         data_length = cursor.fetchone()[0]

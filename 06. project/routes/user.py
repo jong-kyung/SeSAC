@@ -14,7 +14,7 @@ def user_list():
     search_name = request.args.get('name', default='', type=str)
     sub_data = request.args.get('sub-data', default='', type=str)
     try:
-        per_page = 15
+        per_page = 10
 
         users = SQLite3_query('users')
         headers = users.schema_query() # schema 받아오기
@@ -23,12 +23,19 @@ def user_list():
 
         # -------- 페이지네이션 --------
         total_data_len = datas['data_length'] # 데이터 전체 갯수
-        page_range = math.floor(total_data_len/per_page) # 페이지 갯수 구하기
+        page_range = math.ceil(total_data_len/per_page) # 페이지 갯수 구하기
             # ---- 데이터 자르기 ----
         result_datas = datas['datas'] # 데이터 자르기
-        start_page =  ((page - 1) // 5)*5 + 1  # 현재페이지를 5로 나눠 몫을 구한 후 5를 곱하여 5개단위로 끊기
-        end_page = min(start_page + 4, page_range) 
+        # start_page =  ((page - 1) // 5)*5 + 1  # 현재페이지를 5로 나눠 몫을 구한 후 5를 곱하여 5개단위로 끊기
+        if page < 1:
+            page = 1
+            return redirect(url_for('user.user_list'))
+        elif page > page_range:
+            page = page_range
+            return redirect(url_for('user.user_list'))
 
+        start_page = page - (page-1) % 5
+        end_page = min(start_page + 4, page_range) 
         return render_template('list.html', dataname='user', search_name = search_name, sub_data = sub_data, page = page, headers = headers, datas = result_datas, page_range = page_range, start_page = start_page, end_page = end_page)
     
     # TODO : 예외처리를 어떻게 할까?
