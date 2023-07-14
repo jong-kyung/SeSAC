@@ -16,7 +16,6 @@ class SQLite3_query():
 
         return self.headers
     
-    # TODO: 리팩토링을 어떻게 해야할까?
     def total_data_query(self, page, count, *args):
         conditions = []
         find_datas = []

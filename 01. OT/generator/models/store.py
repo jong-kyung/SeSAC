@@ -1,7 +1,7 @@
 class Store:
-    def __init__(self, store_id, store_type, name, address):
+    def __init__(self, store_id, store_name, store_type, address):
         self.store_id = store_id
-        self.name = name
+        self.name = store_name
         self.store_type = store_type
         self.address = address
     
