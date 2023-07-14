@@ -19,7 +19,7 @@ def user_list():
         users = SQLite3_query('users')
         headers = users.schema_query() # schema 받아오기
         result_datas = [] # 결과 데이터 삽입용
-        datas = users.total_data_query(page, per_page, 'Name', search_name, 'Gender', sub_data)
+        datas = users.condition_data_query(page, per_page, 'Name', search_name, 'Gender', sub_data)
 
         # -------- 페이지네이션 --------
         total_data_len = datas['data_length'] # 데이터 전체 갯수
@@ -39,11 +39,10 @@ def user_list():
         start_page = page - (page-1) % 5 # 5개 단위로 끊기
         end_page = min(start_page + 4, page_range) # 끝페이지 정해주기
         
-        return render_template('list.html', dataname='user', search_name = search_name, sub_data = sub_data, page = page, headers = headers, datas = result_datas, page_range = page_range, start_page = start_page, end_page = end_page)
+        return render_template('component/user.html', search_name = search_name, sub_data = sub_data, page = page, headers = headers, datas = result_datas, page_range = page_range, start_page = start_page, end_page = end_page)
     
-    # TODO : 예외처리를 어떻게 할까?
     except TypeError:
-        return redirect('user',next='/1')
+        return redirect('user', next='/1')
 
 
 
@@ -54,4 +53,4 @@ def user_info(param):
     headers = user.schema_query()
     findData = user.detail_info(param)
 
-    return render_template('search_detail.html', headers=headers,datas=findData)
+    return render_template('component/user_detail.html', headers=headers,datas=findData)

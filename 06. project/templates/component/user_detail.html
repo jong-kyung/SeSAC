@@ -1,0 +1,23 @@
+{% extends './common/detail.html' %}
+{% block h1 %}
+    <h1>{{ datas[1] }}의 정보</h1>
+{% endblock %}
+
+{% block nav %}
+    {% include './nav/nav_base.html' %}
+{% endblock %}
+
+{% block content %}
+<table class="table table-striped">
+    <thead>
+        {% for header in headers[1:(headers|length)] %}
+        <td>{{ header }}</td>
+        {% endfor %}
+    </thead>
+    <tr>
+    {% for data in datas[1:datas|length] %}
+        <td>{{ data }}</td>
+    {% endfor %}
+    </tr>
+</table>
+{% endblock %}

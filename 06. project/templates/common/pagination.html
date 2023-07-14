@@ -1,0 +1,32 @@
+<ul class="pagination">
+    <!-- 첫 페이지 -->
+    <li class="page-item">
+        <a class="page-link first" href="?page=1&name={{ serach_name }}">
+            <span aria-hidden="true">&laquo;</span>
+        </a>
+        </li>
+    <!-- 이전 페이지 -->
+    <li class="page-item">
+        <a class="page-link previous" href="?page={{ page-1 }}&name={{ search_name }}%">Previous</a>
+    </li>
+    <!-- 페이지네이션 -->
+    {% for number in range(start_page, end_page + 1) %}
+        {% if page == number %}
+            <li class="page-item active" aria-current="page">
+                <a class="page-link" href="?page={{ number }}&name={{ search_name }}">{{ number }}</a>
+            </li>
+        {% else %}
+            <li class="page-item"><a class="page-link" href="?page={{ number }}&name={{ serach_name }}">{{ number }}</a></li>
+        {% endif %}
+    {% endfor %}
+    <!-- 다음 페이지 -->
+    <li class="page-item">
+        <a class="page-link next" href="?page={{ page + 1 }}&name={{ serach_name }}">Next</a>
+    </li>
+    <!-- 마지막 페이지 -->
+    <li class="page-item">
+        <a class="page-link last" href="?page={{ page_range }}&name={{ serach_name }}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+        </a>
+    </li>
+</ul>

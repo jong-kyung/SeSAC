@@ -1,0 +1,26 @@
+{% extends './common/list_base.html' %}
+{% block nav %}
+    {% include './nav/nav_base.html' %}
+{% endblock %}
+{% block content %}
+    <table class="table table-striped">
+        <thead>
+            {% for header in headers[1:(headers|length)] %}
+            <td>{{ header }}</td>
+            {% endfor %}
+        </thead>
+        {% for data in datas %}
+            <tr>
+            {% for i in range(1, data|length) %}
+                {% if i == (data|length) -2 %}
+                    <td><a href='store/{{ data[i] }}'>{{ data[i] }}</a></td>
+                {% elif i == (data|length) -1 %}
+                    <td><a href='user/{{ data[i] }}'>{{ data[i] }}</a></td>
+                {% else %}
+                    <td>{{ data[i] }}</td>
+                {% endif %}
+            {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

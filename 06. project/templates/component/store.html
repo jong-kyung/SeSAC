@@ -1,0 +1,27 @@
+{% extends './common/list_base.html' %}
+{% block nav %}
+    {% include './nav/store_item_nav.html' %}
+{% endblock %}
+{% block content %}
+    <table class="table table-striped">
+        <thead>
+            {% for header in headers[1:(headers|length)] %}
+            <td>{{ header }}</td>
+            {% endfor %}
+        </thead>
+        {% for data in datas %}
+            <tr>
+            {% for i in range(1, data|length) %}
+                {% if i == 1 %}
+                    <td><a href='store/{{ data[i-1] }}'>{{ data[i] }}</a></td>
+                {% else %}
+                    <td>{{ data[i] }}</td>
+                {% endif %}
+            {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
+{% block search %}
+    {% include './common/search_script.html' %}
+{% endblock %}

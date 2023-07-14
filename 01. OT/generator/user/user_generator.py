@@ -16,7 +16,7 @@ class UserGenerator(Generator):
     def generator(self):
         user_id = uuid.uuid4()
         user_name =  self.user_name_gen.generate_name()
-        birthdate = self.birthdate_gen.generate_birthdate()[0]
+        birthdate = self.birthdate_gen.generate_birthdate()
         gender = self.gender_gen.generate_gender()
         address = self.address_gen.generate_address()[0]
         
