@@ -16,28 +16,40 @@ class SQLite3_query():
 
         return self.headers
     
-    # TODO: 데이터를 한번에 보내는것보다 LIMIT 걸어서 보내주자.
-    # TODO: 페이지네이션은 count로 쿼리요청을 해서 갯수를 구해보는거로
-    # TODO: 인덱싱 해주는 것 말고 더 좋은 방법은 없을까? for 문을 돌린다던지..
-
+    # TODO: 리팩토링을 어떻게 해야할까?
     def total_data_query(self, page, count, *args):
-        condition = []
-        find_data = []
+        conditions = []
+        find_datas = []
+        condition_query = ''
+        find_data_query = ()
+
+        # 조건과 검색내용 분류
         for i in range(len(args)):
             if i%2 == 0 :
-                condition.append(args[i])
+                conditions.append(args[i])
             else:
-                find_data.append(args[i])
-         
+                find_datas.append(args[i])
+                
+        # 조건의 갯수에 따라 AND 붙여주기
+        for num in range(len(conditions)):
+            if num == len(conditions) - 1: 
+                condition_query += f'{conditions[num]} LIKE ?'
+            else:
+                condition_query += f'{conditions[num]} LIKE ? AND '
+
+        # 검색내용 튜플에 넣기
+        for find_data in find_datas:
+            find_data_query += (find_data + '%',)
+
         conn = sqlite3.connect('./DB/crm.db')
         cursor = conn.cursor()
         # -------- 원하는 data 불러오기 --------
-        cursor.execute(f"SELECT * FROM {self.TableName} WHERE {condition[0]} LIKE ? AND {condition[1]} LIKE ? LIMIT {count} OFFSET {(page - 1)*count}" , ( find_data[0]+ '%', find_data[1] + '%'))
+        cursor.execute(f"SELECT * FROM {self.TableName} WHERE {condition_query} LIMIT {count} OFFSET {(page - 1)*count}" , find_data_query)
         datas = cursor.fetchall()
-        print(datas)
         #  -------- 원하는 data 길이 불러오기 --------
-        cursor.execute(f"SELECT count(*) FROM {self.TableName} WHERE {condition[0]} LIKE ? AND {condition[1]} LIKE ?" , ( find_data[0]+ '%', find_data[1] + '%'))
+        cursor.execute(f"SELECT count(*) FROM {self.TableName} WHERE {condition_query}" , find_data_query)
         data_length = cursor.fetchone()[0]
+
         return {'datas':datas, 'data_length': data_length}
 
     def detail_info(self, FindData):
