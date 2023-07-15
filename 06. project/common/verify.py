@@ -1,6 +1,6 @@
 from flask import Flask, redirect, request
 from functools import wraps
-from common.sqlite_query import SQLite3_query
+from sql.login_query import Login_query
 
 import jwt # JWT 토큰 생성용 라이브러리
 SECRET_KEY = 'SESAC'
@@ -16,7 +16,7 @@ def check_login(f):
         
         try:
             payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
-            find_user = SQLite3_query('user')
+            find_user = Login_query('user')
             user_id = find_user.check_overlap(payload['id'])
             
             if user_id:
