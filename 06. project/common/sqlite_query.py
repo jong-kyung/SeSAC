@@ -53,8 +53,6 @@ class SQLite3_query():
         for find_data in find_datas:
             find_data_query += ('%' + find_data + '%',)
 
-
-        print(args)
         conn = sqlite3.connect('./DB/crm.db')
         cursor = conn.cursor()
         # -------- 원하는 data 전체 불러오기(user, store, item) --------
