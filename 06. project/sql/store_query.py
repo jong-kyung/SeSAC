@@ -1,6 +1,6 @@
 from sql.sqlite_connect import SQLite3_connect
 
-class User_query(SQLite3_connect):   
+class Store_query(SQLite3_connect):   
     def __init__(self, DB_Name, TableName):
         super().__init__(DB_Name)
         self.TableName = TableName
@@ -19,7 +19,6 @@ class User_query(SQLite3_connect):
         find_datas = []
         condition_query = ''
         find_data_query = ()
-        # 조건과 검색내용 분류
         for i in range(len(args)):
             if i%2 == 0 :
                 conditions.append(args[i])
@@ -62,3 +61,5 @@ class User_query(SQLite3_connect):
         result = self.cursor.fetchone()
 
         return result
+
+# TODO : 각 매장별 연매출 출력하는 쿼리문 작성하기

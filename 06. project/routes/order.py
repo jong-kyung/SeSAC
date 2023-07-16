@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, request
 from common.verify import check_login
-from common.sqlite_query import SQLite3_query
+from sql.order_query import Order_query
+
 import math
 
 order = Blueprint('order', __name__)
@@ -12,7 +13,7 @@ def order_list():
     try:
         per_page = 10
 
-        orders = SQLite3_query('orders')
+        orders = Order_query('crm', 'orders')
         headers = orders.schema_query() # schema 받아오기
         result_datas = [] # 결과 데이터 삽입용
         datas = orders.total_data_query(page, per_page)
@@ -43,7 +44,7 @@ def order_list():
 @order.route('/order/<param>')
 @check_login
 def order_info(param):
-    order = SQLite3_query('orders')
+    order = Order_query('crm', 'orders')
     headers = order.schema_query()
     findData = order.detail_info(param)
 

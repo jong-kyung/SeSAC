@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, request
 from common.verify import check_login
-from common.sqlite_query import SQLite3_query
+from sql.item_query import Item_query
+
 import math
 
 item = Blueprint('item', __name__)
@@ -14,11 +15,11 @@ def item_list():
     try:
         per_page = 10
 
-        items = SQLite3_query('items')
+        items = Item_query('crm', 'items')
         headers = items.schema_query() # schema 받아오기
         item_types = items.find_data_query('Type') # Type 받아오기
         result_datas = [] # 결과 데이터 삽입용
-        datas = items.condition_data_query(page, per_page, 'Name', search_name, 'Type', sub_data)
+        datas = items.total_data_query(page, per_page, 'Name', search_name, 'Type', sub_data)
 
         # -------- 페이지네이션 --------
         total_data_len = datas['data_length'] # 데이터 전체 갯수
@@ -48,7 +49,7 @@ def item_list():
 @item.route('/item/<param>')
 @check_login
 def item_info(param):
-    item = SQLite3_query('items')
+    item = Item_query('crm', 'items')
     headers = item.schema_query()
     findData = item.detail_info(param)
 

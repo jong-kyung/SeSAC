@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, request
 from common.verify import check_login
-from common.sqlite_query import SQLite3_query
+from sql.store_query import Store_query
+
 import math
 
 store = Blueprint('store', __name__)
@@ -14,11 +15,11 @@ def store_list():
     try:
         per_page = 10
         
-        stores = SQLite3_query('stores')
+        stores = Store_query('crm', 'stores')
         headers = stores.schema_query() # schema 받아오기
         store_types = stores.find_data_query('Type') # Type 받아오기
         result_datas = [] # 결과 데이터 삽입용
-        datas = stores.condition_data_query(page, per_page, 'Name', search_name, 'Type', sub_data)
+        datas = stores.total_data_query(page, per_page, 'Name', search_name, 'Type', sub_data)
         print(search_name, sub_data) 
 
         # -------- 페이지네이션 --------
@@ -47,7 +48,7 @@ def store_list():
 @store.route('/store/<param>')
 @check_login
 def store_info(param):
-    store = SQLite3_query('stores')
+    store = Store_query('crm', 'stores')
     headers = store.schema_query()
     findData = store.detail_info(param)
 

@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, request
 from common.verify import check_login
-from common.sqlite_query import SQLite3_query
+from sql.user_query import User_query
 
 import math
 
@@ -16,10 +16,10 @@ def user_list():
     try:
         per_page = 10
 
-        users = SQLite3_query('users')
+        users = User_query('crm', 'users')
         headers = users.schema_query() # schema 받아오기
         result_datas = [] # 결과 데이터 삽입용
-        datas = users.condition_data_query(page, per_page, 'Name', search_name, 'Gender', sub_data)
+        datas = users.total_data_query(page, per_page, 'Name', search_name, 'Gender', sub_data)
 
         # -------- 페이지네이션 --------
         total_data_len = datas['data_length'] # 데이터 전체 갯수
@@ -49,8 +49,9 @@ def user_list():
 @user.route('/user/<param>')
 @check_login
 def user_info(param):
-    user = SQLite3_query('users')
+    user = User_query('crm', 'users')
     headers = user.schema_query()
+    print(headers)
     findData = user.detail_info(param)
 
     return render_template('component/user_detail.html', headers=headers,datas=findData)

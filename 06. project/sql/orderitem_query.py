@@ -1,7 +1,7 @@
 import sqlite3
 from sql.sqlite_connect import SQLite3_connect
 
-class Order_query(SQLite3_connect):   
+class OrderItem_query(SQLite3_connect):   
     def __init__(self, DB_Name, TableName):
         super().__init__(DB_Name)
         self.TableName = TableName
