@@ -1,0 +1,73 @@
+{% extends './common/detail.html' %}
+{% block h1 %}
+    <h1>{{ datas[1] }}</h1>
+{% endblock %}
+{% block nav %}
+    {% include './nav/nav_base.html' %}
+{% endblock %}
+
+{% block content %}
+<h2>매장 정보</h2>
+<table class="table table-striped">
+    <thead>
+        {% for header in headers[1:(headers|length)] %}
+        <td>{{ header }}</td>
+        {% endfor %}
+    </thead>
+    <tr>
+    {% for data in datas[1:datas|length] %}
+        <td>{{ data }}</td>
+    {% endfor %}
+    </tr>
+</table>
+<h2>월간 매출액</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td>Month</td>
+            <td>Revenue</td>
+        </tr>
+    </thead>
+        {% for revenue in revenues %}
+        <tr>
+            <td>{{ revenue[0] }}</td>
+            <td>{{ revenue[1] }}</td>
+        </tr>
+        {% endfor %}
+</table>
+{% endblock %}
+{% block canvas %}
+<div class="container revenue p-3">
+    <canvas id="revenue"></canvas>
+</div>
+{% endblock %}
+{% block chart %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    let month = [];
+    let price = [];
+    {{ revenues|tojson }}.forEach(element => {
+        month.push(element[0].slice(5,7))
+        price.push(element[1])
+    });
+    const ctx = document.getElementById('revenue');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+        labels: month,
+        datasets: [{
+            label: 'Monthly sale',
+            data: price,
+            borderWidth: 1
+        }]
+        },
+        options: {
+        scales: {
+            y: {
+            beginAtZero: true
+            }
+        }
+        }
+  });
+</script>
+{% endblock %}

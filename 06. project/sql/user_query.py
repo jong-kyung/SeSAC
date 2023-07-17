@@ -62,3 +62,16 @@ class User_query(SQLite3_connect):
         result = self.cursor.fetchone()
 
         return result
+    
+    def store_rate(self, UserID):
+        self.cursor.execute(f'''
+                            SELECT stores.Id ,stores.Name, count(orders.Id) AS count FROM stores 
+                            INNER JOIN orders ON stores.Id = orders.StoreId
+                            INNER JOIN orderitems ON orders.Id = orderitems.OrderId
+                            INNER JOIN {self.TableName} ON orders.UserId = {self.TableName}.Id WHERE {self.TableName}.Id = '{UserID}'
+                            GROUP BY stores.Name 
+                            ORDER BY count DESC
+                            LIMIT 5''')
+        result = self.cursor.fetchall()
+
+        return result

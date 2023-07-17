@@ -48,4 +48,4 @@ def order_info(param):
     headers = order.schema_query()
     findData = order.detail_info(param)
 
-    return render_template('search_detail.html', headers=headers,datas=findData)
+    return render_template('./component/order_detail.html', headers=headers,datas=findData)

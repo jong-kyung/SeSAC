@@ -53,4 +53,4 @@ def item_info(param):
     headers = item.schema_query()
     findData = item.detail_info(param)
 
-    return render_template('search_detail.html', headers=headers,datas=findData)
+    return render_template('./component/item_detail.html', headers=headers,datas=findData)

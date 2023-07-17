@@ -51,5 +51,6 @@ def store_info(param):
     store = Store_query('crm', 'stores')
     headers = store.schema_query()
     findData = store.detail_info(param)
-
-    return render_template('search_detail.html', headers=headers,datas=findData)
+    Revenues = store.monthly_sale(param)
+    
+    return render_template('./component/store_detail.html', headers=headers, datas=findData, revenues = Revenues)

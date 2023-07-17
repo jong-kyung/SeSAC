@@ -51,7 +51,7 @@ def user_list():
 def user_info(param):
     user = User_query('crm', 'users')
     headers = user.schema_query()
-    print(headers)
     findData = user.detail_info(param)
+    stores = user.store_rate(param)
 
-    return render_template('component/user_detail.html', headers=headers,datas=findData)
+    return render_template('component/user_detail.html', headers=headers, datas=findData, stores = stores)

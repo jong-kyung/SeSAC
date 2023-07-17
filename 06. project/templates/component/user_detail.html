@@ -1,6 +1,6 @@
 {% extends './common/detail.html' %}
 {% block h1 %}
-    <h1>{{ datas[1] }}의 정보</h1>
+    <h1>{{ datas[1] }}</h1>
 {% endblock %}
 
 {% block nav %}
@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block content %}
+<h2>사용자 정보</h2>
 <table class="table table-striped">
     <thead>
         {% for header in headers[1:(headers|length)] %}
@@ -19,5 +20,18 @@
         <td>{{ data }}</td>
     {% endfor %}
     </tr>
+</table>
+<h2>자주 방문한 매장</h2>
+<table class="table table-striped">
+    <thead>
+        <td>매장명</td>
+        <td>방문 횟수</td>
+    </thead>
+    {% for store in stores %}
+    <tr>
+        <td><a href="../store/{{ store[0] }}">{{ store[1] }}</a></td>
+        <td>{{ store[2] }}</td>
+    </tr>
+    {% endfor %}
 </table>
 {% endblock %}
