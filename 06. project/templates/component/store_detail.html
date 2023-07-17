@@ -26,12 +26,14 @@
         <tr>
             <td>Month</td>
             <td>Revenue</td>
+            <td>Item Count</td>
         </tr>
     </thead>
         {% for revenue in revenues %}
         <tr>
-            <td>{{ revenue[0] }}</td>
-            <td>{{ revenue[1] }}</td>
+            {% for i in range(revenue|length) %}
+                <td>{{ revenue[i] }}</td>
+            {% endfor %}
         </tr>
         {% endfor %}
 </table>

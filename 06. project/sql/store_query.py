@@ -64,7 +64,7 @@ class Store_query(SQLite3_connect):
 
 # TODO : 각 매장별 연매출 출력하는 쿼리문 작성하기
     def monthly_sale(self, store_ID):
-        self.cursor.execute(f'''SELECT substr(orders.OrderAt,1,7) AS Month, SUM(items.price) AS Revenue FROM {self.TableName} 
+        self.cursor.execute(f'''SELECT substr(orders.OrderAt,1,7) AS Month, SUM(items.price) AS Revenue, count(items.Id) AS count FROM {self.TableName} 
                             INNER JOIN orders ON {self.TableName}.Id = orders.StoreId 
                             INNER JOIN orderitems ON orders.Id = orderitems.OrderId 
                             INNER JOIN items ON orderitems.ItemId = items.Id WHERE stores.Id = ? 
