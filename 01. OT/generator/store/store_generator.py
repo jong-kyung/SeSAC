@@ -13,8 +13,9 @@ class StoreGenerator(Generator):
     def generator(self):
         store_id = uuid.uuid4()
         store_type = self.store_type.generate_name()
-        address = self.address.generate_address()[0]
-        store_name = f'{store_type} {self.address.generate_address()[1]}'
+        total_adress = self.address.generate_address()
+        address = total_adress[0]
+        store_name = f'{store_type} {total_adress[1]}'
 
         return Store(store_id, store_name, store_type, address).get_info()
         

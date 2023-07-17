@@ -21,5 +21,5 @@ class AddressGenerator:
         sub = random.choice(self.sub_address)
         street1 = random.randint(1, 100)
         street2 = random.randint(1, 100)
-        return f'{city} {sub} {street1}길 {street2}' , f'{sub} {street1}호점' # 호점 -> 변수로 바꿔야함 (언어마다 다르게 해줘야하기 때문)
+        return f'{city} {sub} {street1}길 {street2}' , f'{sub} {street2}호점' # 호점 -> 변수로 바꿔야함 (언어마다 다르게 해줘야하기 때문)
         
