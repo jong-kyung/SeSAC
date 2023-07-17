@@ -36,8 +36,13 @@ class User_query(SQLite3_connect):
                 condition_query += f'{conditions[num]} LIKE ? AND '
 
         # 검색내용 튜플에 넣기
-        for find_data in find_datas:
-            find_data_query += ('%' + find_data + '%',)
+        # TODO 비효율적인거같은데 고쳐야할듯?
+        for i in range(len(find_datas)):
+            if i == 1:
+                find_data_query += (f'{find_datas[i]}%',)
+            else:
+                find_data_query += (f'%{find_datas[i]}%',)
+
 
         # -------- 원하는 data 전체 불러오기 --------
         self.cursor.execute(f"SELECT * FROM {self.TableName} WHERE {condition_query} LIMIT {count} OFFSET {(page - 1)*count}" , find_data_query)

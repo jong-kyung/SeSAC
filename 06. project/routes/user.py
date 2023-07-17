@@ -12,10 +12,10 @@ user = Blueprint('user', __name__)
 def user_list():  
     page = request.args.get('page', default=1, type=int) 
     search_name = request.args.get('name', default='', type=str)
-    sub_data = request.args.get('sub-data', default='', type=str)
+    sub_data = request.args.get('sub_data', default='', type=str)
     try:
         per_page = 10
-
+  
         users = User_query('crm', 'users')
         headers = users.schema_query() # schema 받아오기
         result_datas = [] # 결과 데이터 삽입용
@@ -38,7 +38,7 @@ def user_list():
        # 페이지네이션
         start_page = page - (page-1) % 5 # 5개 단위로 끊기
         end_page = min(start_page + 4, page_range) # 끝페이지 정해주기
-        
+
         return render_template('component/user.html', search_name = search_name, sub_data = sub_data, page = page, headers = headers, datas = result_datas, page_range = page_range, start_page = start_page, end_page = end_page)
     
     except TypeError:

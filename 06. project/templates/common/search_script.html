@@ -2,7 +2,7 @@
     const options = document.querySelectorAll('option')
     options.forEach((a, i) => {
         if (a.value == '{{ sub_data }}') {
-            console.log(a.value, '{{ sub_data }}')
+            a.setAttribute('selected', 'selected')
         } else {
             a.removeAttribute('selected')
         }
