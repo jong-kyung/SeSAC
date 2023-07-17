@@ -11,7 +11,7 @@ store = Blueprint('store', __name__)
 def store_list():  
     page = request.args.get('page', default=1, type=int) 
     search_name = request.args.get('name', default='', type=str)
-    sub_data = request.args.get('sub-data', default='', type=str)
+    sub_data = request.args.get('sub_data', default='', type=str)
     try:
         per_page = 10
         
@@ -51,7 +51,15 @@ def store_info(param):
     store = Store_query('crm', 'stores')
     headers = store.schema_query()
     findData = store.detail_info(param)
-    Revenues = store.monthly_sale(param)
-    print(Revenues)
+    revenues = store.monthly_sale(param)
+    users = store.visit_users(param)
 
-    return render_template('./component/store_detail.html', headers=headers, datas=findData, revenues = Revenues)
+    return render_template('./component/store_detail.html', headers=headers, datas=findData, revenues = revenues, users = users)
+
+@store.route('/store/map')
+@check_login
+def store_map():
+    store = Store_query('crm', 'stores')
+    cities = store.city_frequency()
+
+    return render_template('./component/store_map.html', cities = cities)

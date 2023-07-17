@@ -11,7 +11,7 @@ item = Blueprint('item', __name__)
 def item_list():  
     page = request.args.get('page', default=1, type=int) 
     search_name = request.args.get('name', default='', type=str)
-    sub_data = request.args.get('sub-data', default='', type=str)
+    sub_data = request.args.get('sub_data', default='', type=str)
     try:
         per_page = 10
 

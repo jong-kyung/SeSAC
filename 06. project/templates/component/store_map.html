@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRM HomePage</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        #map {
+            width: 100%;
+            height: 1000px;
+        }
+
+        .text-container{
+            text-align: center;
+            color:white;
+            font-weight:bold;
+            font-size:13px
+        }
+    </style>
+</head>
+<body>
+    <div class="container p-3">
+        <h1>CRM HomePage</h1>
+    </div>
+    <div class="container">
+    {% include 'nav/nav_base.html' %}
+    </div>
+    <div class="container mt-3">
+        <div id="map"></div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        let cities = {
+            '강남구': [[37.51, 127.04]],
+            '강동구': [[37.52, 127.12]],
+            '강북구': [[37.63, 127.02]],
+            '강서구': [[37.54, 126.85]],
+            '관악구': [[37.47, 126.95]],
+            '광진구': [[37.53, 127.08]],
+            '구로구': [[37.49, 126.88]],
+            '금천구': [[37.44, 126.90]],
+            '노원구': [[37.65, 127.05]],
+            '도봉구': [[37.66, 127.04]],
+            '동대문구': [[37.57, 127.04]],
+            '동작구': [[37.50, 126.94]],
+            '마포구': [[37.56, 126.91]],
+            '서대문구': [[37.57, 126.93]],
+            '서초구': [[37.48, 127.03]],
+            '성동구': [[37.56, 127.039]],
+            '성북구': [[37.58, 127.02]],
+            '송파구': [[37.51, 127.10]],
+            '양천구': [[37.51, 126.86]],
+            '영등포구': [[37.52, 126.89]],
+            '용산구': [[37.53, 126.96]],
+            '은평구': [[37.59, 126.93]],
+            '종로구': [[37.57, 126.98]],
+            '중구': [[37.57, 127.02]],
+            '중랑구': [[37.60, 127.09]],
+    }
+
+    // SQL 데이터 가져오기
+    let datas = {{ cities|tojson }}
+    // 데이터를 삽입하기
+    for(var key in cities) {
+        datas.forEach(element => {
+            if (key == element[0]) {
+                cities[key].push(element[1])
+            }
+        });
+    }
+
+    var map = L.map('map').setView([37.55, 126.98], 11.5);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 13,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+    
+    for (var key in cities) {
+        console.log(key)
+
+        var circle = L.circle(cities[key][0],{
+            color:'red',
+            fillColor: '#f03',
+            fillOpacity: 0.5,
+            radius: cities[key][1]*40
+        }).addTo(map)
+        
+        var label = L.marker(circle.getLatLng(), {
+            icon: L.divIcon({
+                className: 'text-container',
+                html:`${key}`,
+                iconSize: [50,20],
+                fillOpacity:0
+            })
+        }).addTo(map)
+    }
+
+    </script>
+</body>
+</html>

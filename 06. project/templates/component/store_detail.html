@@ -37,6 +37,19 @@
         </tr>
         {% endfor %}
 </table>
+<h2>방문한 고객</h2>
+<table class="table table-striped">
+    <thead>
+        <td>Name</td>
+        <td>Fequency</td>
+    </thead>
+    {% for user in users %}
+        <tr>
+            <td><a href="../user/{{ user[0] }}">{{ user[1] }}</a></td>
+            <td>{{ user[2] }}</td>
+        </tr>
+    {% endfor %}
+</table>
 {% endblock %}
 {% block canvas %}
 <div class="container revenue p-3">

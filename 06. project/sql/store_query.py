@@ -62,7 +62,6 @@ class Store_query(SQLite3_connect):
 
         return result
 
-# TODO : 각 매장별 연매출 출력하는 쿼리문 작성하기
     def monthly_sale(self, store_ID):
         self.cursor.execute(f'''SELECT substr(orders.OrderAt,1,7) AS Month, SUM(items.price) AS Revenue, count(items.Id) AS count FROM {self.TableName} 
                             INNER JOIN orders ON {self.TableName}.Id = orders.StoreId 
@@ -70,6 +69,25 @@ class Store_query(SQLite3_connect):
                             INNER JOIN items ON orderitems.ItemId = items.Id WHERE stores.Id = ? 
                             GROUP BY stores.Name, Month 
                             ORDER BY Month''', (store_ID,))
+        result = self.cursor.fetchall()
+
+        return result
+    
+    def visit_users(self, store_ID):
+        self.cursor.execute(f'''SELECT users.Id, users.name, count(orders.StoreID) AS count FROM users 
+                            INNER JOIN orders ON users.Id = orders.UserId
+                            WHERE orders.StoreId = '{store_ID}'
+                            GROUP BY users.name
+                            ORDER BY count DESC
+                            ''')
+        result = self.cursor.fetchall()
+        
+        return result
+
+    def city_frequency(self):
+        self.cursor.execute(f'''SELECT 
+            SUBSTR(address, INSTR(address, ' ') + 1, INSTR(SUBSTR(address, INSTR(address, ' ') + 1), ' ') - 1)   AS city, count(address)
+            FROM stores GROUP BY city''')
         result = self.cursor.fetchall()
 
         return result
