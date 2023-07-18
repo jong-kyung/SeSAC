@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, request
+from flask import Blueprint, render_template, redirect, url_for, make_response, request
 
 import math
 
@@ -94,3 +94,12 @@ def item_ui(store_id):
 @check_user
 def kiosk_result(store_id, item_id):
     return print('hi')
+
+@kiosk.route('/kiosk/logout')
+@check_user
+def logout():
+    response = make_response(redirect('/'))
+    response.delete_cookie('token')
+    
+    return response
+
