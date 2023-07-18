@@ -1,6 +1,9 @@
 import jwt
 from flask import Flask, url_for, redirect, render_template, request
 
+# * SQL 쿼리 접근
+from sql.login_query import Login_query
+
 # * Router 정의
 from routes.auth import auth
 from routes.user import user
@@ -25,12 +28,18 @@ app.register_blueprint(kiosk)
 @app.route('/')
 def root():
     token = request.cookies.get('token') # 토큰 받아오기
+    find_user = Login_query('auth', 'users')
+    find_admin = Login_query('auth', 'admin')
     
     if token is None:
         return render_template('login.html')
     try:
-        jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
-        return redirect(url_for('user.user_list'))
+        payload =jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+
+        if find_admin.user_info(payload['id']):
+            return redirect(url_for('user.user_list'))
+        elif find_user.user_info(payload['id']):
+            return redirect(url_for('kiosk.store_ui'))
     except jwt.exceptions.ExpiredSignatureError:
         return render_template('login.html')
     

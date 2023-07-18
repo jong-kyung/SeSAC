@@ -1,0 +1,16 @@
+{% extends './common/order_base.html' %}
+{% block content %}
+<div class="container item-list">
+    <div class="row row-cols-4 justify-content-center">
+        {% for data in datas %}
+        <a class="card col m-3" style="width: 20rem;" href="{{ current_url }}/{{ data[0] }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ data[1] }}</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">{{ data[3] }}</h6>
+                <button type="submit" class="card-link btn btn-primary">선택</button>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

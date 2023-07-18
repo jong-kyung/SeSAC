@@ -6,18 +6,18 @@ class Login_query(SQLite3_connect):
         self.TableName = TableName
 
     def check_overlap(self, param):
-        self.cursor.execute(f"SELECT username FROM {self.TableName} WHERE UserName = ?", (param, ))
+        self.cursor.execute(f"SELECT Username FROM {self.TableName} WHERE Username = ?", (param, ))
         user_id = self.cursor.fetchone()
 
         return user_id
     
     def insert_user_id(self, user_id):
-        self.cursor.execute(f"INSERT INTO {self.TableName} (UserName, Password) VALUES (?, ?)", user_id)
+        self.cursor.execute(f"INSERT INTO {self.TableName} (Username, Password) VALUES (?, ?)", user_id)
         self.connection.commit()
         self.connection.close()
 
     def user_auth(self, id, pw):
-        self.cursor.execute(f"SELECT UserName, Password FROM {self.TableName} WHERE UserName = ? AND Password = ?", (id, pw))
+        self.cursor.execute(f"SELECT Username, Password FROM {self.TableName} WHERE UserName = ? AND Password = ?", (id, pw))
         result = self.cursor.fetchone()
         self.connection.close()
         
@@ -27,3 +27,11 @@ class Login_query(SQLite3_connect):
         self.cursor.execute(f"INSERT INTO {self.TableName} (Id, Name, Gender, Birthdate, Address) VALUES (?, ?, ?, ?, ?)", user_info)
         self.connection.commit()
         self.connection.close()
+
+    def user_info(self, user_name):
+        self.cursor.execute(f"SELECT Username FROM {self.TableName} WHERE Username = ?", (user_name,))
+        result = self.cursor.fetchone()
+        self.connection.close()
+        
+        return result
+

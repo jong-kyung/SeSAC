@@ -1,4 +1,4 @@
-from flask import Flask, redirect, request
+from flask import redirect, request
 from functools import wraps
 from sql.login_query import Login_query
 
