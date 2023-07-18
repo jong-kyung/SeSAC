@@ -35,17 +35,7 @@ def orderitem_list():
         start_page = page - (page-1) % 5 # 5개 단위로 끊기
         end_page = min(start_page + 4, page_range) # 끝페이지 정해주기
         
-        return render_template('kiosk/store.html',page = page, headers = headers, datas = result_datas, page_range = page_range, start_page = start_page, end_page = end_page)
+        return render_template('component/orderitem.html',page = page, headers = headers, datas = result_datas, page_range = page_range, start_page = start_page, end_page = end_page)
     
     except TypeError:
         return redirect('orderitem', next='/1')
-
-
-@orderitem.route('/orderitem/<param>')
-@check_admin
-def orderitem_info(param):
-    orderitem = OrderItem_query('crm', 'orderitems')
-    headers = orderitem.schema_query()
-    findData = orderitem.detail_info(param)
-
-    return render_template('search_detail.html', headers=headers, datas=findData)
