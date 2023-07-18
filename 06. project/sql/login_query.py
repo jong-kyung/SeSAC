@@ -12,8 +12,8 @@ class Login_query(SQLite3_connect):
 
         return user_id
     
-    def insert_user(self, param):
-        self.cursor.execute(f"INSERT INTO {self.TableName}(UserName, Password) VALUES (?, ?)", param)
+    def insert_user_id(self, param):
+        self.cursor.execute(f"INSERT INTO {self.TableName} (UserName, Password) VALUES (?, ?)", param)
         self.connection.commit()
         self.connection.close()
 
@@ -21,6 +21,10 @@ class Login_query(SQLite3_connect):
         self.cursor.execute(f"SELECT UserName, Password FROM {self.TableName} WHERE UserName = ? AND Password = ?", (id, pw))
         result = self.cursor.fetchone()
         self.connection.close()
-
-
+        
         return result
+
+    def insert_user_info(self, param):
+        self.cursor.execute(f"INSERT INTO {self.TableName} (Id, Name, Gender, Birthdate, Address) VALUES (?, ?, ?, ?, ?)", param)
+        self.connection.commit()
+        self.connection.close()
