@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, redirect, url_for, request
-from common.verify import check_login
+from common.verify import check_admin
 from sql.user_query import User_query
 
 import math
@@ -8,7 +8,7 @@ user = Blueprint('user', __name__)
 
 # TODO : 만약 주소창에 -1을 입력할경우엔 어떻게 할것인지?
 @user.route('/user')
-@check_login
+@check_admin
 def user_list():  
     page = request.args.get('page', default=1, type=int) 
     search_name = request.args.get('name', default='', type=str)
@@ -47,7 +47,7 @@ def user_list():
 
 
 @user.route('/user/<param>')
-@check_login
+@check_admin
 def user_info(param):
     user = User_query('crm', 'users')
     headers = user.schema_query()

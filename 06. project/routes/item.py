@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, redirect, url_for, request
-from common.verify import check_login
+from common.verify import check_admin
 from sql.item_query import Item_query
 
 import math
@@ -7,7 +7,7 @@ import math
 item = Blueprint('item', __name__)
 
 @item.route('/item')
-@check_login
+@check_admin
 def item_list():  
     page = request.args.get('page', default=1, type=int) 
     search_name = request.args.get('name', default='', type=str)
@@ -47,7 +47,7 @@ def item_list():
 
 
 @item.route('/item/<param>')
-@check_login
+@check_admin
 def item_info(param):
     item = Item_query('crm', 'items')
     headers = item.schema_query()

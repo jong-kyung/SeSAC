@@ -6,7 +6,7 @@ import uuid
 from flask import Blueprint, make_response, redirect, url_for, jsonify, request
 
 from sql.login_query import Login_query
-from common.verify import check_login
+from common.verify import check_admin
 
 SECRET_KEY = 'SESAC'
 
@@ -40,7 +40,7 @@ def sign_up():
     else:
         find_user.insert_user_id(save_data)
         crm_user.insert_user_info(user_info)
-        
+
         return redirect('/')
                
 
@@ -50,23 +50,38 @@ def login():
     pw = request.form['pw']
     pw_hash = hashlib.sha256(pw.encode('utf-8')).hexdigest()
 
-    find_user = Login_query('auth', 'user')
+    find_user = Login_query('auth', 'users')
+    find_admin = Login_query('auth', 'admin')
+
     user_id = find_user.user_auth(id, pw_hash)
+    admin_id = find_admin.user_auth(id, pw_hash)
     if user_id:
         payload = {
             'id': id,
             'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=60*30)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
+        response = make_response(redirect(url_for('kiosk.main_ui'))) # 응답객체 생성
+        
+        response.set_cookie('token', token, httponly=True) # 토큰을 쿠키에 저장
+        return response
+    
+    elif admin_id:
+        payload = {
+            'id': id,
+        }
+        
+        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
         response = make_response(redirect(url_for('user.user_list'))) # 응답객체 생성
         
         response.set_cookie('token', token, httponly=True) # 토큰을 쿠키에 저장
         return response
+    
     else:
         return jsonify({'result':'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다'})
     
 @auth.route('/logout')
-@check_login
+@check_admin
 def logout():
     response = make_response(redirect('/'))
     response.delete_cookie('token')

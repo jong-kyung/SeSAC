@@ -8,7 +8,6 @@ class Login_query(SQLite3_connect):
     def check_overlap(self, param):
         self.cursor.execute(f"SELECT username FROM {self.TableName} WHERE UserName = ?", (param, ))
         user_id = self.cursor.fetchone()
-        self.connection.close()
 
         return user_id
     

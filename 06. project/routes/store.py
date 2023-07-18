@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, redirect, url_for, request
-from common.verify import check_login
+from common.verify import check_admin
 from sql.store_query import Store_query
 
 import math
@@ -7,7 +7,7 @@ import math
 store = Blueprint('store', __name__)
 
 @store.route('/store')
-@check_login
+@check_admin
 def store_list():  
     page = request.args.get('page', default=1, type=int) 
     search_name = request.args.get('name', default='', type=str)
@@ -46,7 +46,7 @@ def store_list():
         return redirect('store', next='/1')
 
 @store.route('/store/<param>')
-@check_login
+@check_admin
 def store_info(param):
     store = Store_query('crm', 'stores')
     headers = store.schema_query()
@@ -57,7 +57,7 @@ def store_info(param):
     return render_template('./component/store_detail.html', headers=headers, datas=findData, revenues = revenues, users = users)
 
 @store.route('/store/map')
-@check_login
+@check_admin
 def store_map():
     store = Store_query('crm', 'stores')
     cities = store.city_frequency()

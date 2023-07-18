@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, redirect, url_for, request
-from common.verify import check_login
+from common.verify import check_admin
 from sql.order_query import Order_query
 
 import math
@@ -7,7 +7,7 @@ import math
 order = Blueprint('order', __name__)
 
 @order.route('/order')
-@check_login
+@check_admin
 def order_list():  
     page = request.args.get('page', default=1, type=int) 
     try:
@@ -42,7 +42,7 @@ def order_list():
 
 
 @order.route('/order/<param>')
-@check_login
+@check_admin
 def order_info(param):
     order = Order_query('crm', 'orders')
     headers = order.schema_query()

@@ -65,29 +65,32 @@
         const symbol_regex = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
         const korean_regex = /[ㄱ-ㅎ가-힣]/g;
 
-        // let id = document.querySelector('#sign_id')
-        // let password = document.querySelector('#sign_pw')
-        // function check_regex(param) {
-        //     if (space_regex.test(param)) {
-        //         alert('공백은 사용할 수 없습니다')
-        //     } else if (symbol_regex.test(param)) {
-        //         alert('!,@,# 을 이용해주세요.')
-        //     } else if (korean_regex.test(param)) {
-        //         alert('한글을 사용할 수 없습니다.')
-        //     } else if (param == '') {
-        //         alert('장난치지말고 입력좀요~')
-        //     } else {
-        //         return true
-        //     }
-        // }
+        let id = document.querySelector('#sign_id')
+        let password = document.querySelector('#sign_pw')
+        let name = document.querySelector('#user_name')
+        let address = document.querySelector('#user_address')
 
-        // document.querySelector('#sign-up').addEventListener('click', function (e) {
-        //     e.preventDefault()
-        //     if (check_regex(id.value) && check_regex(password.value)) {
-        //         this.parentNode.submit()
-        //         alert('회원가입이 되었습니다')
-        //     }
-        // })
+        function check_regex(...param) {
+            if (space_regex.test(...param)) {
+                alert('공백은 사용할 수 없습니다')
+            } else if (symbol_regex.test(...param)) {
+                alert('!,@,# 을 이용해주세요.')
+            } else if (korean_regex.test(...param)) {
+                alert('한글을 사용할 수 없습니다.')
+            } else if (param.includes('')) {
+                alert('장난치지말고 입력좀요~')
+            } else {
+                return true
+            }
+        }
+        document.querySelector('#sign-up').addEventListener('click', function (e) {
+            e.preventDefault()
+            console.log(id.value,password.value)
+            if (check_regex(id.value, password.value)) {
+                this.parentNode.submit()
+                alert('회원가입이 되었습니다')
+            }
+        })
     </script>
 </body>
 
