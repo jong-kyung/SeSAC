@@ -1,7 +1,93 @@
 {% extends './common/order_base.html' %}
 {% block content %}
-{% include './kiosk/kiosk_list.html' %}
+<div class="container d-flex">
+    <div class="row row-cols-4 justify-content-center">
+        {% for data in datas %}
+        <div class="card col m-3" style="width: 18rem;" href="{{ current_url }}/{{ data[0] }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ data[1] }}</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">{{ data[3] }}</h6>
+                <button class="card-link btn btn-primary">선택</button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="row border border-dark-subtle rounded-1 p-3" style="width:1500px;height: 500px;">
+        <div>
+            <h6>주문목록</h6>
+            <table class="table order_list">
+                <thead>
+                    <td>상품명</td>
+                    <td>상품명</td>
+                    <td>가격</td>
+                </thead>
+            </table>
+            <button class="btn btn-light mt-2" type="submit">구매</button>
+        </div>
+    </div>
+</div>
 <div class="container" style="text-align: center;">
     <a class='btn btn-primary' href="javascript:history.back()">back</a>
 </div>
+{% endblock %}
+
+{% block purchase %}
+<script>
+// 아이템 card를 클릭하면 card내의 이름과 가격이 주문목록에 추가되게
+const cards = document.querySelectorAll('.card-body')
+const order_list = document.querySelector('.order_list') 
+
+let item_name,item_price;
+let item_list = []
+
+let cart = []
+
+cards.forEach((a,i)=>{
+    let buttons = a.lastElementChild
+    buttons.addEventListener('click',(e)=>{
+        item_name = e.currentTarget.previousElementSibling.previousElementSibling.innerText; // 상품명
+        item_price = Number(e.currentTarget.previousElementSibling.innerText) // 상품가격
+        let total_count = 0;
+        let total_price = 0;
+
+        let cart_index = cart.findIndex(a => { return a.name == item_name}) // cart 어레이에서 상품명이 있는지 찾기
+        if (cart_index == -1){
+            cart.push({'name':item_name, 'price':item_price, 'count':1})
+        } else {
+            cart[cart_index].count++;
+            cart[cart_index].price = item_price*cart[cart_index].count
+        }
+
+        order_list.innerHTML = `
+            <thead>
+                <td>상품명</td>
+                <td>상품명</td>
+                <td>가격</td>
+            </thead>` // 계속 추가되게하려면 초기화 해줘야함
+        
+        cart.forEach((a,i)=>{
+            total_count += a.count
+            total_price += a.price
+            order_list.insertAdjacentHTML('beforeend',
+            `
+            <tr>
+                <td class='item_name'>${a.name}</td>
+                <td class='item_count'>${a.count}</td>
+                <td class='item_price'>${a.price}</td>
+            </tr>`
+            )  
+        })
+
+
+        order_list.insertAdjacentHTML('beforeend',
+        `
+        <tr class='table-danger'>
+            <td>합계</td>
+            <td>${total_count}</td>
+            <td>${total_price}</td>
+        </tr>
+        `)
+    })
+})
+</script>
 {% endblock %}

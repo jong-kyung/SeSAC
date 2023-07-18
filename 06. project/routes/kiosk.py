@@ -5,8 +5,7 @@ import math
 from common.verify import check_user
 from sql.store_query import Store_query
 from sql.item_query import Item_query
-from sql.order_query import Order_query
-from sql.orderitem_query import OrderItem_query
+from sql.kiosk_query import Kiosk_query
 
 kiosk = Blueprint('kiosk', __name__)
 
@@ -59,7 +58,7 @@ def item_ui(store_id):
     current_url = request.path
 
     try:
-        per_page = 9
+        per_page = 15
 
         items = Item_query('crm', 'items')
         headers = items.schema_query() # schema 받아오기
@@ -89,13 +88,6 @@ def item_ui(store_id):
         
     except TypeError:
         return redirect('kiosk', next='/1')
-
-@kiosk.route('/kiosk/<store_id>/<item_id>')
-@check_user
-def kiosk_result(store_id, item_id):
-
-
-    return render_template('kiosk/kiosk_result.html')
 
 @kiosk.route('/kiosk/logout')
 @check_user
