@@ -26,12 +26,13 @@
         <h1>KIOSK</h1>
     </div>
     <div class="container">
-        {% block nav %}
-        {% endblock %}
-    </div>
-    <div class="container">
-        {% block content %}
-        {% endblock %}
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">스타벅스</h5>
+              <h6 class="card-subtitle mb-2 text-body-secondary">스타벅스 양천구 8호점</h6>
+              <a href="#" class="card-link btn btn-primary">선택</a>
+            </div>
+          </div>
     </div>
     <div class="container mt-3">
         {% include './common/pagination.html' %}

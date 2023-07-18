@@ -55,13 +55,14 @@ def login():
 
     user_id = find_user.user_auth(id, pw_hash)
     admin_id = find_admin.user_auth(id, pw_hash)
+    
     if user_id:
         payload = {
             'id': id,
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=60*30)
+            # 'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=60*30)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
-        response = make_response(redirect(url_for('kiosk.main_ui'))) # 응답객체 생성
+        response = make_response(redirect(url_for('kiosk.store_ui'))) # 응답객체 생성
         
         response.set_cookie('token', token, httponly=True) # 토큰을 쿠키에 저장
         return response

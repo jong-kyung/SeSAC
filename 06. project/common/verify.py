@@ -38,7 +38,7 @@ def check_user(f):
         
         try:
             payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
-            find_user = Login_query('auth', 'user')
+            find_user = Login_query('auth', 'users')
             user_id = find_user.check_overlap(payload['id'])
             
             if user_id:

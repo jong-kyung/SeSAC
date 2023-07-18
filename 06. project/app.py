@@ -8,6 +8,7 @@ from routes.store import store
 from routes.item import item
 from routes.order import order
 from routes.orderitem import orderitem
+from routes.kiosk import kiosk
 
 SECRET_KEY = 'SESAC'
 
@@ -19,6 +20,7 @@ app.register_blueprint(store)
 app.register_blueprint(item)
 app.register_blueprint(order)
 app.register_blueprint(orderitem)
+app.register_blueprint(kiosk)
 
 @app.route('/')
 def root():
