@@ -45,7 +45,7 @@ def store_ui():
         start_page = page - (page-1) % 5 # 5개 단위로 끊기
         end_page = min(start_page + 4, page_range) # 끝페이지 정해주기
 
-        return render_template('kiosk/kiosk_list.html', search_name = search_name, sub_data = sub_data, page = page, types = store_types, headers = headers, datas = result_datas, page_range = page_range, start_page = start_page, end_page = end_page, current_url = current_url)
+        return render_template('kiosk/store_list.html', search_name = search_name, sub_data = sub_data, page = page, types = store_types, headers = headers, datas = result_datas, page_range = page_range, start_page = start_page, end_page = end_page, current_url = current_url)
     
     except TypeError:
         return redirect('kiosk', next='/1')
@@ -85,7 +85,7 @@ def item_ui(store_id):
         start_page = page - (page-1) % 5 # 5개 단위로 끊기
         end_page = min(start_page + 4, page_range) # 끝페이지 정해주기
         
-        return render_template('kiosk/kiosk_list.html', search_name = search_name, sub_data = sub_data, page = page, types = item_types, headers = headers, datas = result_datas, page_range = page_range, start_page = start_page, end_page = end_page, current_url = current_url)
+        return render_template('kiosk/item_list.html', search_name = search_name, sub_data = sub_data, page = page, types = item_types, headers = headers, datas = result_datas, page_range = page_range, start_page = start_page, end_page = end_page, current_url = current_url)
         
     except TypeError:
         return redirect('kiosk', next='/1')
@@ -93,7 +93,9 @@ def item_ui(store_id):
 @kiosk.route('/kiosk/<store_id>/<item_id>')
 @check_user
 def kiosk_result(store_id, item_id):
-    return print('hi')
+
+
+    return render_template('kiosk/kiosk_result.html')
 
 @kiosk.route('/kiosk/logout')
 @check_user

@@ -26,22 +26,7 @@
     <div class="container p-3">
         <h1>KIOSK</h1>
     </div>
-    <div class="container">
-        <div class="d-inline-flex p-2">
-            <form class="d-flex" role="search" method="get">
-                <input class="form-control me-2 search-item" type="search" placeholder="Search" aria-label="Search"
-                    name="name" value="{{ search_name }}">
-                <select class="form-select me-2" id="inputGroupSelect04" name="sub_data">
-                    <option selected value="">Type</option>
-                    {% for type in types %}
-                    <option value="{{ type }}">{{ type }}</option>
-                    {% endfor %}
-                </select>
-                <button class="btn btn-outline-success search-btn " type="submit">Search</button>
-            </form>
-            <a class="btn btn-danger fw-bold ms-2" href="/kiosk/logout">Log-Out</a>
-        </div>
-    </div>
+    {% include './nav/kiosk_nav.html' %}
     {% block content %}
     {% endblock %}
     <div class="container mt-3">
