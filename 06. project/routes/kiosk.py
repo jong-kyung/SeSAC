@@ -7,7 +7,7 @@ import jwt
 from common.verify import check_user
 from sql.store_query import Store_query
 from sql.item_query import Item_query
-from sql.kiosk_query import Kiosk_query
+from sql.kiosk_query import Kiosk_query, find_user_id
 
 SECRET_KEY = 'SESAC'
 
@@ -93,10 +93,12 @@ def view_result():
         item_info = json.loads(request.cookies.get('item_info'))
         store_id = json.loads(request.cookies.get('store_id'))
         token = request.cookies.get('token') 
-        user_id = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
-        print(user_id['id'])
-        insert_datas = Kiosk_query('crm')
-        # insert_datas.insert_data(item_info, store_id)
+        user_name = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+        user_id = find_user_id(user_name['id'])
+        
+        # DB에 데이터 삽입
+        insert_data = Kiosk_query('crm')
+        insert_data.insert_datas(item_info, store_id, user_id)
 
         return render_template('kiosk/kiosk_result.html',item_info = item_info)
 
