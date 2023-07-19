@@ -1,12 +1,15 @@
-from flask import Blueprint, render_template, redirect, url_for, make_response, jsonify, request
+from flask import Blueprint, render_template, redirect, url_for, make_response, request
 
 import math
-import json
+import json # 쿠키에 데이터를 넣기위해 사용
+import jwt
 
 from common.verify import check_user
 from sql.store_query import Store_query
 from sql.item_query import Item_query
 from sql.kiosk_query import Kiosk_query
+
+SECRET_KEY = 'SESAC'
 
 kiosk = Blueprint('kiosk', __name__)
 
@@ -89,8 +92,12 @@ def view_result():
     else :
         item_info = json.loads(request.cookies.get('item_info'))
         store_id = json.loads(request.cookies.get('store_id'))
+        token = request.cookies.get('token') 
+        user_id = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+        print(user_id['id'])
+        insert_datas = Kiosk_query('crm')
+        # insert_datas.insert_data(item_info, store_id)
 
-        
         return render_template('kiosk/kiosk_result.html',item_info = item_info)
 
 @kiosk.route('/kiosk/logout')

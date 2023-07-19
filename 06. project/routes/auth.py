@@ -28,7 +28,7 @@ def sign_up():
     user_info = (str(user_id), user_name, user_gender, user_birthdate, user_address)
 
     pw_hash = hashlib.sha256(sign_pw.encode('utf-8')).hexdigest() # 해쉬암호화
-    save_data = (sign_id, pw_hash)
+    save_data = (str(user_id), sign_id, pw_hash)
 
     find_user = Login_query('auth', 'users') # 회원가입시 접근하는 DB
     crm_user = Login_query('crm', 'users') # 사용자의 정보를 저장하는 DB

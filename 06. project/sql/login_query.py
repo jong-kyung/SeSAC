@@ -12,12 +12,12 @@ class Login_query(SQLite3_connect):
         return user_id
     
     def insert_user_id(self, user_id):
-        self.cursor.execute(f"INSERT INTO {self.TableName} (Username, Password) VALUES (?, ?)", user_id)
+        self.cursor.execute(f"INSERT INTO {self.TableName} (Id, Username, Password) VALUES (?, ?, ?)", user_id)
         self.connection.commit()
         self.connection.close()
 
     def user_auth(self, id, pw):
-        self.cursor.execute(f"SELECT Username, Password FROM {self.TableName} WHERE UserName = ? AND Password = ?", (id, pw))
+        self.cursor.execute(f"SELECT Username, Password FROM {self.TableName} WHERE Username = ? AND Password = ?", (id, pw))
         result = self.cursor.fetchone()
         self.connection.close()
         
