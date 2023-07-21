@@ -20,7 +20,6 @@ def store_list():
         store_types = stores.find_data_query('Type') # Type 받아오기
         result_datas = [] # 결과 데이터 삽입용
         datas = stores.total_data_query(page, per_page, 'Name', search_name, 'Type', sub_data)
-        print(search_name, sub_data) 
 
         # -------- 페이지네이션 --------
         total_data_len = datas['data_length'] # 데이터 전체 갯수

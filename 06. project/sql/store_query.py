@@ -86,7 +86,7 @@ class Store_query(SQLite3_connect):
 
     def city_frequency(self):
         self.cursor.execute(f'''SELECT 
-            SUBSTR(address, INSTR(address, ' ') + 1, INSTR(SUBSTR(address, INSTR(address, ' ') + 1), ' ') - 1)   AS city, count(address)
+            SUBSTR(address, INSTR(address, ' ') + 1, INSTR(SUBSTR(address, INSTR(address, ' ') + 1), ' ') - 1) AS city, count(address)
             FROM stores GROUP BY city''')
         result = self.cursor.fetchall()
 

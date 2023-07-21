@@ -68,7 +68,7 @@
     // SQL 데이터 가져오기
     let datas = {{ cities|tojson }}
     // 데이터를 삽입하기
-    for(var key in cities) {
+    for(var key in cities) { // Cities object에 쿼리문(횟수) 삽입
         datas.forEach(element => {
             if (key == element[0]) {
                 cities[key].push(element[1])
@@ -83,8 +83,6 @@
     }).addTo(map);
     
     for (var key in cities) {
-        console.log(key)
-
         var circle = L.circle(cities[key][0],{
             color:'red',
             fillColor: '#f03',

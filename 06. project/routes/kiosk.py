@@ -21,6 +21,7 @@ def store_ui():
     sub_data = request.args.get('sub_data', default='', type=str)
     current_url = request.path
 
+    # TODO : 검색후에 이름정렬
     try:
         per_page = 12
   
@@ -80,6 +81,7 @@ def item_ui():
 
         return render_template('kiosk/item_list.html', search_name = search_name, sub_data = sub_data, types = item_types, headers = headers, datas = result_datas)
 
+# TODO : 쿠키 지워주기
 @kiosk.route('/kiosk/result', methods=['GET','POST'])
 @check_user
 def view_result():

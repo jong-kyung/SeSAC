@@ -34,10 +34,10 @@
 {% block purchase %}
 <script>
     // 아이템 card를 클릭하면 card내의 이름과 가격이 주문목록에 추가되게
-    const cards = document.querySelectorAll('.card-body')
-    const order_list = document.querySelector('.order_list')
+    const cards = document.querySelectorAll('.card-body') // 각 아이템들
+    const order_list = document.querySelector('.order_list') // 주문리스트
 
-    let cart = []
+    let cart = [] // 장바구니 list
 
     cards.forEach((a, i) => {
         let buttons = a.lastElementChild
@@ -45,13 +45,13 @@
             item_id = e.currentTarget.parentElement.parentElement.dataset.item_id // 상품 id
             item_name = e.currentTarget.previousElementSibling.previousElementSibling.innerText; // 상품명
             item_price = Number(e.currentTarget.previousElementSibling.innerText) // 상품가격
-            let total_count = 0;
-            let total_price = 0;
+            let total_count = 0; // 갯수합
+            let total_price = 0; // 가격합
 
             let cart_index = cart.findIndex(a => { return a.name == item_name }) // cart 어레이에서 상품명이 있는지 찾기
-            if (cart_index == -1) {
+            if (cart_index == -1) { // cart에 없으면
                 cart.push({ 'id': item_id, 'name': item_name, 'price': item_price, 'count': 1 })
-            } else {
+            } else { 
                 cart[cart_index].count++;
                 cart[cart_index].price = item_price * cart[cart_index].count
             }
@@ -88,23 +88,22 @@
         })
     })
 
-    // kiosk/result 로 post 요청
-    const result_btn = document.querySelector('.buy-btn')
-    async function postData(url = '', data = {}) {
+    const result_btn = document.querySelector('.buy-btn') // 구매버튼
+    async function postData(url = '', data = {}) { // post, get요청을 동시에 하기 위한 함수
         const response = await fetch(url, {
             method: 'POST',
             headers: {
                 "Content-Type": 'application/json',
             },
-            body: JSON.stringify(data),
+            body: JSON.stringify(data), // JSON 변환
         })
-        if (response.redirected) {
+        if (response.redirected) { // 서버에서 redirected:true면 실행
             window.location.href = url
         }
         return response
     }
     result_btn.addEventListener('click', e => {
-        postData('/kiosk/result', cart).then(data => console.log(data))
+        postData('/kiosk/result', cart)
     })
 
 </script>
