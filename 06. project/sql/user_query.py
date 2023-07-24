@@ -5,9 +5,10 @@ class User_query(SQLite3_connect):
         super().__init__(DB_Name)
         self.TableName = TableName
 
+    # ! 사용자의 schema 값을 가져오는 것은 좋은 방식이 아님
     def schema_query(self):
         headers = []
-        # -------- schema 불러오기 --------
+        # schema 불러오기
         self.cursor.execute(f"PRAGMA table_info({self.TableName})")
         schemas = self.cursor.fetchall()
         for schema in schemas:  
@@ -19,6 +20,7 @@ class User_query(SQLite3_connect):
         find_datas = []
         condition_query = ''
         find_data_query = ()
+        
         # 조건과 검색내용 분류
         for i in range(len(args)):
             if i%2 == 0 :
@@ -44,15 +46,18 @@ class User_query(SQLite3_connect):
                 find_data_query += (f'%{find_datas[i]}%',)
 
 
-        # -------- 원하는 data 전체 불러오기 --------
+        # 원하는 data 전체 불러오기
         self.cursor.execute(f"SELECT * FROM {self.TableName} WHERE {condition_query} LIMIT {count} OFFSET {(page - 1)*count}" , find_data_query)
         datas = self.cursor.fetchall()
-        #  -------- 원하는 data 길이 불러오기 --------
+        
+        # 원하는 data 길이 불러오기
         self.cursor.execute(f"SELECT count(*) FROM {self.TableName} WHERE {condition_query}" , find_data_query)
         data_length = self.cursor.fetchone()[0]
 
-        return {'datas':datas, 'data_length': data_length}
+        return {'datas': datas, 'data_length': data_length}
 
+
+    # TODO : dictionary 로 받는걸로 고치거나 튜플로 사용할경우엔 왜 인덱싱을 해주었는지 주석을 달아줄 것
     def find_data_query(self, column):
         result_datas = []
 

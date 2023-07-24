@@ -34,8 +34,9 @@ def root():
     if token is None:
         return render_template('login.html')
     try:
-        payload =jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+        payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
 
+        # TODO 사용자/ test 아이디가 같은경우에 어떻게 처리할 것 인지
         if find_admin.user_info(payload['id']):
             return redirect(url_for('user.user_list'))
         elif find_user.user_info(payload['id']):

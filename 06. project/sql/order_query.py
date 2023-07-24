@@ -8,7 +8,8 @@ class Order_query(SQLite3_connect):
         
     def schema_query(self):
         headers = []
-        # -------- schema 불러오기 --------
+        
+        # schema 불러오기
         self.cursor.execute(f"PRAGMA table_info({self.TableName})")
         schemas = self.cursor.fetchall()
         for schema in schemas:  
@@ -16,10 +17,11 @@ class Order_query(SQLite3_connect):
         return headers
     
     def total_data_query(self, page, count):
-        # -------- 원하는 data 전체 불러오기(order, orderitem) --------
+        # 원하는 data 전체 불러오기(order, orderitem)
         self.cursor.execute(f"SELECT * FROM {self.TableName} LIMIT {count} OFFSET {(page-1)*count}")
         datas = self.cursor.fetchall()
-        #  -------- 원하는 data 길이 불러오기 --------
+        
+        # 원하는 data 길이 불러오기
         self.cursor.execute(f"SELECT count(*) FROM {self.TableName}")
         data_length = self.cursor.fetchone()[0]
 

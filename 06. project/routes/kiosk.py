@@ -31,11 +31,12 @@ def store_ui():
         result_datas = [] # 결과 데이터 삽입용
         datas = stores.total_data_query(page, per_page, 'Name', search_name, 'Type', sub_data)
 
-        # -------- 페이지네이션 --------
+        # 페이지네이션
         total_data_len = datas['data_length'] # 데이터 전체 갯수
         page_range = math.ceil(total_data_len/per_page) # 페이지 갯수 구하기
-            # ---- 데이터 자르기 ----
-        result_datas = datas['datas'] # 데이터 자르기
+        
+        # 데이터 자르기
+        result_datas = datas['datas']
         
         # 의도치 않은 페이지 이동시 예외처리
         if page < 1:
@@ -75,8 +76,8 @@ def item_ui():
         result_datas = [] # 결과 데이터 삽입용
         datas = items.total_data_query(1, per_page, 'Name', search_name, 'Type', sub_data)
 
-            # ---- 데이터 자르기 ----
-        result_datas = datas['datas'] # 데이터 자르기
+        # 데이터 자르기
+        result_datas = datas['datas']
         
 
         return render_template('kiosk/item_list.html', search_name = search_name, sub_data = sub_data, types = item_types, headers = headers, datas = result_datas)

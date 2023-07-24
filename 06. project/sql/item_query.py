@@ -7,7 +7,8 @@ class Item_query(SQLite3_connect):
 
     def schema_query(self):
         headers = []
-        # -------- schema 불러오기 --------
+        
+        # schema 불러오기
         self.cursor.execute(f"PRAGMA table_info({self.TableName})")
         schemas = self.cursor.fetchall()
         for schema in schemas:  
@@ -19,6 +20,7 @@ class Item_query(SQLite3_connect):
         find_datas = []
         condition_query = ''
         find_data_query = ()
+       
         # 조건과 검색내용 분류
         for i in range(len(args)):
             if i%2 == 0 :
@@ -39,10 +41,11 @@ class Item_query(SQLite3_connect):
         for find_data in find_datas:
             find_data_query += (f'%{find_data}%',)
 
-        # -------- 원하는 data 전체 불러오기 --------
+        # 원하는 data 전체 불러오기
         self.cursor.execute(f"SELECT * FROM {self.TableName} WHERE {condition_query} LIMIT {count} OFFSET {(page - 1)*count}" , find_data_query)
         datas = self.cursor.fetchall()
-        #  -------- 원하는 data 길이 불러오기 --------
+        
+        # 원하는 data 길이 불러오기
         self.cursor.execute(f"SELECT count(*) FROM {self.TableName} WHERE {condition_query}" , find_data_query)
         data_length = self.cursor.fetchone()[0]
 

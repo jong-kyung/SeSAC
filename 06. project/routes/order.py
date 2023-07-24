@@ -6,6 +6,7 @@ import math
 
 order = Blueprint('order', __name__)
 
+# TODO : 상점명, 주문한사람 표기로 변경
 @order.route('/order')
 @check_admin
 def order_list():  
@@ -17,11 +18,13 @@ def order_list():
         headers = orders.schema_query() # schema 받아오기
         result_datas = [] # 결과 데이터 삽입용
         datas = orders.total_data_query(page, per_page)
-        # -------- 페이지네이션 --------
+        
+        # 페이지네이션
         total_data_len = datas['data_length'] # 데이터 전체 갯수
         page_range = math.ceil(total_data_len/per_page) # 페이지 갯수 구하기
-            # ---- 데이터 자르기 ----
-        result_datas = datas['datas'] # 데이터 자르기
+        
+        # 데이터 자르기
+        result_datas = datas['datas']
         
         # 의도치 않은 페이지 이동시 예외처리
         if page < 1:
