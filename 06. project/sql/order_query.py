@@ -6,16 +6,6 @@ class Order_query(SQLite3_connect):
         super().__init__(DB_Name)
         self.TableName = TableName
         
-    def schema_query(self):
-        headers = []
-        
-        # schema 불러오기
-        self.cursor.execute(f"PRAGMA table_info({self.TableName})")
-        schemas = self.cursor.fetchall()
-        for schema in schemas:  
-            headers.append(schema[1]) # schema 값 선택
-        return headers
-    
     def total_data_query(self, page, count):
         # 원하는 data 전체 불러오기(order, orderitem)
         self.cursor.execute(f"SELECT * FROM {self.TableName} LIMIT {count} OFFSET {(page-1)*count}")

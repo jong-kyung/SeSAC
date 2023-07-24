@@ -16,7 +16,6 @@ def store_list():
         per_page = 10
         
         stores = Store_query('crm', 'stores')
-        headers = stores.schema_query() # schema 받아오기
         store_types = stores.find_data_query('Type') # Type 받아오기
         result_datas = [] # 결과 데이터 삽입용
         datas = stores.total_data_query(page, per_page, 'Name', search_name, 'Type', sub_data)
@@ -40,7 +39,7 @@ def store_list():
         start_page = page - (page-1) % 5 # 5개 단위로 끊기
         end_page = min(start_page + 4, page_range) # 끝페이지 정해주기
         
-        return render_template('component/store.html', search_name = search_name, sub_data = sub_data, page = page, types = store_types, headers = headers, datas = result_datas, page_range = page_range, start_page = start_page, end_page = end_page)
+        return render_template('component/store.html', search_name = search_name, sub_data = sub_data, page = page, types = store_types, datas = result_datas, page_range = page_range, start_page = start_page, end_page = end_page)
     
     except TypeError:
         return redirect('store', next='/1')
@@ -49,12 +48,11 @@ def store_list():
 @check_admin
 def store_info(param):
     store = Store_query('crm', 'stores')
-    headers = store.schema_query()
     findData = store.detail_info(param)
     revenues = store.monthly_sale(param)
     users = store.visit_users(param)
 
-    return render_template('./component/store_detail.html', headers=headers, datas=findData, revenues = revenues, users = users)
+    return render_template('./component/store_detail.html', datas=findData, revenues = revenues, users = users)
 
 @store.route('/store/map')
 @check_admin

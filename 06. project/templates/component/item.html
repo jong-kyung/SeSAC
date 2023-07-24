@@ -5,9 +5,9 @@
 {% block content %}
     <table class="table table-striped">
         <thead>
-            {% for header in headers[1:(headers|length)] %}
-            <td>{{ header }}</td>
-            {% endfor %}
+            <td>Name</td>
+            <td>Type</td>
+            <td>Price</td>
         </thead>
         {% for data in datas %}
             <tr>

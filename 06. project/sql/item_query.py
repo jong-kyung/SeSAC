@@ -5,16 +5,6 @@ class Item_query(SQLite3_connect):
         super().__init__(DB_Name)
         self.TableName = TableName
 
-    def schema_query(self):
-        headers = []
-        
-        # schema 불러오기
-        self.cursor.execute(f"PRAGMA table_info({self.TableName})")
-        schemas = self.cursor.fetchall()
-        for schema in schemas:  
-            headers.append(schema[1]) # schema 값 선택
-        return headers
-    
     def total_data_query(self, page, count, *args):
         conditions = []
         find_datas = []

@@ -10,9 +10,9 @@
 <h2>매장 정보</h2>
 <table class="table table-striped">
     <thead>
-        {% for header in headers[1:(headers|length)] %}
-        <td>{{ header }}</td>
-        {% endfor %}
+        <td>Name</td>
+        <td>Type</td>
+        <td>Address</td>
     </thead>
     <tr>
     {% for data in datas[1:datas|length] %}

@@ -16,7 +16,6 @@ def item_list():
         per_page = 10
 
         items = Item_query('crm', 'items')
-        headers = items.schema_query() # schema 받아오기
         item_types = items.find_data_query('Type') # Type 받아오기
         result_datas = [] # 결과 데이터 삽입용
         datas = items.total_data_query(page, per_page, 'Name', search_name, 'Type', sub_data)
@@ -40,7 +39,7 @@ def item_list():
         start_page = page - (page-1) % 5 # 5개 단위로 끊기
         end_page = min(start_page + 4, page_range) # 끝페이지 정해주기
         
-        return render_template('component/item.html', search_name = search_name, sub_data = sub_data, page = page, types = item_types, headers = headers, datas = result_datas, page_range = page_range, start_page = start_page, end_page = end_page)
+        return render_template('component/item.html', search_name = search_name, sub_data = sub_data, page = page, types = item_types, datas = result_datas, page_range = page_range, start_page = start_page, end_page = end_page)
     
     except TypeError:
         return redirect('item', next='/1')
@@ -51,7 +50,6 @@ def item_list():
 @check_admin
 def item_info(param):
     item = Item_query('crm', 'items')
-    headers = item.schema_query()
     findData = item.detail_info(param)
 
-    return render_template('./component/item_detail.html', headers=headers,datas=findData)
+    return render_template('./component/item_detail.html', datas=findData)

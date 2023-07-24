@@ -9,9 +9,9 @@
 <h2>상세 정보</h2>
 <table class="table table-striped">
     <thead>
-        {% for num in range(headers|length -1) %}
-        <td>{{ headers[num + 1] }}</td>
-        {% endfor %}
+        <td>Name</td>
+        <td>Type</td>
+        <td>Price</td>
     </thead>
     <tr>
         {% for num in range(datas|length -1) %}

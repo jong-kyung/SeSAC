@@ -11,9 +11,10 @@
 <h2>사용자 정보</h2>
 <table class="table table-striped">
     <thead>
-        {% for header in headers[1:(headers|length)] %}
-        <td>{{ header }}</td>
-        {% endfor %}
+        <td>Name</td>
+        <td>Gender</td>
+        <td>Birthdate</td>
+        <td>Address</td>
     </thead>
     <tr>
     {% for data in datas[1:datas|length] %}
