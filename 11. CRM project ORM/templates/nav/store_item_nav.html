@@ -1,0 +1,14 @@
+{% extends './nav/nav_base.html' %}
+{% block nav_data %}
+<form class="d-flex" role="search" method="get">
+    <input class="form-control me-2 search-item" type="search" placeholder="Search" aria-label="Search"
+        name="name" value="{{ search_name }}">
+    <select class="form-select" id="inputGroupSelect04" name="sub_data">
+        <option selected value="">Type</option>
+        {% for type in types %}
+            <option value="{{ type }}">{{ type }}</option>
+        {% endfor %}
+    </select>
+    <button class="btn btn-outline-success search-btn " type="submit">Search</button>
+</form>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends './common/order_base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row row-cols-4 justify-content-center">
+        {% for data in datas %}
+        <a class="card col m-3 store_info" style="width: 20rem;" data-store="{{ data[0] }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ data[1] }}</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">{{ data[3] }}</h6>
+                <button type="submit" class="card-link btn btn-primary">선택</button>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+{% endblock %}
+{% block pagination %}
+{% include './common/pagination.html' %}
+{% endblock %}
+{% block pagination_script %}
+<script>
+    const page = {{ page| tojson }}
+    const last_page = {{ page_range| tojson }}
+    if (page <= 1) {
+        document.querySelector('.first').className += ' disabled'
+        document.querySelector('.previous').className += ' disabled'
+    } else if (page >= last_page) {
+        document.querySelector('.last').className += ' disabled'
+        document.querySelector('.next').className += ' disabled'
+    }
+</script>
+<script>
+    const btn = document.querySelectorAll('.store_info')
+
+    async function postData(url = '', data = {}) {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                "Content-Type": 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+        if (response.redirected) {
+            window.location.href = url
+        }
+        return response
+    }
+    btn.forEach((a) =>{
+        a.addEventListener('click', e=>{
+            e.preventDefault()
+            postData('/kiosk/item', a.dataset.store).then((data) => console.log(data))
+        })
+    })
+</script>
+{% endblock %}
