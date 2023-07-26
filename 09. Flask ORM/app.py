@@ -23,7 +23,7 @@ class Users(db.Model): # Users 테이블 생성
 @app.route('/')
 def home():
     if 'username' in session:
-        flash('로그인에 성공하셨습니다.')
+        flash('로그인에 성공하셨습니다.','info') # 비동기적으로 생성되는 메시지로, 백과 프론트의 소통을 위해 사용함 / 첫번째 인자: 메시지, 두번째 인자: 카테고리
         username = session['username']
         return render_template('index.html', username=username)
     
