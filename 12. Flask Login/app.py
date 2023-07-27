@@ -57,7 +57,7 @@ def login():
             login_user(find_user) # 로그인 정보 저장
             return redirect(url_for('view_users'))
         else:
-            return '로그인 실패!'
+            flash('계정이 없거나 비밀번호가 틀립니다.', 'danger')
     else:
         return redirect(url_for('main'))
     
@@ -65,7 +65,7 @@ def login():
 @login_required
 def logout():
     logout_user() # 로그아웃
-    flash('로그아웃 되었습니다.')
+    flash('로그아웃 되었습니다.', 'danger')
     return redirect('/')
 
 @app.route('/profile_edit', methods=['GET', 'POST'])
@@ -77,7 +77,7 @@ def profile_edit():
         current_user.password = new_pw
         current_user.email = new_email
         db.session.commit()
-        flash('사용자 정보가 수정되었습니다')
+        flash('사용자 정보가 수정되었습니다', 'success')
         return redirect(url_for('view_users'))
     else: 
         return render_template('profile_edit.html')
@@ -98,7 +98,7 @@ def register():
         new_user.set_password(pw)
         db.session.add(new_user)
         db.session.commit()
-        flash('회원가입이 되었습니다! 로그인을 해주세요!')
+        flash('회원가입이 되었습니다! 로그인을 해주세요!', 'info')
         return redirect(url_for('main'))
     else:
         return render_template('register.html')
@@ -114,7 +114,7 @@ def view_users():
 def withdraw():
     db.session.delete(current_user)
     db.session.commit()
-    flash('헤어지게 되어 아쉬워요 다음에 또 뵐 수 있기를 바랄게요 :)')
+    flash('헤어지게 되어 아쉬워요 다음에 또 뵐 수 있기를 바랄게요 :)', 'warning')
     return redirect(url_for('main'))
 
 if __name__ == '__main__':
