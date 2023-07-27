@@ -1,21 +1,19 @@
-<!DOCTYPE html>
-<html lang="ko">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>프로필 수정</title>
-</head>
-
-<body>
+{% extends 'base.html' %}
+{% include 'user-nav.html' %}
+{% block content %}
+<h1></h1>
+<div class="container">
     <h1>프로필 수정</h1>
-    <form action="/profile_edit" method="POST">
-        <label for="pw">새로운 비밀번호</label>
-        <input type="password" name="pw" id="pw" required>
-        <label for="email">이메일 주소 받아오기</label>
-        <input type="email" name="email" id="eamil" required>
-        <button type="submit">수정</button>
+    <form action="/profile_edit" method="post">
+        <div class="mb-3">
+            <label for="pw" class="form-label">새로운 비밀번호</label>
+            <input type="type" name="pw" class="form-control" id="pw">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">이메일 주소</label>
+            <input type="email" name="email" class="form-control" id="email">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
-</body>
-
-</html>
+</div>
+{% endblock %}

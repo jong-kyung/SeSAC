@@ -1,0 +1,15 @@
+{% extends 'nav.html' %}
+{% block nav %}
+<li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="{{ url_for('view_users') }}">메인</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="{{ url_for('profile_edit') }}">프로필 수정</a>
+</li>
+<li class="nav-item me-2">
+    <a class="nav-link active" href="{{ url_for('logout') }}">로그아웃</a>
+</li>
+<li class="nav-item me-2">
+    <a class="nav-link active" href="{{ url_for('withdraw') }}">회원탈퇴</a>
+</li>
+{% endblock %}

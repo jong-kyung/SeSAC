@@ -1,18 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>  
-    <ul>
-        {% for user in users %}
-        <li>이름 : {{ user.username }}</li>
-        {% endfor %}
-    </ul>
-    <a href="{{ url_for('logout') }}">로그아웃</a>
-    <a href="{{ url_for('profile_edit') }}">수정</a>
-    <a href="{{ url_for('withdraw') }}">탈퇴</a>
-</body>
-</html>
+{% extends './base.html' %}
+{% include 'user-nav.html' %}
+{% block content %}
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Password</th>
+                <th scope="col">Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {% for user in users %}
+                <td>{{ user.username }}</td>
+                <td>{{ user.password_hash }}</td>
+                <td>{{ user.email }}</td>
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

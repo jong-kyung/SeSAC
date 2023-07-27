@@ -1,23 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>회원가입</title>
-</head>
-
-<body>
-    <h1>회원가입</h1>
-    <form action="{{ url_for('register') }}" method="post">
-        <label for="id">아이디</label>
-        <input type="text" name="username" id="id" required />
-        <label for="pw">아이디</label>
-        <input type="password" name="password" id="password" required />
-        <label for="email">이메일</label>
-        <input type="email" name="email" id="email">
-        <button type="submit">로그인</button>
+{% extends './base.html' %}
+{% include 'login-nav.html' %}
+{% block content %}
+<div class="container">
+    <form action="/register" method="post">
+        <div class="mb-3">
+            <label for="id" class="form-label">아이디</label>
+            <input type="type" name="username" class="form-control" id="id">
+        </div>
+        <div class="mb-3">
+            <label for="pw" class="form-label">비밀번호</label>
+            <input type="password" name="password" class="form-control" id="pw">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">이메일</label>
+            <input type="email" name="email" class="form-control" id="email">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
-</body>
-
-</html>
+</div>
+{% endblock %}
