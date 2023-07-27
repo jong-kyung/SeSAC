@@ -1,6 +1,14 @@
 {% extends './base.html' %}
 {% include 'user-nav.html' %}
 {% block content %}
+{% with messages = get_flashed_messages() %}
+    {% for msg in messages %}
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            {{ msg }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+{% endwith %}
 <div class="container">
     <table class="table">
         <thead>
@@ -11,13 +19,13 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                {% for user in users %}
-                <td>{{ user.username }}</td>
-                <td>{{ user.password_hash }}</td>
-                <td>{{ user.email }}</td>
-                {% endfor %}
-            </tr>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.password_hash }}</td>
+                    <td>{{ user.email }}</td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
 </div>

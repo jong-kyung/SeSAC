@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, flash, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -44,15 +44,10 @@ def load_user(user_id):
 
 @app.route('/')
 def main():
-    return render_template('base.html')
+    return render_template('main.html')
 
 @app.route('/login', methods=['GET','POST'])
 def login():
-    # 로그인 기능 구현
-    # 1. form으로 부터 id/pw 를 받아온다
-    # 2. DB로 부터 쿼리해서 id/pw가 맞는지 확인한다
-    # 3. 성공하면 로그인정보를 저장하고 로그인 한 페이지로 이동
-    #    실패하면 오류를 알려준다
     if request.method == 'POST':
         id = request.form['username']
         pw = request.form['password']
@@ -64,38 +59,31 @@ def login():
         else:
             return '로그인 실패!'
     else:
-        return render_template('main.html')
+        return redirect(url_for('main'))
     
 @app.route('/logout')
 @login_required
 def logout():
     logout_user() # 로그아웃
-    return redirect(url_for('main'))
+    flash('로그아웃 되었습니다.')
+    return redirect('/')
 
 @app.route('/profile_edit', methods=['GET', 'POST'])
 @login_required
 def profile_edit():
-    # 미션 : 프로필 수정기능 구현
-    # 1. 폼을 통해 변경하려는 내역을 가져온다(password)
-    # 2. 저장할 장소를 가져온다. (current_user 이용)
-    # 3. 받아온 정보를 DB에 저장한다
     if request.method == 'POST':
         new_pw = request.form['pw']
         new_email = request.form['email']
         current_user.password = new_pw
         current_user.email = new_email
         db.session.commit()
-
-        return redirect(url_for('main'))
+        flash('사용자 정보가 수정되었습니다')
+        return redirect(url_for('view_users'))
     else: 
         return render_template('profile_edit.html')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    # 회원가입 form을 만든다
-    # 회원기입 정보를 가져온다
-    # 사용자가 있는지 조회한다
-    # DB에 저장한다
     if request.method == 'POST':
         id = request.form['username']
         pw = request.form['password']
@@ -103,13 +91,14 @@ def register():
         
         existing_user = User.query.filter_by(username = id).first()
         if existing_user:
-            return '중복된 사용자입니다'
+            flash('중복된 사용자입니다')
+            return redirect(url_for('register'))
 
         new_user = User(username = id,  email = email)
         new_user.set_password(pw)
         db.session.add(new_user)
         db.session.commit()
-
+        flash('회원가입이 되었습니다! 로그인을 해주세요!')
         return redirect(url_for('main'))
     else:
         return render_template('register.html')
@@ -117,9 +106,6 @@ def register():
 @app.route('/users')
 @login_required
 def view_users():
-    # 모든 사용자 보여주기
-    # 1. 사용자 정보를 모두 조회한다
-    # 2. HTML 조회한 정보를 전달해 출력한다
     users = User.query.all()
     return render_template('users.html', users = users) 
 
@@ -128,6 +114,7 @@ def view_users():
 def withdraw():
     db.session.delete(current_user)
     db.session.commit()
+    flash('헤어지게 되어 아쉬워요 다음에 또 뵐 수 있기를 바랄게요 :)')
     return redirect(url_for('main'))
 
 if __name__ == '__main__':
