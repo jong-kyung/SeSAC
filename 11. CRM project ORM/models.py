@@ -35,7 +35,8 @@ class stores(db.Model):
 
     orderR = db.relationship('orders', backref='stores')
 
-class items(db.Model):
+class buy_item(db.Model):
+    __tablename__ = 'items'
     Id = db.Column(db.String(100), nullable = False, primary_key = True)
     Name = db.Column(db.String(120), nullable = False)
     Type = db.Column(db.String(100), nullable = False)

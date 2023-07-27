@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, request
 from common.verify import check_admin
 from sql.store_query import Store_query
+from models import stores
 
 import math
 
@@ -15,10 +16,10 @@ def store_list():
     try:
         per_page = 10
         
-        stores = Store_query('crm', 'stores')
-        store_types = stores.find_data_query('Type') # Type 받아오기
+        store = Store_query(stores)
+        store_types = store.find_data_query('Type') # Type 받아오기
         result_datas = [] # 결과 데이터 삽입용
-        datas = stores.total_data_query(page, per_page, 'Name', search_name, 'Type', sub_data)
+        datas = store.total_data_query(page, per_page, search_name, sub_data)
 
         # 페이지네이션
         total_data_len = datas['data_length'] # 데이터 전체 갯수
@@ -47,7 +48,7 @@ def store_list():
 @store.route('/store/<param>')
 @check_admin
 def store_info(param):
-    store = Store_query('crm', 'stores')
+    store = Store_query(stores)
     findData = store.detail_info(param)
     revenues = store.monthly_sale(param)
     users = store.visit_users(param)
@@ -57,7 +58,7 @@ def store_info(param):
 @store.route('/store/map')
 @check_admin
 def store_map():
-    store = Store_query('crm', 'stores')
+    store = Store_query(stores)
     cities = store.city_frequency()
 
     return render_template('./component/store_map.html', cities = cities)

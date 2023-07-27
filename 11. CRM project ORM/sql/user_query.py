@@ -1,6 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func
-from models import stores, orders, orderitems
+from models import stores, orders
 
 class User_query():   
     def __init__(self, TableName):

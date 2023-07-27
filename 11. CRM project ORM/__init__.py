@@ -18,7 +18,7 @@ db = SQLAlchemy(app)
 from routes.auth import auth
 from routes.main import main
 from routes.user import user
-# from routes.store import store
+from routes.store import store
 # from routes.item import item
 # from routes.order import order
 # from routes.orderitem import orderitem
@@ -28,7 +28,7 @@ from routes.user import user
 app.register_blueprint(auth) 
 app.register_blueprint(main) 
 app.register_blueprint(user) 
-# app.register_blueprint(store)
+app.register_blueprint(store)
 # app.register_blueprint(item)
 # app.register_blueprint(order)
 # app.register_blueprint(orderitem)

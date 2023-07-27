@@ -2,6 +2,7 @@
 {% block h1 %}
     <h1>{{ datas[1] }}</h1>
 {% endblock %}
+
 {% block nav %}
     {% include './nav/nav_base.html' %}
 {% endblock %}
@@ -15,9 +16,9 @@
         <td>Address</td>
     </thead>
     <tr>
-    {% for data in datas[1:datas|length] %}
-        <td>{{ data }}</td>
-    {% endfor %}
+        <td>{{ datas.Name }}</td>
+        <td>{{ datas.Type }}</td>
+        <td>{{ datas.Address }}</td>
     </tr>
 </table>
 <h2>월간 매출액</h2>
@@ -29,11 +30,12 @@
             <td>Item Count</td>
         </tr>
     </thead>
+    {{ revenues }}
         {% for revenue in revenues %}
         <tr>
-            {% for i in range(revenue|length) %}
-                <td>{{ revenue[i] }}</td>
-            {% endfor %}
+            <td>{{ revenue[0] }}</td>
+            <td>{{ revenue[1] }}</td>
+            <td>{{ revenue[2] }}</td>
         </tr>
         {% endfor %}
 </table>
@@ -62,11 +64,12 @@
     let month = [];
     let price = [];
     let count = [];
-    {{ revenues|tojson }}.forEach(element => {
-        month.push(element[0].slice(5,7))
-        price.push(element[1])
-        count.push(element[2])
-    });
+    {% for revenue in revenues %}
+        month.push({{ revenue[0]|tojson }}.slice(5,7))
+        price.push({{ revenue[1]|tojson }})
+        count.push({{ revenue[2]|tojson }})
+    {% endfor %}
+
     const yearCtx = document.querySelector('#revenue').getContext('2d');
     const yearChart = new Chart(yearCtx, {
     type: 'line',
@@ -89,7 +92,7 @@
             yAxisID: 'y2',
         }]
     },
-    options: {
+    options: {{{ revenue[0]|tojson }}
         scales: {
             y1: {
                 position: 'left',
@@ -107,38 +110,5 @@
         }
     }
 });
-//     const ctx = document.getElementById('revenue');
-//     new Chart(ctx, {
-//         type: 'line',
-//         data: {
-//         labels: month,
-//         datasets: [{
-//             label: 'Monthly sale',
-//             data: price,
-//             borderWidth:1,
-//             backgroundColor: 'rgba(16,163,127,1)',
-//             yAxisId: 'y2',
-//             type:'bar'
-//         },{
-//             label: 'Frequency',
-//             data: count,
-//             borderWidth: 1,
-//             yAxisId: 'y1',
-//         }]
-//         },
-//         options: {
-//             scales: {
-//                 y2: {
-//                     position:'left',
-//                     gird:{
-//                         drawOnChartArea: false
-//                     }
-//                 },
-//                 y2:{
-//                     position:'right',
-//                 }
-//             }
-//         }
-//   });
 </script>
 {% endblock %}
