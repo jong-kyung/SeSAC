@@ -17,9 +17,10 @@
         <td>Address</td>
     </thead>
     <tr>
-    {% for data in datas[1:datas|length] %}
-        <td>{{ data }}</td>
-    {% endfor %}
+        <td>{{ datas.Name }}</td>
+        <td>{{ datas.Gender }}</td>
+        <td>{{ datas.Birthdate }}</td>
+        <td>{{ datas.Address }}</td>
     </tr>
 </table>
 <h2>자주 방문한 매장</h2>

@@ -2,6 +2,7 @@ from flask import redirect, request
 from functools import wraps
 from sql.login_query import Login_query
 import jwt # JWT 토큰 생성용 라이브러리
+from models import admin, auth_user
 
 SECRET_KEY = 'SESAC'
 
