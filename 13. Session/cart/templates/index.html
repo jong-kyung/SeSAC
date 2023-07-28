@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cart</title>
+</head>
+
+<body>
+    <h1>상품인건가</h1>
+    <table border="1">
+        <tr>
+            <td>name</td>
+            <td>price</td>
+            <td>&nbsp;</td>
+        </tr>
+        {% for item_name, item_info in items.items() %}
+        <tr>
+            <td>{{ item_info.name }}</td>
+            <td>{{ item_info.price }}</td>
+            <td><a href="{{ url_for('add_to_cart', item_name = item_name) }}">카트에 담기</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="{{ url_for('view_cart') }}">장바구니 보기</a>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cart</title>
+</head>
+<body>
+    <h1>장바구니</h1>
+    <table border="1">
+        <tr>
+            <td>상품명</td>
+            <td>갯수</td>
+            <td>가격</td>
+        </tr>
+        {% for key, value in cart_items.items() %}
+        <tr>
+            <td>{{ value.name }}</td>
+            <td>{{ value.quantity }}</td>
+            <td>{{ value.unit_price }}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td>합계</td>
+            <td>{{ count }}</td>
+            <td>{{ total }}</td>
+        </tr>
+    </table>
+</body>
+</html>
