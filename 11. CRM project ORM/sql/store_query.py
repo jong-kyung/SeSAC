@@ -1,13 +1,11 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func, text
-from models import orders, buy_item, orderitems
 from __init__ import db
 class Store_query():   
     def __init__(self, TableName):
         self.TableName = TableName
     
     def total_data_query(self, page, count, *args):
-        print(args[0])
         datas = self.TableName.query\
         .filter(self.TableName.Name.like(f'{args[0]}%'))\
         .filter(self.TableName.Type.like(f'%{args[1]}%'))\

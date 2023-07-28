@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, request
 from common.verify import check_admin
 from sql.item_query import Item_query
+from models import buy_item
 
 import math
 
@@ -15,10 +16,10 @@ def item_list():
     try:
         per_page = 10
 
-        items = Item_query('crm', 'items')
+        items = Item_query(buy_item)
         item_types = items.find_data_query('Type') # Type 받아오기
         result_datas = [] # 결과 데이터 삽입용
-        datas = items.total_data_query(page, per_page, 'Name', search_name, 'Type', sub_data)
+        datas = items.total_data_query(page, per_page, search_name, sub_data)
 
         # 페이지네이션
         total_data_len = datas['data_length'] # 데이터 전체 갯수
@@ -49,7 +50,7 @@ def item_list():
 @item.route('/item/<param>')
 @check_admin
 def item_info(param):
-    item = Item_query('crm', 'items')
+    item = Item_query(buy_item)
     findData = item.detail_info(param)
 
     return render_template('./component/item_detail.html', datas=findData)
