@@ -49,7 +49,7 @@ class orders(db.Model):
     Id = db.Column(db.String(100), nullable = False, primary_key = True)
     OrderAt = db.Column(db.String(32), nullable = False)
     StoreId = db.Column(db.String(32), db.ForeignKey('stores.Id'))
-    userId = db.Column(db.String(64), db.ForeignKey('users.Id'))
+    UserId = db.Column(db.String(64), db.ForeignKey('users.Id'))
 
     orderItemR = db.relationship('orderitems', backref='orders')
 

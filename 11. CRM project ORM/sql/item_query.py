@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import func, text
+from sqlalchemy import func
 
 class Item_query():   
     def __init__(self, TableName):

@@ -1,36 +1,29 @@
-import sqlite3
-from sql.sqlite_connect import SQLite3_connect
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import func
 
-class Order_query(SQLite3_connect):   
-    def __init__(self, DB_Name, TableName):
-        super().__init__(DB_Name)
+class Order_query():   
+    def __init__(self, TableName):
         self.TableName = TableName
         
     def total_data_query(self, page, count):
-        # 원하는 data 전체 불러오기(order, orderitem)
-        self.cursor.execute(f"SELECT * FROM {self.TableName} LIMIT {count} OFFSET {(page-1)*count}")
-        datas = self.cursor.fetchall()
+        datas = self.TableName.query\
+         .offset((page-1) * count)\
+        .limit(count)\
+        .all()
         
         # 원하는 data 길이 불러오기
-        self.cursor.execute(f"SELECT count(*) FROM {self.TableName}")
-        data_length = self.cursor.fetchone()[0]
+        data_length = self.TableName.query\
+        .with_entities(func.count().label('data_count'))\
+        .first()
 
-        return {'datas':datas, 'data_length': data_length}
+        return {'datas':datas, 'data_length': data_length[0]}
 
     def find_data_query(self, column):
-        result_datas = []
+        result_datas = self.TableName.query.distinct(column).all()
 
-        self.cursor.execute(f"SELECT DISTINCT {column} FROM {self.TableName}")
-        datas = self.cursor.fetchall()
-        for data in datas:
-            result_datas.append(data[0])
         return result_datas
 
     def detail_info(self, FindData):
-        conn = sqlite3.connect('./DB/crm.db')
-        cursor = conn.cursor()
-
-        cursor.execute(f"SELECT * FROM {self.TableName} WHERE Id = ?",(FindData,))
-        result = cursor.fetchone()
+        result = self.TableName.query.filter(self.TableName.Id == FindData).first()
 
         return result

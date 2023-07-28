@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, request
 from common.verify import check_admin
 from sql.orderitem_query import OrderItem_query
+from models import orderitems
 
 import math
 
@@ -14,9 +15,9 @@ def orderitem_list():
     try:
         per_page = 10
 
-        orderitems = OrderItem_query('crm', 'orderitems')
+        orderitem = OrderItem_query(orderitems)
         result_datas = [] # 결과 데이터 삽입용
-        datas = orderitems.total_data_query(page, per_page)
+        datas = orderitem.total_data_query(page, per_page)
         
         # 페이지네이션
         total_data_len = datas['data_length'] # 데이터 전체 갯수

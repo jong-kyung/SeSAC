@@ -11,15 +11,9 @@
         </thead>
         {% for data in datas %}
             <tr>
-            {% for i in range(1, data|length) %}
-                {% if i == (data|length) -2 %}
-                    <td><a href='store/{{ data[i] }}'>{{ data[i] }}</a></td>
-                {% elif i == (data|length) -1 %}
-                    <td><a href='user/{{ data[i] }}'>{{ data[i] }}</a></td>
-                {% else %}
-                    <td>{{ data[i] }}</td>
-                {% endif %}
-            {% endfor %}
+            <td>{{ data.OrderAt }}</td>
+            <td><a href="/store/{{ data.StoreId }}">{{ data.StoreId }}</a></td>
+            <td><a href="/user/{{ data.UserId }}">{{ data.UserId }}</a></td>
             </tr>
         {% endfor %}
     </table>
