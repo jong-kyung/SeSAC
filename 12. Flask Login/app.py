@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, url_for, flash, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_migrate import Migrate
 
 """
 LoginManager: 로그인 관리를 담당하는 클래스로, Flask 애플리케이션에서 로그인 기능을 초기화하고 관리하는 역할을 합니다.
@@ -22,6 +23,9 @@ app.config['SQLALCHEMY_TRACK_MODIFICATONS'] = False
 # DB 생성
 db = SQLAlchemy(app)
 
+# DB 마이그레이션 모듈 로딩
+migrate = Migrate(app, db)
+
 # 로그인 매니저 생성
 login_manager = LoginManager(app)
 login_manager.login_view = 'login' # 로그인 페이지 URI 설정
@@ -29,14 +33,17 @@ login_manager.login_view = 'login' # 로그인 페이지 URI 설정
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(80), unique = True, nullable = False)
-    password_hash = db.Column(db.String(120), nullable = False)
+    password = db.Column(db.String(80), nullable = False)
+    # password_hash = db.Column(db.String(120), nullable = False)
     email = db.Column(db.String(120))
 
     def set_password(self, password): # 해시값으로 전환
-        self.password_hash = generate_password_hash(password)
+        self.password = password
+        # self.password_hash = generate_password_hash(password)
 
     def check_password(self, password):
-        return check_password_hash(self.password_hash, password)
+        return self.password == password
+        # return check_password_hash(self.password_hash, password)
 
 @login_manager.user_loader # 로그인을 하기 위한 함수
 def load_user(user_id):
@@ -94,7 +101,7 @@ def register():
             flash('중복된 사용자입니다')
             return redirect(url_for('register'))
 
-        new_user = User(username = id,  email = email)
+        new_user = User(username = id, email = email)
         new_user.set_password(pw)
         db.session.add(new_user)
         db.session.commit()
