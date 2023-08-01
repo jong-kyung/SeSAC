@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<ul>
+    <li>
+        <h3>{{ todo.title }}</h3>
+        <p>{{ todo.content }}</p>
+    </li>
+    <a href="/todo/{{ todo.id }}/update">수정하기</a>
+    <a href="/todo/{{ todo.id }}/delete">삭제하기</a>
+</ul>
+{% endblock %}

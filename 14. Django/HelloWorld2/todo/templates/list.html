@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<ul>
+    {% for todo in todos %}
+    <li>
+        <a href="/todo/{{ todo.id }}">
+            <h3>{{ todo.title }}</h3>
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+<a href="/todo/write">글쓰기</a>
+{% endblock %}
