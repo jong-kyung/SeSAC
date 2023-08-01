@@ -1,5 +1,8 @@
 from __init__ import db
+from flask_sqlalchemy import SQLAlchemy
 
+
+db = SQLAlchemy()
 # ! auth.db
 class auth_user(db.Model): # 일반 사용자 테이블 정의
     __bind_key__ = 'auth_db'

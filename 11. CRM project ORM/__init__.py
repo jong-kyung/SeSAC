@@ -1,6 +1,6 @@
 import os
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+from models import db 
 
 app=Flask(__name__) 
 app.instance_path = os.path.abspath('DB')
@@ -12,7 +12,7 @@ app.config['SQLALCHEMY_BINDS'] = {
     'auth_db' : 'sqlite:///auth.db'
 }
 
-db = SQLAlchemy(app)
+db.init_app(app) # SQLALCHEMY DB를 초기화 하는 방법
 
 # * Router 정의
 from routes.auth import auth
