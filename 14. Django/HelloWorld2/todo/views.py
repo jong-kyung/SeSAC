@@ -32,8 +32,10 @@ def update_todo(request, pk):
         r_title = request.POST['title']
         r_content = request.POST['content']
         print(f'수정할제목:{r_title}, 수정할내용:{r_content}')
-        Todo.objects.update(title = r_title, content = r_content)
-        return redirect('todo_list')
+        todo_detail.title = r_title
+        todo_detail.content = r_content
+        todo_detail.save()
+        return redirect('todo_detail', todo_detail.pk)
     else:
         return render(request, 'edit.html', {
             'todo':todo_detail
