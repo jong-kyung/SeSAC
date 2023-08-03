@@ -10,7 +10,7 @@ class Question(models.Model):
     
 
 class Choice(models.Model):
-    Question = models.ForeignKey(
+    question = models.ForeignKey(
         'Question',
         on_delete=models.CASCADE
     )

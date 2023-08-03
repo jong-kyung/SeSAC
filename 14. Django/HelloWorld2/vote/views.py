@@ -13,14 +13,14 @@ def choice_list(request, pk):
         selected_choice = question.choice_set.get(pk=request.POST['choice']) # question, choice join문법, choice의 fk와 question의 pk가 일치하는 값
         selected_choice.count += 1
         selected_choice.save()
-        print(f'Question의 PK:{selected_choice.Question.pk}')
-        return redirect('result_choice', selected_choice.Question.pk)
+        print(f'Question의 PK:{selected_choice.question.pk}')
+        return redirect('result_choice', selected_choice.question.pk)
     else:
         selected_choice = question.choice_set.all()
         return render(request, 'choice.html', {'questions':selected_choice})
     
 def result_choice(request, pk):
-    choice = Choice.objects.filter(Question = pk).all()
+    choice = Choice.objects.filter(question = pk).all()
 
     return render(request, 'result.html', {
         'choices' : choice
