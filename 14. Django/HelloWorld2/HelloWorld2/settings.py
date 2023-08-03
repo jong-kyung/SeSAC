@@ -11,10 +11,21 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# 우리 프로젝트 전체의 미디어 업로드 폴더 설정
+MEDIA_ROOT = os.path.join(BASE_DIR, 'upload')
+
+# 웹 컴포넌트가 이 미디어 폴더를 어떤 URI로 접근할것인지 정의
+MEDIA_URL = '/media/'
+
+# nginx(웹서버)를 배우고 나면
+# location /media/ {
+#     alias / path/to/your/uploads/photos/;
+# }
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -38,7 +49,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'helloapp',
-    'todo'
+    'todo',
+    'photo_upload'
 ]
 
 MIDDLEWARE = [
