@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quest</title>
+</head>
+
+<body>
+    <h1>Quest</h1>
+    {% for quest in questions %}
+    <a href='{{ quest.id }}'>{{ quest.question }}</a>
+    {% endfor %}
+</body>
+
+</html>

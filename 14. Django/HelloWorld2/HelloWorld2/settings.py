@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'helloapp',
     'todo',
-    'photo_upload'
+    'photo_upload',
+    'vote'
 ]
 
 MIDDLEWARE = [

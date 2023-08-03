@@ -23,6 +23,7 @@ urlpatterns = [
     path('', include('helloapp.urls')),
     path('todo/', include('todo.urls')),
     path('photo/', include('photo_upload.urls')),
+    path('poll/', include('vote.urls'))
     # static('/media', BASE_DIR/upload/photos) <- 아래 개념 설명용
 ]
 
