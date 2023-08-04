@@ -75,7 +75,7 @@
                 success: function (res) {
                     console.log(res)
                     alert('저장 완료')
-                    window.location.href = '/'
+                    window.location.reload()
                 }
             })
         }
@@ -133,7 +133,7 @@
                             url: '/edit',
                             data: { id: card_id, title: title, message: content },
                             success: function (resp) {
-                                window.location.href = '/'
+                                window.location.reload()
                             }
                         })
                     })
@@ -148,7 +148,7 @@
                                 url: '/delete',
                                 data: { id: card_id },
                                 success: function (resp) {
-                                    window.location.href = '/'
+                                    window.location.reload()
                                 }
                             })
                         })
