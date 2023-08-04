@@ -106,7 +106,7 @@
                     resp.forEach(element => {
                         makeCard(...element)
                     });
-                    
+
                     const card_delete = document.querySelectorAll('.card-delete')
                     const card_edit = document.querySelectorAll('.card-edit')
 
@@ -131,7 +131,7 @@
                         $.ajax({ // 수정요청
                             type: 'post',
                             url: '/edit',
-                            data: { id: card_id, title:title, message:content},
+                            data: { id: card_id, title: title, message: content },
                             success: function (resp) {
                                 window.location.href = '/'
                             }
@@ -155,12 +155,7 @@
                     })
                 }
             })
-
-
         })
-
-
-
     </script>
 </body>
 
