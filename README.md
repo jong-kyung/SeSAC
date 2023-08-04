@@ -20,3 +20,12 @@
     - Leaflet.js 사용법
 - 5주차 : 미니 프로젝트
     - 1~4주차 내용을 토대로 CRM 페이지 개발
+- 6주차 : FLASK ORM 및 로그인 인증방식
+  - sqlite3 사용법
+  - Flask-SQLALCHEMY 사용법
+  - Flask-Login 사용법
+  - Session 인증방식 이론 및 사용법
+- 7주차 : Django 및 Javasrcipt
+  - Django 기반 MVT 설계 이론 및 실습
+  - Javsascript AJAX 통신 방식 이론
+  - JQuery 기초

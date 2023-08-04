@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메모장</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+</head>
+
+<body>
+    <div class='container w-50 my-3 border border-primary-subtle p-3 rounded'>
+        <h2 class="mb-3 p-2">메모하기</h2>
+        <div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">제목</span>
+                <input type="text" id="input_title" class="form-control" placeholder="제목" aria-label="Username"
+                    aria-describedby="basic-addon1" name="title" required>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">내용</span>
+                <textarea id="input_content" class="form-control" aria-label="With textarea" name="content" required
+                    style="resize: none;" placeholder="내용"></textarea>
+            </div>
+            <button type="submit" class="btn btn-outline-primary" onclick="uploadPost()">작성 <i
+                    class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+        </div>
+    </div>
+    <div class="container p-3">
+        <h2 class="text-center mb-3 p-2 border-bottom border-primary-subtle">목록</h2>
+        <div class="d-inline-flex card-wrap">
+
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">상세보기</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">제목</span>
+                        <input type="text" id="edit_title" class="form-control" aria-label="Username"
+                            aria-describedby="basic-addon1" name="title" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">내용</span>
+                        <textarea id="edit_content" class="form-control" aria-label="With textarea" name="content"
+                            required style="resize: none;"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="edit_submit">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script>
+        const uploadPost = (e) => {
+            let title = $('#input_title').val();
+            let content = $('#input_content').val();
+            console.log(title, content)
+            $.ajax({ // 서버에 작성 요청 보내기
+                type: 'post',
+                url: '/create',
+                data: { title: title, message: content },
+                success: function (res) {
+                    console.log(res)
+                    alert('저장 완료')
+                    window.location.href = '/'
+                }
+            })
+        }
+
+        const makeCard = async (id, title, message) => {
+            let card_content =
+                `
+                <div class="card border-primary mb-3 me-3" style="max-width: 18rem;">
+                    <div class="card-header">메모</div>
+                    <div class="card-body"  data-id="${id}">
+                        <h5 class="card-title">${title}</h5>
+                        <p class="card-text">${message}</p>
+                        <button class="btn btn-outline-primary card-edit" data-bs-toggle="modal" data-bs-target="#editModal">수정</button>
+                        <a href="#" class="btn btn-outline-danger card-delete">삭제</a>
+                    </div>
+                </div>
+                `
+            $('.card-wrap').append(card_content)
+        }
+
+        $('document').ready(() => {
+            console.log('document is ready')
+
+            $.ajax({ // 서버로부터 내용 불러오기
+                type: 'get',
+                url: '/list',
+                success: function (resp) {
+                    resp.forEach(element => {
+                        makeCard(...element)
+                    });
+                    const cards = document.querySelectorAll('.card')
+                    const card_delete = document.querySelectorAll('.card-delete')
+                    const card_edit = document.querySelectorAll('.card-edit')
+
+                    // 모달창에 반영하기
+                    card_edit.forEach((element) => {
+                        element.addEventListener('click', e => {
+                            let content = e.currentTarget.previousElementSibling
+                            let title = content.previousElementSibling
+                            let card_id = e.currentTarget.parentElement.dataset.id
+                            document.querySelector('#edit_title').value = title.innerText
+                            document.querySelector('#edit_content').value = content.innerText
+                        })
+                    })
+
+                    // 데이터 수정하기
+                    document.querySelector('#edit_submit').addEventListener('click', e => {
+                        let card_id = document.querySelector('.card-body').dataset.id
+                        let title = document.querySelector('#edit_title').value
+                        let content = document.querySelector('#edit_content').value
+                        $.ajax({
+                            type: 'post',
+                            url: '/edit',
+                            data: { id: card_id, title:title, message:content},
+                            success: function (resp) {
+                                window.location.href = '/'
+                            }
+                        })
+                    })
+
+                    // 데이터 삭제하기
+                    card_delete.forEach((element) => {
+                        element.addEventListener('click', (e) => {
+                            let parent_card = e.currentTarget.parentElement.parentElement
+                            let card_id = e.currentTarget.parentElement.dataset.id
+                            e.preventDefault()
+                            $.ajax({
+                                type: 'post',
+                                url: '/delete',
+                                data: { id: card_id },
+                                success: function (resp) {
+                                    window.location.href = '/'
+                                }
+                            })
+                        })
+                    })
+                }
+            })
+
+
+        })
+
+
+
+    </script>
+</body>
+
+</html>

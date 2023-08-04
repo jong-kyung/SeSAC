@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number2</title>
+</head>
+
+<body>
+    <h1>숫자: <span id="num"></span></h1>
+    <button id="plus">증가</button>
+    <button id="minus">감소</button>
+</body>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script>
+    let number = 0
+
+    $('#num').html(number)
+    $('#plus').click(e => {
+        number++;
+        $('#num').html(number)
+    })
+
+    $('#minus').click(e => {
+        number--;
+        $('#num').html(number)
+    })
+</script>
+
+</html>
