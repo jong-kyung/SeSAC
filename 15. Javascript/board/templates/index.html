@@ -35,7 +35,7 @@
     </div>
     <!-- Modal -->
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog" data-id="">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">상세보기</h1>
@@ -118,12 +118,13 @@
                             let card_id = e.currentTarget.parentElement.dataset.id
                             document.querySelector('#edit_title').value = title.innerText
                             document.querySelector('#edit_content').value = content.innerText
+                            document.querySelector('.modal-dialog').dataset.id = card_id
                         })
                     })
 
                     // 데이터 수정하기
                     document.querySelector('#edit_submit').addEventListener('click', e => {
-                        let card_id = document.querySelector('.card-body').dataset.id
+                        let card_id = document.querySelector('.modal-dialog').dataset.id
                         let title = document.querySelector('#edit_title').value
                         let content = document.querySelector('#edit_content').value
                         $.ajax({
