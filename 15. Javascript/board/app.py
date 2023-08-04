@@ -24,6 +24,7 @@ def list_post():
     result = db.execute_fetch(sql)
     tuple_keys = ('id', 'title', 'message')
     dict_list = []
+    
     for r in result:
         dict_value = dict(zip(tuple_keys, r))
         dict_list.append(dict_value)
@@ -33,7 +34,7 @@ def list_post():
 @app.route('/delete', methods=['POST'])
 def delete_post():
     id = request.form['id']
-    sql = f'DELETE FROM board WHERE id = {id}'
+    sql = f'DELETE FROM board WHERE id = "{id}"'
     db.execute(sql)
     db.commit()
     return 'DEL'
@@ -43,7 +44,7 @@ def edit_post():
     id = request.form['id']
     title = request.form['title']
     message = request.form['message']
-    sql = f'UPDATE board SET title = "{title}", message = "{message}" WHERE id = {id}'
+    sql = f'UPDATE board SET title = "{title}", message = "{message}" WHERE id = "{id}"'
     db.execute(sql)
     db.commit()
     return 'hi'
