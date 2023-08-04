@@ -106,11 +106,11 @@
                     resp.forEach(element => {
                         makeCard(...element)
                     });
-                    const cards = document.querySelectorAll('.card')
+                    
                     const card_delete = document.querySelectorAll('.card-delete')
                     const card_edit = document.querySelectorAll('.card-edit')
 
-                    // 모달창에 반영하기
+                    // 모달창에 값들 반영해주기
                     card_edit.forEach((element) => {
                         element.addEventListener('click', e => {
                             let content = e.currentTarget.previousElementSibling
@@ -124,10 +124,11 @@
 
                     // 데이터 수정하기
                     document.querySelector('#edit_submit').addEventListener('click', e => {
+                        // 모달에 반영된 값들 가져오기
                         let card_id = document.querySelector('.modal-dialog').dataset.id
                         let title = document.querySelector('#edit_title').value
                         let content = document.querySelector('#edit_content').value
-                        $.ajax({
+                        $.ajax({ // 수정요청
                             type: 'post',
                             url: '/edit',
                             data: { id: card_id, title:title, message:content},
@@ -140,10 +141,9 @@
                     // 데이터 삭제하기
                     card_delete.forEach((element) => {
                         element.addEventListener('click', (e) => {
-                            let parent_card = e.currentTarget.parentElement.parentElement
-                            let card_id = e.currentTarget.parentElement.dataset.id
+                            let card_id = e.currentTarget.parentElement.dataset.id // id값 가져오기
                             e.preventDefault()
-                            $.ajax({
+                            $.ajax({ // 삭제 요청
                                 type: 'post',
                                 url: '/delete',
                                 data: { id: card_id },
