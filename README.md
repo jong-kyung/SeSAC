@@ -29,3 +29,4 @@
   - Django 기반 MVT 설계 이론 및 실습
   - Javsascript AJAX 통신 방식 이론
   - JQuery 기초
+  - FRONT - BACK AJAX 통신 실습
