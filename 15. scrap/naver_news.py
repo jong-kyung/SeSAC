@@ -21,6 +21,22 @@ def get_sportsnews():
         print(naver_news_url + a_tag['href'])
         print(a_tag['title'])
 
+def print_news_content(url):
+    data = requests.get(url)
+    soup = BeautifulSoup(data.text, 'html.parser')
+    news_content = soup.select_one('.news_end')
+    if news_content: 
+        start_span = news_content.find('span')
+        end_p = news_content.find('p', class_= 'source')
+        if start_span and end_p:
+            content = start_span.next_element
+            while content and content != end_p:
+                if isinstance(content, str) and content.strip():
+                    print(content.strip())
+                content = content.next_element
+    
+    print('-'*20)
+
 def get_naver_land():
     data = requests.get('https://land.naver.com/news/')
     soup = BeautifulSoup(data.text, 'html.parser')
