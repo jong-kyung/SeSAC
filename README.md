@@ -30,3 +30,5 @@
   - Javsascript AJAX 통신 방식 이론
   - JQuery 기초
   - FRONT - BACK AJAX 통신 실습
+- 8주차 : 웹스크래핑
+  - BeautifulSoup 사용법
