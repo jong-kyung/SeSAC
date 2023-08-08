@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import sqlite3
+from datetime import date
 
 # 데이터베이스 설정
 conn = sqlite3.connect('movie_data.db')
@@ -12,12 +13,21 @@ cur.execute('''
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             title TEXT,
             rating TEXT,
-            reservation_rate TEXT,
             poster_url TEXT,
-            short_description TEXT,
+            short_description TEXT
+    )
+''')       
+
+# ! RANKING, DATE용 테이블
+cur.execute('''
+    CREATE TABLE IF NOT EXISTS weekly_rankings (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                ranking TEXT, 
+                updated_at DATETIME,
+                movie_id INTEGER,
+                FOREIGN KEY(movie_id) REFERENCES moives(id)
     )
 ''')
-            
 conn.commit()
 
 data = requests.get('https://movie.daum.net/ranking/reservation')
@@ -31,9 +41,9 @@ for r in rankings:
     info = r.select('.info_txt')
     url = title['href']
     short = r.select_one('.link_story')
-    # print(f'제목:{title.text}, {info[0].text.replace("평점","")},{info[1].text.replace("예매율","")}')
-    # print(f'링크{daum_movie_url + url}')
-    # print(f'쇼트:{short.text.strip()}')
+    today = date.today()
     
-    cur.execute('INSERT INTO movies (title, rating, reservation_rate, poster_url, short_description) VALUES (?, ?, ?, ?, ?)',(title.text, info[0].text.replace("평점",""), info[1].text.replace("예매율",""), daum_movie_url + url, short.text.strip()))
+    cur.execute('INSERT INTO movies (title, rating, poster_url, short_description) VALUES (?, ?, ?, ?)',(title.text, info[0].text.replace("평점",""), daum_movie_url + url, short.text.strip()))
+    movie_id = cur.lastrowid
+    cur.execute('INSERT INTO weekly_rankings (ranking, updated_at, movie_id) VALUES (?, ?, ?)',(info[1].text.replace("예매율",""), today, movie_id))
     conn.commit()
