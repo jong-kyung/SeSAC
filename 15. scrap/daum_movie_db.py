@@ -42,8 +42,13 @@ for r in rankings:
     url = title['href']
     short = r.select_one('.link_story')
     today = date.today()
-    
-    cur.execute('INSERT INTO movies (title, rating, poster_url, short_description) VALUES (?, ?, ?, ?)',(title.text, info[0].text.replace("평점",""), daum_movie_url + url, short.text.strip()))
-    movie_id = cur.lastrowid # 마지막에 insert한 id값 변수 설정
-    cur.execute('INSERT INTO weekly_rankings (ranking, updated_at, movie_id) VALUES (?, ?, ?)',(info[1].text.replace("예매율",""), today, movie_id))
-    conn.commit()
+    cur.execute('SELECT * FROM movies WHERE title = ?', (title.text, ))
+    m_title = cur.fetchone()
+    if not m_title:
+        cur.execute('INSERT INTO movies (title, rating, poster_url, short_description) VALUES (?, ?, ?, ?)',(title.text, info[0].text.replace("평점",""), daum_movie_url + url, short.text.strip())) # movie 테이블에 DB 삽입
+        movie_id = cur.lastrowid # 마지막에 insert한 id값 변수 설정
+        cur.execute('INSERT INTO weekly_rankings (ranking, updated_at, movie_id) VALUES (?, ?, ?)',(info[1].text.replace("예매율",""), today, movie_id))
+        conn.commit()
+
+
+
