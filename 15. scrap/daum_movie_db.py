@@ -43,18 +43,10 @@ for r in rankings:
     short = r.select_one('.link_story')
     today = date.today()
     
-    cur.execute('SELECT title FROM movies WHERE title = ?', (title.text, )) # 제목이 같은것 찾기
-    movie_detail = cur.fetchone()
-    if not movie_detail:
-        cur.execute('INSERT INTO movies (title, rating, poster_url, short_description) VALUES (?, ?, ?, ?)',(title.text, info[0].text.replace("평점",""), daum_movie_url + url, short.text.strip())) # movie 테이블에 DB 삽입
-        movie_id = cur.lastrowid # insert한 id값 가져오기
-        cur.execute('INSERT INTO weekly_rankings (ranking, updated_at, movie_id) VALUES (?, ?, ?)',(info[1].text.replace("예매율",""), today, movie_id))
-        conn.commit()
-    else:
-        cur.execute('UPDATE movies SET rating = ? WHERE title = ?', (info[0].text.replace("평점",""), title.text))
-        movie_id = cur.lastrowid # update한 id값 가져오기
-        cur.execute('UPDATE weekly_rankings SET ranking = ? WHERE movie_id = ?', (info[1].text.replace("예매율", ""), movie_id))
-        conn.commit()
+    cur.execute('INSERT INTO movies (title, rating, poster_url, short_description) VALUES (?, ?, ?, ?)',(title.text, info[0].text.replace("평점",""), daum_movie_url + url, short.text.strip())) # movie 테이블에 DB 삽입
+    movie_id = cur.lastrowid # insert한 id값 가져오기
+    cur.execute('INSERT INTO weekly_rankings (ranking, updated_at, movie_id) VALUES (?, ?, ?)',(info[1].text.replace("예매율",""), today, movie_id))
+    conn.commit()
 
     # 만약 8월 9일인데 같은영화가 순위권에 존재하면 ??..
     # 평점이 달라지는정도일텐데.. ?..  update를 통해 평점을 변경해주고..
