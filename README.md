@@ -30,7 +30,7 @@
   - Javsascript AJAX 통신 방식 이론
   - JQuery 기초
   - FRONT - BACK AJAX 통신 실습
-- 8주차 : 웹스크래핑
+- 8주차 : 웹스크래핑, API응용 및 OpenCV
   - BeautifulSoup 사용법
   - 영화 스크래핑 사이트 만들기
   - 외부 API 응용
