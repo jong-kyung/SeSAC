@@ -32,3 +32,5 @@
   - FRONT - BACK AJAX 통신 실습
 - 8주차 : 웹스크래핑
   - BeautifulSoup 사용법
+  - 영화 스크래핑 사이트 만들기
+  - 외부 API 응용
