@@ -34,3 +34,5 @@
   - BeautifulSoup 사용법
   - 영화 스크래핑 사이트 만들기
   - 외부 API 응용
+  - 백엔드 API 문서화 유틸리티 사용
+  - SMTP, IAMP, POP3 프로토콜 및 사용
