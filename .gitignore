@@ -12,3 +12,4 @@ __pycache__
 *.sqlite
 migrations
 *.txt
+*.log
