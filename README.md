@@ -43,3 +43,5 @@
   - 기초 리눅스 명령어
   - AWS LightSail 사용법
   - AWS EC2 사용법
+- 11주차 : AWS와 Docker
+  - AWS 권한 설정
