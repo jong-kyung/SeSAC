@@ -46,3 +46,4 @@
 - 11주차 : AWS와 Docker
   - AWS 권한 설정
   - AWS DB 서버 생성 및 MySQL 연동
+  - Docker 기초 명령어
