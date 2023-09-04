@@ -48,3 +48,6 @@
   - AWS DB 서버 생성 및 MySQL 연동
   - Docker 기초 명령어
   - Docker 이미지 개발
+- 12주차 : Docker와 팀프로젝트
+  - Docker 이미지 배포
+  - Docker Compose 명령어
