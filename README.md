@@ -51,3 +51,4 @@
 - 12주차 : Docker와 팀프로젝트
   - Docker 이미지 배포
   - Docker Compose 명령어
+  - 팀프로젝트 중간발표
